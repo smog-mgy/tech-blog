@@ -1,0 +1,32 @@
+# 技术博客站点配置
+site_name: 我的技术博客
+site_description: 记录学习、项目与踩坑的技术博客
+site_author: smog-mgy
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.top        # 顶部导航
+    - navigation.footer     # 底部导航
+    - content.code.copy     # 代码块复制按钮
+    - toc.integrate         # 右侧目录
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+
+markdown_extensions:
+  - admonition                      # 提示框（!!! note 等）
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.superfences            # 代码块增强
+  - pymdownx.inlinehilite           # 行内代码高亮
+  - toc:
+      permalink: true               # 标题锚点
+
+nav:
+  - 首页: index.md
+  - 关于我: about.md
+  - 技术文章:
+      - 用 Ollama 搭建本地 RAG 问答应用: posts/rag-ollama.md
