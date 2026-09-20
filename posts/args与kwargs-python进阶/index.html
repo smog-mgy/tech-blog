@@ -13,10 +13,8 @@
       
       
       
-        <link rel="prev" href="../../about/">
+        <link rel="prev" href="../rag-ollama/">
       
-      
-        <link rel="next" href="../args%E4%B8%8Ekwargs-python%E8%BF%9B%E9%98%B6/">
       
       
         
@@ -27,7 +25,7 @@
     
     
       
-        <title>用 Ollama 搭建本地 RAG 问答应用 - 我的技术博客</title>
+        <title>关于Agent开发的Python进阶 - 我的技术博客</title>
       
     
     
@@ -78,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#ollama-rag" class="md-skip">
+        <a href="#agentpython" class="md-skip">
           跳转至
         </a>
       
@@ -114,7 +112,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              用 Ollama 搭建本地 RAG 问答应用
+              关于Agent开发的Python进阶
             
           </span>
         </div>
@@ -324,6 +322,34 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../rag-ollama/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    用 Ollama 搭建本地 RAG 问答应用
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -343,7 +369,7 @@
   <span class="md-ellipsis">
     
   
-    用 Ollama 搭建本地 RAG 问答应用
+    关于Agent开发的Python进阶
   
 
     
@@ -361,7 +387,7 @@
   <span class="md-ellipsis">
     
   
-    用 Ollama 搭建本地 RAG 问答应用
+    关于Agent开发的Python进阶
   
 
     
@@ -387,90 +413,52 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#_1" class="md-nav__link">
+  <a href="#argkwargs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        背景
+        arg/*kwargs
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="arg/*kwargs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#agentargkwargs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        为什么Agent开发需要学习arg与*kwargs
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#embedchain" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#args" class="md-nav__link">
     <span class="md-ellipsis">
       
-        第一版：embedchain 快速搭建
+        关于*args
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#1ollama-python" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#kwargs" class="md-nav__link">
     <span class="md-ellipsis">
       
-        坑 1：ollama Python 包缺失
+        关于**kwargs
       
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        坑 2：用对话模型当嵌入模型
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        坑 3（最关键）：对话历史全局共享，幻觉被"回传强化"
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#rag" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        最终方案：重写一个精简 RAG
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_2" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        验证结果
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#_3" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        总结
-      
-    </span>
-  </a>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -478,34 +466,6 @@
   
 </nav>
       
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../args%E4%B8%8Ekwargs-python%E8%BF%9B%E9%98%B6/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    关于Agent开发的Python进阶
-  
-
-    
-  </span>
-  
-  
-
-      </a>
     </li>
   
 
@@ -535,91 +495,46 @@
 
 
 
-<h1 id="ollama-rag">用 Ollama 搭建本地 RAG 问答应用：从踩坑到重写<a class="headerlink" href="#ollama-rag" title="Permanent link">&para;</a></h1>
-<p><strong>日期</strong>：2026-09-18
-<strong>标签</strong>：Python · RAG · Ollama · Streamlit</p>
-<h2 id="_1">背景<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
-<p>我想做一个本地的 PDF 问答应用：上传 PDF，然后向它提问，全程数据不出本机。最初基于 <code>embedchain</code> 框架快速搭了一个，但实际用起来发现<strong>回答很"笨"、答非所问、还会编造内容</strong>。这篇文章记录我从"能用"到"好用"的过程，重点是踩过的坑。</p>
-<h2 id="embedchain">第一版：embedchain 快速搭建<a class="headerlink" href="#embedchain" title="Permanent link">&para;</a></h2>
-<p>第一版代码很短，核心就一个配置：</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">embedchain</span><span class="w"> </span><span class="kn">import</span> <span class="n">App</span>
-<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">app</span> <span class="o">=</span> <span class="n">App</span><span class="o">.</span><span class="n">from_config</span><span class="p">(</span><span class="n">config</span><span class="o">=</span><span class="p">{</span>
-<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="s2">"llm"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"provider"</span><span class="p">:</span> <span class="s2">"ollama"</span><span class="p">,</span> <span class="s2">"config"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"model"</span><span class="p">:</span> <span class="s2">"llama3.2:latest"</span><span class="p">,</span> <span class="o">...</span><span class="p">}},</span>
-<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="s2">"vectordb"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"provider"</span><span class="p">:</span> <span class="s2">"chroma"</span><span class="p">,</span> <span class="s2">"config"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"dir"</span><span class="p">:</span> <span class="n">db_path</span><span class="p">}},</span>
-<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="s2">"embedder"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"provider"</span><span class="p">:</span> <span class="s2">"ollama"</span><span class="p">,</span> <span class="s2">"config"</span><span class="p">:</span> <span class="p">{</span><span class="s2">"model"</span><span class="p">:</span> <span class="s2">"llama3.2:latest"</span><span class="p">,</span> <span class="o">...</span><span class="p">}},</span>
-<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">})</span>
+<h1 id="agentpython">关于Agent开发的Python进阶<a class="headerlink" href="#agentpython" title="Permanent link">&para;</a></h1>
+<p><strong>日期</strong>：2026-09-19
+<strong>标签</strong>：Python · Agent</p>
+<h2 id="argkwargs"><em>arg/</em>*kwargs<a class="headerlink" href="#argkwargs" title="Permanent link">&para;</a></h2>
+<h3 id="agentargkwargs">为什么Agent开发需要学习<em>arg与</em>*kwargs<a class="headerlink" href="#agentargkwargs" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>在阅读LangChain/LangGraph的官方示例与源码时，我们可以经常看到函数定义里带着<code>*arg</code>、<code>**kwarg</code>,或者函数头上挂着<code>@tool</code>、<code>@retry_decorator</code>这样的符号。一开始我以为这些是“高级语法，看不懂也没事”，后来发现：<strong>不懂这些Python语法，根本看不懂Agent框架在干什么。</strong></p>
+<p>这篇文章把我学Agent开发前必须补的几个Python进阶语法梳理一遍</p>
+</blockquote>
+<h3 id="args">关于<code>*args</code><a class="headerlink" href="#args" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><code>*args</code>:接收任意数量的位置参数</p>
+<p><strong><code>args</code>是什么？</strong>：当你写一个函数，但不确定用户会传几个参数时，用<code>*args</code>来接住所有多出来的参数，他会被打包成一个元组。</p>
+<p><strong>为什么需要它？</strong>：比如你要写一个“把所有数字加起来”的函数，调用时用户可能传入2个、3个......或者更多的参数，你没有办法提前写死。这个时候就需要用到<code>*args</code>。</p>
+</blockquote>
+<p><strong>代码示例</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">):</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">args</span><span class="p">))</span>  <span class="c1">#&lt;class 'tuple'&gt;</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>   
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>      <span class="c1">#3</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="nb">print</span><span class="p">(</span><span class="n">add</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">,</span><span class="mi">4</span><span class="p">,</span><span class="mi">5</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span> <span class="c1">#19</span>
 </code></pre></div>
-<p>表面看一切正常，实际跑起来问题一堆。</p>
-<h2 id="1ollama-python">坑 1：<code>ollama</code> Python 包缺失<a class="headerlink" href="#1ollama-python" title="Permanent link">&para;</a></h2>
-<div class="admonition note">
-<p class="admonition-title">报错信息</p>
-<p><code>ImportError: Ollama requires extra dependencies. Install with pip install ollama</code></p>
-</div>
-<p>embedchain 的 Ollama 提供方需要 <code>ollama</code> 这个 Python 库，但它<strong>不会随 embedchain 自动安装</strong>。Ollama 软件本身装好了也没用，这是 Python 层面的依赖缺失。</p>
-<p><strong>解决</strong>：<code>pip install ollama</code></p>
-<h2 id="2">坑 2：用对话模型当嵌入模型<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
-<p>第一版把 <code>llama3.2:latest</code> 同时用作对话模型和嵌入模型（embedder）。实际上 <strong>llama3.2 不支持 embedding</strong>（Ollama 中它的能力只有 <code>completion</code>），调用嵌入接口直接超时，添加文档时失败。</p>
-<p><strong>解决</strong>：拉取专门的嵌入模型 <code>nomic-embed-text</code>，并在 embedder 配置中指定。</p>
-<h2 id="3">坑 3（最关键）：对话历史全局共享，幻觉被"回传强化"<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
-<p>这是最难发现的问题。表现为：提问越来越"笨"，且错误有延续性。</p>
-<p>排查过程：把实际发给模型的 Prompt 打出来看，发现里面<strong>混着大量无关的历史对话</strong>——论文总结、漏洞报告、简历分析，全是之前不同会话里问过的内容。</p>
-<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Context information:
-<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>------（当前 PDF 的检索片段）------
-<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>Conversation history:
-<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>------（10 轮历史问答，来自之前所有会话）------
-<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
-<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>Query: 当前问题
-<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>Answer:
+<h3 id="kwargs">关于<code>**kwargs</code><a class="headerlink" href="#kwargs" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><code>**kwargs</code>:接受任意数量的关键字参数</p>
+<p><strong><code>**kwargs</code>是什么</strong>:当你写一个函数，不确定函数调用时会传入多少个__带名字的参数__，就用<code>**kwargs</code>接住全部参数，它会被打包成一个__字典dict__。</p>
+<p><strong>为什么需要他？</strong>:比如调用大模型，Agent工具函数时，可选参数不固定，可能传<code>model</code>,<code>temperature</code>,<code>api_key</code>等命名参数，没办法提前写死所有形参，这时就用<code>**kwargs</code>。</p>
+</blockquote>
+<p><strong>代码示例</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">show_model_config</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="nb">print</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span>   <span class="c1">#&lt;class 'dict'&gt;</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    <span class="nb">print</span><span class="p">(</span><span class="n">kwargs</span><span class="p">)</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>   
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="n">show_model_config</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="s2">"llama3"</span><span class="p">,</span><span class="n">temperature</span> <span class="o">=</span> <span class="mf">0.7</span><span class="p">)</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1">#{'model':'llama3', 'temperature':0.7}</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="n">show_model_config</span><span class="p">(</span><span class="n">model</span> <span class="o">=</span> <span class="s2">"gpt-4o"</span><span class="p">,</span><span class="n">temperature</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span><span class="n">max_tokens</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="c1">#{'model':'gpt-4o', 'temperature':0.5, 'max_tokens':1024}</span>
 </code></pre></div>
-<p><strong>根因</strong>：embedchain 把所有会话的问答统一存进全局 SQLite（<code>~/.embedchain/embedchain.db</code>），且都挂在同一个默认 <code>app_id</code> 下。每次提问，框架自动把最近 10 轮历史拼进 Prompt。更糟的是，<strong>历史里 AI 曾经编造过的回答会被再次当作"参考"喂给模型</strong>——幻觉形成自我强化的恶性循环。</p>
-<p>例如：文档明明写着"杭州以西湖、龙井茶闻名"，模型却回答"杭州的文化名著包括《西游记》《三国演义》"——这段编造又进入历史，污染后续所有会话。</p>
-<p><strong>解决思路</strong>：不再依赖黑盒框架的"历史管理"，而是自己控制 Prompt——<strong>只放检索片段和当前问题，不带任何历史</strong>。</p>
-<h2 id="rag">最终方案：重写一个精简 RAG<a class="headerlink" href="#rag" title="Permanent link">&para;</a></h2>
-<p>与其继续给 embedchain 打补丁，不如自己写一个完全可控的精简版，四个模块：</p>
-<table>
-<thead>
-<tr>
-<th>模块</th>
-<th>职责</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>config.py</code></td>
-<td>所有可配置项（模型、路径、分块参数）</td>
-</tr>
-<tr>
-<td><code>loader.py</code></td>
-<td>PDF 解析 + 文本分块（带重叠）</td>
-</tr>
-<tr>
-<td><code>store.py</code></td>
-<td>ChromaDB 封装（嵌入、存储、检索）</td>
-</tr>
-<tr>
-<td><code>qa.py</code></td>
-<td>检索 → 组装 Prompt → 调用模型生成</td>
-</tr>
-</tbody>
-</table>
-<p>关键设计决策：</p>
-<ol>
-<li><strong>每份 PDF 独立 collection</strong>——不同文档的问答互不干扰</li>
-<li><strong>Prompt 只含检索片段 + 当前问题</strong>——根治历史污染</li>
-<li><strong>用 <code>qwen2.5:7b</code> 替代 3B 小模型</strong>——中文回答质量明显提升</li>
-<li><strong>用 <code>bge-m3</code> 替代英文嵌入模型</strong>——中文检索更准</li>
-</ol>
-<h2 id="_2">验证结果<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>在本地 Ollama（16G 内存）上，提问"杭州地铁1号线什么时候开通？"，模型能准确回答"2012年11月24日"——内容来自 PDF，不再是编造。</p>
-<h2 id="_3">总结<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
-<ul>
-<li>用黑盒框架快速出活可以，但出问题时排查成本高，尤其是隐式的"历史管理"</li>
-<li>RAG 应用的核心三要素：<strong>检索准、Prompt 干净、模型够强</strong></li>
-<li>遇到"答非所问 + 编造内容"，优先检查三件事：检索到内容了吗？Prompt 里混入了什么？模型是不是太弱？</li>
-</ul>
-<p><em>下一篇预告：自己实现 ChromaDB 向量库的增删查，附完整代码。</em></p>
 
 
 
@@ -655,7 +570,7 @@
       <nav class="md-footer__inner md-grid" aria-label="页脚" >
         
           
-          <a href="../../about/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 关于我">
+          <a href="../rag-ollama/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 用 Ollama 搭建本地 RAG 问答应用">
             <div class="md-footer__button md-icon">
               
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
@@ -665,27 +580,11 @@
                 上一页
               </span>
               <div class="md-ellipsis">
-                关于我
+                用 Ollama 搭建本地 RAG 问答应用
               </div>
             </div>
           </a>
         
-        
-          
-          <a href="../args%E4%B8%8Ekwargs-python%E8%BF%9B%E9%98%B6/" class="md-footer__link md-footer__link--next" aria-label="下一页: 关于Agent开发的Python进阶">
-            <div class="md-footer__title">
-              <span class="md-footer__direction">
-                下一页
-              </span>
-              <div class="md-ellipsis">
-                关于Agent开发的Python进阶
-              </div>
-            </div>
-            <div class="md-footer__button md-icon">
-              
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
-            </div>
-          </a>
         
       </nav>
     
