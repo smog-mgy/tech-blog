@@ -4,8 +4,9 @@
 
 ## 最新文章
 
+- [关于Agent开发的Python模块化与工程结构](posts/关于Agent开发的Python模块化与工程结构.md) —— 2026-09-20
+- [关于Agent开发的Python面向对象进阶](posts/关于Agent开发的Python面向对象进阶.md) —— 2026-09-20
 - [关于Agent开发的Python函数进阶](posts/关于Agent开发的Python函数进阶.md) —— 2026-09-19
-- [用 Ollama 搭建本地 RAG 问答应用（从踩坑到重写）](posts/rag-ollama.md) —— 2026-09-18
 
 ## 关于这个博客
 
