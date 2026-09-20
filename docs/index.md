@@ -4,8 +4,6 @@
 
 ## 最新文章
 
-- [测试文档](posts/我的博客文档.md) —— 2026-09-20
-
 - [关于Agent开发的Python函数进阶](posts/关于Agent开发的Python函数进阶.md) —— 2026-09-19
 - [用 Ollama 搭建本地 RAG 问答应用（从踩坑到重写）](posts/rag-ollama.md) —— 2026-09-18
 

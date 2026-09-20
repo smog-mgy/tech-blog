@@ -31,4 +31,3 @@ nav:
   - 技术文章:
       - 用 Ollama 搭建本地 RAG 问答应用: posts/rag-ollama.md
       - 关于Agent开发的Python函数进阶: posts/关于Agent开发的Python函数进阶.md
-      - 测试发布：posts/我的博客文档.md
