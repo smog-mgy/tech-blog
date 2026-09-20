@@ -30,3 +30,4 @@ nav:
   - 关于我: about.md
   - 技术文章:
       - 用 Ollama 搭建本地 RAG 问答应用: posts/rag-ollama.md
+      - 关于Agent开发的Python进阶: posts/args与kwargs-python进阶.md

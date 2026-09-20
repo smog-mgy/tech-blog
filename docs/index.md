@@ -4,6 +4,7 @@
 
 ## 最新文章
 
+- [关于Agent开发的Python进阶](posts/args与kwargs-python进阶.md) —— 2026-09-19
 - [用 Ollama 搭建本地 RAG 问答应用（从踩坑到重写）](posts/rag-ollama.md) —— 2026-09-18
 
 ## 关于这个博客
