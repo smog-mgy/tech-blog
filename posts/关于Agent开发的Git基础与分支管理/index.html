@@ -1,0 +1,1085 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录学习、项目与踩坑的技术博客">
+      
+      
+        <meta name="author" content="smog-mgy">
+      
+      
+      
+        <link rel="prev" href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>关于Agent开发的Git基础与分支管理 - 我的技术博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#agentgit" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="我的技术博客" class="md-header__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            我的技术博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              关于Agent开发的Git基础与分支管理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="我的技术博客" class="md-nav__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    我的技术博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于我
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技术文章
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    技术文章
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python函数进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python面向对象进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python模块化与工程结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Git基础与分支管理
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Git基础与分支管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#agent-git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        为什么Agent开发必须学 Git
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#git" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、Git 是什么？为什么需要它
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、Git 是什么？为什么需要它">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#git_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关于 Git
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、分支是什么？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、分支是什么？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#branch" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关于分支（Branch）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、常用分支命令
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、常用分支命令">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 查看所有分支
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 创建新分支
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 切换分支
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 创建并切换到新分支（最常用）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 合并分支
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 删除分支
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#commit-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、commit message 规范
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、commit message 规范">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#commit-message_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        为什么要写规范的 commit message
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#commit" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        常用的 commit 类型
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vs-commit-message" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        好的 vs 烂的 commit message
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#merge-conflict" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、合并冲突（Merge Conflict）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、合并冲突（Merge Conflict）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        什么是合并冲突
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        怎么解决冲突
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、完整的分支工作流
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent-git_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        七、为什么 Agent 开发必须懂 Git
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="agentgit">关于Agent开发的Git基础与分支管理<a class="headerlink" href="#agentgit" title="Permanent link">&para;</a></h1>
+<p><strong>日期</strong>：2026-03-26
+<strong>标签</strong>：Git · 版本控制 · Agent</p>
+<h2 id="agent-git">为什么Agent开发必须学 Git<a class="headerlink" href="#agent-git" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>你在 GitHub 上看到的 LangChain、LangGraph 这些 Agent 框架，全都是 Git 管理的开源项目。</p>
+<p>想给开源项目提 PR？想和团队协作开发 Agent？想记录自己项目的迭代过程？不懂 Git 根本玩不转。</p>
+<p>这篇文章把我学 Agent 开发前必须补的 Git 基础梳理一遍。</p>
+</blockquote>
+<hr />
+<h2 id="git">一、Git 是什么？为什么需要它<a class="headerlink" href="#git" title="Permanent link">&para;</a></h2>
+<h3 id="git_1">关于 Git<a class="headerlink" href="#git_1" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>Git</strong>：一个版本管理工具，帮你记录项目的每次修改，随时可以回退到任意历史版本。</p>
+<p><strong>类比理解</strong>：就像游戏存档，你打了个 Boss 存个档，打错了可以读档重来。</p>
+</blockquote>
+<p><strong>没有 Git 的痛点</strong>：
+- 项目改坏了，找不到原来的版本
+- 同时改多个功能，互相冲突
+- 想回退到上周的版本，不知道改了啥
+- 多人协作，不知道谁改了什么</p>
+<p><strong>有 Git 之后</strong>：
+- 每次修改都有记录，随时回退
+- 不同功能在不同分支上开发，互不干扰
+- 所有人改了什么一目了然
+- 出问题了一键回滚</p>
+<hr />
+<h2 id="_1">二、分支是什么？<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="branch">关于分支（Branch）<a class="headerlink" href="#branch" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>分支</strong>：从主线（master/main）分叉出来的一条独立开发线，在分支上改代码不会影响主线。</p>
+<p><strong>为什么需要分支</strong>：开发新功能时不想搞乱主线的稳定版本，做完了再合并回去。</p>
+</blockquote>
+<p><strong>类比理解</strong>：
+- 主线（master）：稳定版，能正常运行的版本
+- 新分支：你在上面瞎改，改坏了直接删掉分支就行
+- 合并：改好了，把新分支的代码合并回主线</p>
+<hr />
+<h2 id="_2">三、常用分支命令<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<h3 id="1">1. 查看所有分支<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>git<span class="w"> </span>branch
+</code></pre></div>
+<p>输出：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>* main
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>  dev
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>  feature/login
+</code></pre></div></p>
+<p>前面带 <code>*</code> 的是当前所在分支。</p>
+<h3 id="2">2. 创建新分支<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>branch<span class="w"> </span>分支名
+</code></pre></div>
+<p>例子：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>git<span class="w"> </span>branch<span class="w"> </span>feature/rag
+</code></pre></div></p>
+<h3 id="3">3. 切换分支<a class="headerlink" href="#3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>分支名
+</code></pre></div>
+<p>或者新版本 Git 用：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>git<span class="w"> </span>switch<span class="w"> </span>分支名
+</code></pre></div></p>
+<p>例子：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>feature/rag
+</code></pre></div></p>
+<h3 id="4">4. 创建并切换到新分支（最常用）<a class="headerlink" href="#4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>新分支名
+</code></pre></div>
+<p><strong>等价于</strong>：先 <code>git branch</code> 创建，再 <code>git checkout</code> 切换。</p>
+<p>例子：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/embedding
+</code></pre></div></p>
+<p><strong>关键点</strong>：<code>-b</code> 就是 "branch" 的意思，创建+切换一步完成。</p>
+<h3 id="5">5. 合并分支<a class="headerlink" href="#5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>main<span class="w">          </span><span class="c1"># 先切回主分支</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>git<span class="w"> </span>merge<span class="w"> </span>feature/rag<span class="w">      </span><span class="c1"># 把 feature/rag 合并进来</span>
+</code></pre></div>
+<p><strong>流程</strong>：
+1. 在 feature 分支上开发新功能
+2. 开发完了切回 main 分支
+3. 把 feature 分支合并到 main</p>
+<h3 id="6">6. 删除分支<a class="headerlink" href="#6" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>git<span class="w"> </span>branch<span class="w"> </span>-d<span class="w"> </span>分支名
+</code></pre></div>
+<p>例子：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>git<span class="w"> </span>branch<span class="w"> </span>-d<span class="w"> </span>feature/rag
+</code></pre></div></p>
+<hr />
+<h2 id="commit-message">四、commit message 规范<a class="headerlink" href="#commit-message" title="Permanent link">&para;</a></h2>
+<h3 id="commit-message_1">为什么要写规范的 commit message<a class="headerlink" href="#commit-message_1" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>写得好的 commit 信息，几个月后你一眼就知道这次改了什么。</p>
+<p>写得烂的（"update"、"fix"、"改了点东西"），过两天自己都忘了改了啥。</p>
+</blockquote>
+<h3 id="commit">常用的 commit 类型<a class="headerlink" href="#commit" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>前缀</th>
+<th>含义</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>feat:</code></td>
+<td>新功能</td>
+<td><code>feat: 添加 PDF 文档上传功能</code></td>
+</tr>
+<tr>
+<td><code>fix:</code></td>
+<td>修 bug</td>
+<td><code>fix: 修复向量数据库加载失败的问题</code></td>
+</tr>
+<tr>
+<td><code>docs:</code></td>
+<td>文档修改</td>
+<td><code>docs: 更新 README 安装说明</code></td>
+</tr>
+<tr>
+<td><code>style:</code></td>
+<td>代码格式</td>
+<td><code>style: 调整代码缩进</code></td>
+</tr>
+<tr>
+<td><code>refactor:</code></td>
+<td>重构</td>
+<td><code>refactor: 拆分 loader 模块</code></td>
+</tr>
+<tr>
+<td><code>test:</code></td>
+<td>测试</td>
+<td><code>test: 添加 PDF 加载单元测试</code></td>
+</tr>
+<tr>
+<td><code>chore:</code></td>
+<td>杂项</td>
+<td><code>chore: 更新依赖版本</code></td>
+</tr>
+</tbody>
+</table>
+<h3 id="vs-commit-message">好的 vs 烂的 commit message<a class="headerlink" href="#vs-commit-message" title="Permanent link">&para;</a></h3>
+<p><strong>烂的</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>"改了点东西"
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>"update"
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>"fix bug"
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>"提交"
+</code></pre></div></p>
+<p><strong>好的</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>feat: 添加 RAG 问答链模块
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>fix: 修复 Ollama 连接超时问题
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>docs: 补充模块化项目目录说明
+</code></pre></div></p>
+<p><strong>记忆口诀</strong>：<code>&lt;类型&gt;: &lt;做了什么事&gt;</code></p>
+<hr />
+<h2 id="merge-conflict">五、合并冲突（Merge Conflict）<a class="headerlink" href="#merge-conflict" title="Permanent link">&para;</a></h2>
+<h3 id="_3">什么是合并冲突<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>当两个分支修改了同一个文件的同一行，Git 不知道该用哪个版本，就会报冲突。</p>
+</blockquote>
+<p><strong>常见场景</strong>：
+- 你和同事同时改了同一段代码
+- 你在两个分支上都改了同一行</p>
+<h3 id="_4">怎么解决冲突<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p><strong>第 1 步：Git 提示冲突</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>CONFLICT (content): Merge conflict in config.py
+</code></pre></div>
+<p><strong>第 2 步：打开冲突文件</strong></p>
+<p>Git 会在文件里标记出冲突的地方：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="o">&lt;&lt;&lt;&lt;&lt;&lt;&lt;</span> <span class="n">HEAD</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">CHUNK_SIZE</span> <span class="o">=</span> <span class="mi">500</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="o">=======</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="n">CHUNK_SIZE</span> <span class="o">=</span> <span class="mi">1000</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="o">&gt;&gt;&gt;&gt;&gt;&gt;&gt;</span> <span class="n">feature</span><span class="o">/</span><span class="n">embedding</span>
+</code></pre></div>
+<p><strong>第 3 步：手动选择保留哪个</strong></p>
+<p>删掉标记，改成你想要的版本：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="n">CHUNK_SIZE</span> <span class="o">=</span> <span class="mi">500</span>
+</code></pre></div>
+<p><strong>第 4 步：标记冲突已解决</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>git<span class="w"> </span>add<span class="w"> </span>config.py
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"merge: 解决 CHUNK_SIZE 配置冲突"</span>
+</code></pre></div>
+<p><strong>关键点</strong>：
+- 冲突不可怕，就是 Git 让你做个选择
+- 打开文件，删掉 <code>&lt;&lt;&lt;&lt;&lt;&lt;&lt;</code> 和 <code>=======</code> 和 <code>&gt;&gt;&gt;&gt;&gt;&gt;&gt;</code> 这些标记
+- 保留你想要的代码就行</p>
+<hr />
+<h2 id="_5">六、完整的分支工作流<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p><strong>开发新功能的标准流程</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># 1. 切回主分支，拉最新代码</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>git<span class="w"> </span>checkout<span class="w"> </span>main
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>git<span class="w"> </span>pull
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="c1"># 2. 创建新功能分支</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/new-tool
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="c1"># 3. 在新分支上开发，多次提交</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>git<span class="w"> </span>add<span class="w"> </span>.
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">"feat: 添加新工具函数"</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="c1"># 4. 开发完了，切回主分支</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a>git<span class="w"> </span>checkout<span class="w"> </span>main
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="c1"># 5. 合并新分支</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a>git<span class="w"> </span>merge<span class="w"> </span>feature/new-tool
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="c1"># 6. 推送到远程</span>
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>main
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="c1"># 7. 删除本地功能分支</span>
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a>git<span class="w"> </span>branch<span class="w"> </span>-d<span class="w"> </span>feature/new-tool
+</code></pre></div>
+<hr />
+<h2 id="agent-git_1">七、为什么 Agent 开发必须懂 Git<a class="headerlink" href="#agent-git_1" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>LangChain 这样的开源 Agent 项目，每天都有几百个 PR 提交：</p>
+<ul>
+<li>有人加了个新工具</li>
+<li>有人修了个 bug</li>
+<li>有人更新了文档</li>
+</ul>
+<p>不懂分支、不懂 commit 规范、不懂合并冲突，根本没法参与开源贡献。</p>
+</blockquote>
+<p><strong>实际工作中</strong>：
+- 每个功能开一个分支，不搞乱主线
+- 代码评审时看 commit message 就知道改了啥
+- 出问题了，快速定位是哪次提交引入的 bug</p>
+<p><strong>三者关系</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>写代码 → 提交 → 分支 → 合并 → 发布
+</code></pre></div>
+<ul>
+<li>函数/类：写代码</li>
+<li>模块化：组织代码</li>
+<li>Git：管理代码版本</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 关于Agent开发的Python模块化与工程结构">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                关于Agent开发的Python模块化与工程结构
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.footer", "content.code.copy", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

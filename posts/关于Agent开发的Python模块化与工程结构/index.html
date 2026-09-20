@@ -1,0 +1,1094 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录学习、项目与踩坑的技术博客">
+      
+      
+        <meta name="author" content="smog-mgy">
+      
+      
+      
+        <link rel="prev" href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BF%9B%E9%98%B6/">
+      
+      
+        <link rel="next" href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Git%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>关于Agent开发的Python模块化与工程结构 - 我的技术博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#agentpython" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="我的技术博客" class="md-header__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            我的技术博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              关于Agent开发的Python模块化与工程结构
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="我的技术博客" class="md-nav__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    我的技术博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于我
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技术文章
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    技术文章
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python函数进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python面向对象进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python模块化与工程结构
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python模块化与工程结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#agent" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        为什么Agent开发必须懂模块化
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#import" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、import 是怎么工作的
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、import 是怎么工作的">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#import_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关于 import
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#import_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        import 的几种写法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、什么是模块、什么是包
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、什么是模块、什么是包">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#module" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关于模块（Module）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#package" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关于包（Package）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#if-name-main" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、if name == "main": 的作用
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、if name == &#34;main&#34;: 的作用">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#if-name-main_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        关于 if name == "main"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、实战：把零散代码整理成模块化项目
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、实战：把零散代码整理成模块化项目">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        模块化后的目录结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        每个文件的内容
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#agent_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、为什么 Agent 框架都是模块化的
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Git%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Git基础与分支管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="agentpython">关于Agent开发的Python模块化与工程结构<a class="headerlink" href="#agentpython" title="Permanent link">&para;</a></h1>
+<p><strong>日期</strong>：2026-03-19
+<strong>标签</strong>：Python · Agent · 模块化</p>
+<h2 id="agent">为什么Agent开发必须懂模块化<a class="headerlink" href="#agent" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>刚开始写代码，所有东西都塞在一个 .py 文件里，几百行后自己都找不到北。</p>
+<p>LangChain / LangGraph 源码里，一个功能拆成十几个文件，每个文件各司其职。不懂模块化，根本不知道从哪看起。</p>
+<p>这篇文章把我学Agent开发前必须补的模块化知识梳理一遍。</p>
+</blockquote>
+<hr />
+<h2 id="import">一、import 是怎么工作的<a class="headerlink" href="#import" title="Permanent link">&para;</a></h2>
+<h3 id="import_1">关于 import<a class="headerlink" href="#import_1" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>import</strong>：把别的文件里写好的代码拿过来用，不用重复造轮子。</p>
+<p><strong>本质</strong>：Python 找到你导入的文件，执行一遍，把里面的变量、函数、类都拿过来。</p>
+</blockquote>
+<p><strong>代码示例</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># 导入标准库</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">sys</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="c1"># 导入第三方库</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="c1"># 导入自己写的模块</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="kn">from</span><span class="w"> </span><span class="nn">my_module</span><span class="w"> </span><span class="kn">import</span> <span class="n">my_function</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="kn">from</span><span class="w"> </span><span class="nn">my_package</span><span class="w"> </span><span class="kn">import</span> <span class="n">my_class</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="c1"># 导入并起别名</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+</code></pre></div>
+<h3 id="import_2">import 的几种写法<a class="headerlink" href="#import_2" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>写法</th>
+<th>作用</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>import 模块名</code></td>
+<td>导入整个模块</td>
+<td><code>import os</code></td>
+</tr>
+<tr>
+<td><code>from 模块名 import 函数/类</code></td>
+<td>只导入需要的部分</td>
+<td><code>from os import path</code></td>
+</tr>
+<tr>
+<td><code>from 模块名 import *</code></td>
+<td>导入所有（不推荐）</td>
+<td><code>from os import *</code></td>
+</tr>
+<tr>
+<td><code>import 模块名 as 别名</code></td>
+<td>起别名</td>
+<td><code>import numpy as np</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>关键点</strong>：
+- import 只会执行一次，重复 import 不会重复执行
+- import 会把整个文件执行一遍，所以模块顶层的代码都会运行</p>
+<hr />
+<h2 id="_1">二、什么是模块、什么是包<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="module">关于模块（Module）<a class="headerlink" href="#module" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>模块</strong>：一个 .py 文件就是一个模块。</p>
+<p>文件名 <code>utils.py</code> → 模块名 <code>utils</code></p>
+</blockquote>
+<h3 id="package">关于包（Package）<a class="headerlink" href="#package" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>包</strong>：一个文件夹，里面有多个 .py 文件，还有一个 <code>__init__.py</code> 文件。</p>
+<p>文件夹名 <code>mypackage/</code> → 包名 <code>mypackage</code></p>
+</blockquote>
+<p><strong>目录结构示例</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>my_project/
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>├── main.py              # 主程序入口
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├── config.py            # 配置模块
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>├── utils/               # 工具包
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│   ├── __init__.py
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│   ├── file_loader.py   # 文件加载工具
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│   └── text_processor.py # 文本处理工具
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>└── models/              # 模型包
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>    ├── __init__.py
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>    ├── llm.py           # 大模型封装
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>    └── embedding.py      # 向量嵌入封装
+</code></pre></div>
+<p><strong>导入方式</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># 导入模块</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">config</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># 从包导入模块</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">file_loader</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># 从模块导入函数/类</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="kn">from</span><span class="w"> </span><span class="nn">utils.file_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_pdf</span>
+</code></pre></div>
+<hr />
+<h2 id="if-name-main">三、if <strong>name</strong> == "<strong>main</strong>": 的作用<a class="headerlink" href="#if-name-main" title="Permanent link">&para;</a></h2>
+<h3 id="if-name-main_1">关于 if <strong>name</strong> == "<strong>main</strong>"<a class="headerlink" href="#if-name-main_1" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>这行代码的意思是：<strong>只有直接运行这个文件时，才执行下面的代码；被别人 import 时，不执行。</strong></p>
+</blockquote>
+<p><strong>代码示例</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># my_module.py</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">hello</span><span class="p">():</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"你好！"</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># 只有直接运行这个文件时，才执行下面的代码</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">hello</span><span class="p">()</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"这是直接运行时才会看到的"</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>两种运行方式的区别</strong>：</p>
+<p><strong>方式1：直接运行这个文件</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">python</span> <span class="n">my_module</span><span class="p">.</span><span class="n">py</span>
+</code></pre></div>
+输出：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>你好！
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>这是直接运行时才会看到的
+</code></pre></div></p>
+<p><strong>方式2：被别人 import</strong>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># main.py</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">my_module</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># 不会执行 if __name__ 里的代码</span>
+</code></pre></div></p>
+<p><strong>为什么需要它</strong>：
+- 写模块的时候，经常想测试一下自己的代码
+- 但别人 import 你的模块时，不希望测试代码被执行
+- 用 <code>if __name__ == "__main__":</code> 把测试代码包起来就行</p>
+<hr />
+<h2 id="_2">四、实战：把零散代码整理成模块化项目<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p><strong>原始问题</strong>：所有代码都塞在一个 <code>chat_pdf.py</code> 里，几百行，又乱又难维护。</p>
+<p><strong>整理思路</strong>：按功能拆分，每个文件只干一件事。</p>
+<h3 id="_3">模块化后的目录结构<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>chat_pdf/
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>├── main.py           # 主程序入口
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>├── config.py         # 配置（API Key、模型名等）
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>├── loader/          # 文档加载模块
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>│   ├── __init__.py
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>│   └── pdf_loader.py # 加载 PDF 文件
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>├── store/            # 向量存储模块
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>│   ├── __init__.py
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>│   └── vector_store.py # 向量数据库
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>├── qa/               # 问答模块
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>│   ├── __init__.py
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>│   └── chain.py      # RAG 问答链
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>└── requirements.txt   # 依赖列表
+</code></pre></div>
+<h3 id="_4">每个文件的内容<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p><strong>1. config.py（配置模块）</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># 所有配置集中在这，改的时候只改这里</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># 大模型配置</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">LLM_MODEL</span> <span class="o">=</span> <span class="s2">"llama3.2"</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="n">EMBEDDING_MODEL</span> <span class="o">=</span> <span class="s2">"nomic-embed-text"</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># 向量数据库配置</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="n">CHROMA_PATH</span> <span class="o">=</span> <span class="s2">"./chroma_db"</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="c1"># 文档配置</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="n">PDF_PATH</span> <span class="o">=</span> <span class="s2">"./data/test.pdf"</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a><span class="n">CHUNK_SIZE</span> <span class="o">=</span> <span class="mi">500</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="n">CHUNK_OVERLAP</span> <span class="o">=</span> <span class="mi">50</span>
+</code></pre></div>
+<p><strong>2. loader/pdf_loader.py（文档加载模块）</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># 只负责：加载 PDF，切成小块</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.document_loaders</span><span class="w"> </span><span class="kn">import</span> <span class="n">PyPDFLoader</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.text_splitter</span><span class="w"> </span><span class="kn">import</span> <span class="n">RecursiveCharacterTextSplitter</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">config</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">load_and_split_pdf</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">):</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="sd">"""加载 PDF 文件，切分成小块"""</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>    <span class="n">loader</span> <span class="o">=</span> <span class="n">PyPDFLoader</span><span class="p">(</span><span class="n">pdf_path</span><span class="p">)</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>    <span class="n">documents</span> <span class="o">=</span> <span class="n">loader</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>    <span class="n">splitter</span> <span class="o">=</span> <span class="n">RecursiveCharacterTextSplitter</span><span class="p">(</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>        <span class="n">chunk_size</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">CHUNK_SIZE</span><span class="p">,</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>        <span class="n">chunk_overlap</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">CHUNK_OVERLAP</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>    <span class="p">)</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a>    <span class="n">chunks</span> <span class="o">=</span> <span class="n">splitter</span><span class="o">.</span><span class="n">split_documents</span><span class="p">(</span><span class="n">documents</span><span class="p">)</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>    <span class="k">return</span> <span class="n">chunks</span>
+</code></pre></div>
+<p><strong>3. store/vector_store.py（向量存储模块）</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># 只负责：创建和管理向量数据库</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.vectorstores</span><span class="w"> </span><span class="kn">import</span> <span class="n">Chroma</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.embeddings</span><span class="w"> </span><span class="kn">import</span> <span class="n">OllamaEmbeddings</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">config</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_vector_store</span><span class="p">(</span><span class="n">chunks</span><span class="p">):</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="w">    </span><span class="sd">"""用文档块创建向量数据库"""</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>    <span class="n">embeddings</span> <span class="o">=</span> <span class="n">OllamaEmbeddings</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">EMBEDDING_MODEL</span><span class="p">)</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>    <span class="n">vector_store</span> <span class="o">=</span> <span class="n">Chroma</span><span class="o">.</span><span class="n">from_documents</span><span class="p">(</span>
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>        <span class="n">documents</span><span class="o">=</span><span class="n">chunks</span><span class="p">,</span>
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>        <span class="n">embedding</span><span class="o">=</span><span class="n">embeddings</span><span class="p">,</span>
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>        <span class="n">persist_directory</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">CHROMA_PATH</span>
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>    <span class="p">)</span>
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>    <span class="k">return</span> <span class="n">vector_store</span>
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a><span class="k">def</span><span class="w"> </span><span class="nf">load_vector_store</span><span class="p">():</span>
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a><span class="w">    </span><span class="sd">"""加载已有的向量数据库"""</span>
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>    <span class="n">embeddings</span> <span class="o">=</span> <span class="n">OllamaEmbeddings</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">EMBEDDING_MODEL</span><span class="p">)</span>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>    <span class="n">vector_store</span> <span class="o">=</span> <span class="n">Chroma</span><span class="p">(</span>
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>        <span class="n">persist_directory</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">CHROMA_PATH</span><span class="p">,</span>
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>        <span class="n">embedding_function</span><span class="o">=</span><span class="n">embeddings</span>
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>    <span class="p">)</span>
+<a id="__codelineno-10-24" name="__codelineno-10-24" href="#__codelineno-10-24"></a>    <span class="k">return</span> <span class="n">vector_store</span>
+</code></pre></div>
+<p><strong>4. qa/chain.py（问答模块）</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># 只负责：创建 RAG 问答链</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chat_models</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOllama</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.chains</span><span class="w"> </span><span class="kn">import</span> <span class="n">RetrievalQA</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="kn">import</span><span class="w"> </span><span class="nn">config</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="k">def</span><span class="w"> </span><span class="nf">create_qa_chain</span><span class="p">(</span><span class="n">vector_store</span><span class="p">):</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="w">    </span><span class="sd">"""创建问答链"""</span>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>    <span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOllama</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">config</span><span class="o">.</span><span class="n">LLM_MODEL</span><span class="p">)</span>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>    <span class="n">qa_chain</span> <span class="o">=</span> <span class="n">RetrievalQA</span><span class="o">.</span><span class="n">from_chain_type</span><span class="p">(</span>
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>        <span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">,</span>
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>        <span class="n">chain_type</span><span class="o">=</span><span class="s2">"stuff"</span><span class="p">,</span>
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>        <span class="n">retriever</span><span class="o">=</span><span class="n">vector_store</span><span class="o">.</span><span class="n">as_retriever</span><span class="p">(),</span>
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>        <span class="n">return_source_documents</span><span class="o">=</span><span class="kc">True</span>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>    <span class="p">)</span>
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>    <span class="k">return</span> <span class="n">qa_chain</span>
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a><span class="k">def</span><span class="w"> </span><span class="nf">ask_question</span><span class="p">(</span><span class="n">qa_chain</span><span class="p">,</span> <span class="n">question</span><span class="p">):</span>
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a><span class="w">    </span><span class="sd">"""提问，返回答案和来源"""</span>
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>    <span class="n">result</span> <span class="o">=</span> <span class="n">qa_chain</span><span class="p">({</span><span class="s2">"query"</span><span class="p">:</span> <span class="n">question</span><span class="p">})</span>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>    <span class="k">return</span> <span class="n">result</span><span class="p">[</span><span class="s2">"result"</span><span class="p">],</span> <span class="n">result</span><span class="p">[</span><span class="s2">"source_documents"</span><span class="p">]</span>
+</code></pre></div>
+<p><strong>5. main.py（主程序入口）</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># 只负责：把所有模块串起来</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">loader.pdf_loader</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_and_split_pdf</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">store.vector_store</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_vector_store</span><span class="p">,</span> <span class="n">load_vector_store</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">qa.chain</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_qa_chain</span><span class="p">,</span> <span class="n">ask_question</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">config</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="k">def</span><span class="w"> </span><span class="nf">main</span><span class="p">():</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>    <span class="c1"># 1. 加载文档（如果向量库已存在，跳过这步）</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>    <span class="n">chunks</span> <span class="o">=</span> <span class="n">load_and_split_pdf</span><span class="p">(</span><span class="n">config</span><span class="o">.</span><span class="n">PDF_PATH</span><span class="p">)</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>    <span class="c1"># 2. 创建向量数据库</span>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>    <span class="n">vector_store</span> <span class="o">=</span> <span class="n">create_vector_store</span><span class="p">(</span><span class="n">chunks</span><span class="p">)</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>    <span class="c1"># 3. 创建问答链</span>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>    <span class="n">qa_chain</span> <span class="o">=</span> <span class="n">create_qa_chain</span><span class="p">(</span><span class="n">vector_store</span><span class="p">)</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>
+<a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>    <span class="c1"># 4. 问答循环</span>
+<a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">"RAG 问答系统已启动，输入问题开始对话（输入 q 退出）"</span><span class="p">)</span>
+<a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>    <span class="k">while</span> <span class="kc">True</span><span class="p">:</span>
+<a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>        <span class="n">question</span> <span class="o">=</span> <span class="nb">input</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">问题："</span><span class="p">)</span>
+<a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>        <span class="k">if</span> <span class="n">question</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">"q"</span><span class="p">:</span>
+<a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>            <span class="k">break</span>
+<a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>        <span class="n">answer</span><span class="p">,</span> <span class="n">sources</span> <span class="o">=</span> <span class="n">ask_question</span><span class="p">(</span><span class="n">qa_chain</span><span class="p">,</span> <span class="n">question</span><span class="p">)</span>
+<a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="se">\n</span><span class="s2">答案：</span><span class="si">{</span><span class="n">answer</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"来源：</span><span class="si">{</span><span class="n">sources</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'source'</span><span class="p">,</span><span class="w"> </span><span class="s1">'unknown'</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a>
+<a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">"__main__"</span><span class="p">:</span>
+<a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>    <span class="n">main</span><span class="p">()</span>
+</code></pre></div>
+<hr />
+<h2 id="agent_1">五、为什么 Agent 框架都是模块化的<a class="headerlink" href="#agent_1" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>LangChain 为什么拆成几十个包？</p>
+<ul>
+<li>每个功能独立，可以单独替换</li>
+<li>比如你想换向量数据库，只需要改 store 模块，其他模块不用动</li>
+<li>多人协作，各写各的模块不冲突</li>
+<li>代码复用，loader 模块可以被多个项目用</li>
+</ul>
+</blockquote>
+<p><strong>模块化的好处</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>好处</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>易维护</td>
+<td>改一个功能只改一个文件</td>
+</tr>
+<tr>
+<td>易复用</td>
+<td>模块可以被多个项目 import</td>
+</tr>
+<tr>
+<td>易协作</td>
+<td>多人各写各的模块不冲突</td>
+</tr>
+<tr>
+<td>易测试</td>
+<td>每个模块可以单独测试</td>
+</tr>
+</tbody>
+</table>
+<p><strong>完成标准</strong>：项目目录结构清晰，每个文件职责单一，能独立 import。</p>
+<hr />
+<p><strong>三者关系</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>函数（封装动作）→ 类（封装数据+动作）→ 模块/包（组织代码）
+</code></pre></div>
+<ul>
+<li>函数：把一段代码打包</li>
+<li>类：把数据和操作数据的方法打包</li>
+<li>模块：把相关的类和函数打包成一个文件</li>
+<li>包：把相关的模块打包成一个文件夹</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BF%9B%E9%98%B6/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 关于Agent开发的Python面向对象进阶">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                关于Agent开发的Python面向对象进阶
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Git%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" class="md-footer__link md-footer__link--next" aria-label="下一页: 关于Agent开发的Git基础与分支管理">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                关于Agent开发的Git基础与分支管理
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.footer", "content.code.copy", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
