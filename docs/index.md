@@ -4,6 +4,7 @@
 
 ## 最新文章
 
+- [写Todo命令行项目的收获](posts/写Todo命令行项目的收获.md) —— 2026-04-02
 - [关于Agent开发的Git基础与分支管理](posts/关于Agent开发的Git基础与分支管理.md) —— 2026-03-26
 - [关于Agent开发的Python模块化与工程结构](posts/关于Agent开发的Python模块化与工程结构.md) —— 2026-03-19
 - [关于Agent开发的Python面向对象进阶](posts/关于Agent开发的Python面向对象进阶.md) —— 2026-03-12
