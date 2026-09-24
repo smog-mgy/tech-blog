@@ -35,3 +35,6 @@ nav:
       - 关于Agent开发的Git基础与分支管理: posts/关于Agent开发的Git基础与分支管理.md
       - 写Todo命令行项目的收获: posts/写Todo命令行项目的收获.md
       - PyTorch框架学习笔记: posts/PyTorch框架学习笔记.md
+      - 神经网络基础学习笔记: posts/神经网络基础学习笔记.md
+      - 卷积神经网络学习笔记: posts/卷积神经网络学习笔记.md
+      - 循环神经网络学习笔记: posts/循环神经网络学习笔记.md
