@@ -38,3 +38,8 @@ nav:
       - 神经网络基础学习笔记: posts/神经网络基础学习笔记.md
       - 卷积神经网络学习笔记: posts/卷积神经网络学习笔记.md
       - 循环神经网络学习笔记: posts/循环神经网络学习笔记.md
+      - LLM主要架构学习笔记: posts/LLM主要架构学习笔记.md
+      - LLM主流开源大模型学习笔记: posts/LLM主流开源大模型学习笔记.md
+      - 大模型Prompt-Tuning方法入门学习笔记: posts/大模型Prompt-Tuning方法入门学习笔记.md
+      - 大模型Prompt-Tuning方法进阶学习笔记: posts/大模型Prompt-Tuning方法进阶学习笔记.md
+      - 大模型提示词工程应用学习笔记: posts/大模型提示词工程应用学习笔记.md
