@@ -1,0 +1,1609 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录学习、项目与踩坑的技术博客">
+      
+      
+        <meta name="author" content="smog-mgy">
+      
+      
+      
+        <link rel="prev" href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+      
+      
+        <link rel="next" href="../%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%BA%94%E7%94%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>大模型Prompt-Tuning方法进阶学习笔记 - 我的技术博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#prompt-tuning" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="我的技术博客" class="md-header__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            我的技术博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              大模型Prompt-Tuning方法进阶学习笔记
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="我的技术博客" class="md-nav__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    我的技术博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于我
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技术文章
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    技术文章
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python函数进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python面向对象进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python模块化与工程结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Git%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Git基础与分支管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%86%99Todo%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%94%B6%E8%8E%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    写Todo命令行项目的收获
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PyTorch%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyTorch框架学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    神经网络基础学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    卷积神经网络学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    循环神经网络学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LLM%E4%B8%BB%E8%A6%81%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主要架构学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LLM%E4%B8%BB%E6%B5%81%E5%BC%80%E6%BA%90%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主流开源大模型学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法入门学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法进阶学习笔记
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法进阶学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prompt-tuning_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、超大规模参数模型 Prompt-Tuning 方法（总览）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#in-context-learningicl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、上下文学习（In-Context Learning，ICL）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、上下文学习（In-Context Learning，ICL）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 三种学习方式（必考区分）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 代码示例：三种方式的 prompt 构造
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#instruction-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、指令学习（Instruction-Tuning）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、指令学习（Instruction-Tuning）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 什么是指令
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 电影评论二分类例子
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-instruction-tuning" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 如何实现 Instruction-Tuning？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 指令学习 vs 提示学习（必考区别）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35-vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 代码示例：指令 vs 提示 直观对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chain-of-thoughtcot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、思维链（Chain-of-Thought，CoT）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、思维链（Chain-of-Thought，CoT）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 概念
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 理解：数学题例子
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-cot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 CoT 分类（必考）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44-cot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 CoT 的四个特点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45-few-shot-cot-zero-shot-cot" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 代码示例：Few-shot CoT 与 Zero-shot CoT
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#peft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、PEFT：大模型参数高效微调方法
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、PEFT：大模型参数高效微调方法">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51-peft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 PEFT 介绍
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-peft" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 PEFT 三种方法总览
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-prefix-tuning2021" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 Prefix-Tuning（2021）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54-adapter-tuning2019" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 Adapter-Tuning（2019）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-lora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 LoRA（低秩适应，当前最通用效果最好）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#peft-lora" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、动手实验：用 peft 库一行代码做 LoRA 微调
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ppt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        结尾 · 自测题（PPT 原版思考总结）
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%BA%94%E7%94%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型提示词工程应用学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="prompt-tuning">大模型 Prompt-Tuning 方法进阶学习笔记<a class="headerlink" href="#prompt-tuning" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>主题：超大规模模型的三种 Prompt 方法（ICL / Instruction-Tuning / CoT）+ PEFT 参数高效微调（Prefix / Adapter / LoRA）</p>
+</blockquote>
+<p><strong>前置</strong>：当模型超过 10 亿参数后，<strong>只需要设计合适的模板或指令，就能免参数训练实现零样本学习</strong>。</p>
+<hr />
+<h2 id="prompt-tuning_1">一、超大规模参数模型 Prompt-Tuning 方法（总览）<a class="headerlink" href="#prompt-tuning_1" title="Permanent link">&para;</a></h2>
+<p><strong>为什么大模型上 Prompt-Tuning 比标准 Fine-tuning 增益高？</strong></p>
+<blockquote>
+<p>根本原因：模型参数量足够大 + 训练使用了足够多的语料 + 设计的预训练任务足够有效。</p>
+</blockquote>
+<p>面向超大规模模型的三种方法：</p>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>核心思想</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>上下文学习 In-Context Learning（ICL）</strong></td>
+<td>直接挑选少量样本作为该任务的提示</td>
+</tr>
+<tr>
+<td><strong>指令学习 Instruction-Tuning</strong></td>
+<td>构建任务指令集，促使模型根据任务指令做出反馈</td>
+</tr>
+<tr>
+<td><strong>思维链 Chain-of-Thought（CoT）</strong></td>
+<td>给予或激发模型推理和解释的信息，以线性链式模式指导生成</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="in-context-learningicl">二、上下文学习（In-Context Learning，ICL）<a class="headerlink" href="#in-context-learningicl" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 概念<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<ul>
+<li>最早在 <strong>GPT-3</strong> 中提出</li>
+<li>目的：从训练集<strong>挑选少量标注样本</strong>，设计任务相关指令形成提示模板，指导测试样本生成结果</li>
+<li><strong>不修改模型参数</strong>，把例子直接拼在输入前面</li>
+</ul>
+<h3 id="22">2.2 三种学习方式（必考区分）<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Zero-shot</strong>（零样本）</td>
+<td>只给出任务描述 + 测试数据，直接预测（不给例子）</td>
+</tr>
+<tr>
+<td><strong>One-shot</strong>（单样本）</td>
+<td>任务描述 + <strong>插入 1 个示例</strong> + 测试数据</td>
+</tr>
+<tr>
+<td><strong>Few-shot</strong>（小样本）</td>
+<td>任务描述 + <strong>插入 N 个示例</strong> + 测试数据</td>
+</tr>
+</tbody>
+</table>
+<h3 id="23-prompt">2.3 代码示例：三种方式的 prompt 构造<a class="headerlink" href="#23-prompt" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># 以"情感分类"为例，看三种方式的 prompt 长什么样</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="k">def</span><span class="w"> </span><span class="nf">build_zero_shot</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="k">return</span> <span class="sa">f</span><span class="s2">"判断下面句子的情感是正面还是负面：</span><span class="se">\n</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="se">\n</span><span class="s2">情感："</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">build_one_shot</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="n">demo</span> <span class="o">=</span> <span class="s2">"这家餐厅的菜很好吃。</span><span class="se">\n</span><span class="s2">情感：正面</span><span class="se">\n</span><span class="s2">"</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="k">return</span> <span class="sa">f</span><span class="s2">"判断下面句子的情感是正面还是负面：</span><span class="se">\n</span><span class="si">{</span><span class="n">demo</span><span class="si">}{</span><span class="n">text</span><span class="si">}</span><span class="se">\n</span><span class="s2">情感："</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="k">def</span><span class="w"> </span><span class="nf">build_few_shot</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">2</span><span class="p">):</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    <span class="n">demos</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        <span class="s2">"这部电影太无聊了。</span><span class="se">\n</span><span class="s2">情感：负面"</span><span class="p">,</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>        <span class="s2">"服务态度非常好。</span><span class="se">\n</span><span class="s2">情感：正面"</span><span class="p">,</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>    <span class="p">][:</span><span class="n">n</span><span class="p">]</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    <span class="n">demo_str</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">demos</span><span class="p">)</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>    <span class="k">return</span> <span class="sa">f</span><span class="s2">"判断下面句子的情感是正面还是负面：</span><span class="se">\n</span><span class="si">{</span><span class="n">demo_str</span><span class="si">}{</span><span class="n">text</span><span class="si">}</span><span class="se">\n</span><span class="s2">情感："</span>
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="n">text</span> <span class="o">=</span> <span class="s2">"这家餐厅环境不错但价格太贵了。"</span>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"=== Zero-shot ==="</span><span class="p">)</span>
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a><span class="nb">print</span><span class="p">(</span><span class="n">build_zero_shot</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== One-shot ==="</span><span class="p">)</span>
+<a id="__codelineno-0-21" name="__codelineno-0-21" href="#__codelineno-0-21"></a><span class="nb">print</span><span class="p">(</span><span class="n">build_one_shot</span><span class="p">(</span><span class="n">text</span><span class="p">))</span>
+<a id="__codelineno-0-22" name="__codelineno-0-22" href="#__codelineno-0-22"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== Few-shot(2) ==="</span><span class="p">)</span>
+<a id="__codelineno-0-23" name="__codelineno-0-23" href="#__codelineno-0-23"></a><span class="nb">print</span><span class="p">(</span><span class="n">build_few_shot</span><span class="p">(</span><span class="n">text</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
+<a id="__codelineno-0-24" name="__codelineno-0-24" href="#__codelineno-0-24"></a>
+<a id="__codelineno-0-25" name="__codelineno-0-25" href="#__codelineno-0-25"></a><span class="c1"># 实际调用：把 prompt 发给模型即可，模型权重完全不变</span>
+<a id="__codelineno-0-26" name="__codelineno-0-26" href="#__codelineno-0-26"></a><span class="c1"># response = model.generate(build_few_shot(text))</span>
+</code></pre></div>
+<blockquote>
+<p>记忆：<strong>"给几个例子"决定叫法</strong>——0 个=zero-shot，1 个=one-shot，N 个=few-shot。</p>
+</blockquote>
+<hr />
+<h2 id="instruction-tuning">三、指令学习（Instruction-Tuning）<a class="headerlink" href="#instruction-tuning" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 什么是指令<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<p><strong>Instruction-Tuning 本质上也是对下游任务的指令</strong>——告诉模型"需要做什么任务、输出什么内容"。</p>
+<p><strong>Prompt vs Instruction 对比</strong>（同一句话的两种问法）：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>Prompt（补全式）：带女朋友去了一家餐厅，她吃的很开心，这家餐厅太__了！
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>Instruction（判别式）：判断这句话的情感：带女朋友去了一家餐厅，她吃的很开心。
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>    选项：A=好，B=一般，C=差
+</code></pre></div>
+<blockquote>
+<p><strong>做判别比做生成更容易</strong>——所以 Instruction 用"选项式"提问。</p>
+</blockquote>
+<h3 id="32">3.2 电影评论二分类例子<a class="headerlink" href="#32" title="Permanent link">&para;</a></h3>
+<ul>
+<li>简单模板（Prompt）：<code>. It was [mask].</code></li>
+<li>加上任务特性（Instruction）：<code>The movie review is . It was [mask].</code>——通过 mask 位置输出经 Verbalizer 映射到标签</li>
+</ul>
+<h3 id="33-instruction-tuning">3.3 如何实现 Instruction-Tuning？<a class="headerlink" href="#33-instruction-tuning" title="Permanent link">&para;</a></h3>
+<ul>
+<li>为每个任务<strong>设计 10 个指令模板</strong>，测试时看平均表现</li>
+<li>关键：<strong>必须对模型精调</strong>，让模型知道这种指令模式</li>
+</ul>
+<h3 id="34-vs">3.4 指令学习 vs 提示学习（必考区别）<a class="headerlink" href="#34-vs" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Prompt</th>
+<th>Instruction-Tuning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>激发能力</td>
+<td>激发语言模型的<strong>补全能力</strong>（接下半句、完形填空）</td>
+<td>激发语言模型的<strong>理解能力</strong>（理解指令后做出正确 action）</td>
+</tr>
+<tr>
+<td>是否需要精调</td>
+<td>未精调的模型也有一定效果</td>
+<td><strong>必须精调</strong>，让模型学会指令模式</td>
+</tr>
+</tbody>
+</table>
+<h3 id="35-vs">3.5 代码示例：指令 vs 提示 直观对比<a class="headerlink" href="#35-vs" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># 提示学习：让模型补全</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="n">prompt</span> <span class="o">=</span> <span class="s2">"小明在考试中得了满分，他感到非常____。"</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="c1"># 指令学习：让模型理解并判别</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="n">instruction</span> <span class="o">=</span> <span class="s2">"""请判断以下句子的情感倾向，只回答 A/B/C：</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="s2">句子：小明在考试中得了满分。</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="s2">A=开心  B=难过  C=平静</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="s2">答案："""</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"Prompt 式："</span><span class="p">,</span> <span class="n">prompt</span><span class="p">)</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">Instruction 式："</span><span class="p">)</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="nb">print</span><span class="p">(</span><span class="n">instruction</span><span class="p">)</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="c1"># 真实感受：补全式模型会接着写词，判别式模型会输出选项字母</span>
+</code></pre></div>
+<hr />
+<h2 id="chain-of-thoughtcot">四、思维链（Chain-of-Thought，CoT）<a class="headerlink" href="#chain-of-thoughtcot" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 概念<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<ul>
+<li>首次提出于 Google 论文《Chain-of-Thought Prompting Elicits Reasoning in Large Language Models》</li>
+<li><strong>定义：改进的提示策略，提高 LLM 在复杂推理任务（算术、常识、符号推理）中的性能</strong></li>
+<li>本质：<strong>离散式提示学习</strong>；相比传统上下文学习，<strong>多了中间的推导提示</strong></li>
+</ul>
+<blockquote>
+<p>传统 ICL：<code>x1,y1, x2,y2, ..., xtest → 补全 ytest</code>
+CoT：<code>x1, CoT1, y1, x2, CoT2, y2, ..., xtest → 模型自己生成推导 → ytest</code></p>
+</blockquote>
+<h3 id="42">4.2 理解：数学题例子<a class="headerlink" href="#42" title="Permanent link">&para;</a></h3>
+<p><strong>不给思路（错误）</strong>：直接问"罗杰有 5 个球，又买了 2 盒 3 个装的网球，现在有几个球？"→ 模型答错</p>
+<p><strong>给思维链（正确）</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>罗杰先有 5 个球，2 盒 3 个网球等于 6 个，5 + 6 = 11
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>→ 答案：11
+</code></pre></div></p>
+<p>就像数学考试<strong>写出解题过程才能得分</strong>——模型也需要"先想后答"。</p>
+<h3 id="43-cot">4.3 CoT 分类（必考）<a class="headerlink" href="#43-cot" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>做法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Few-shot CoT</strong></td>
+<td>ICL 特殊情况：把每个演示扩充为 <code>&lt;input, CoT, output&gt;</code>（示例里带上推理步骤）</td>
+</tr>
+<tr>
+<td><strong>Zero-shot CoT</strong></td>
+<td>不举例子，直接用提示激发推理：先用 <strong>"Let's think step by step"</strong> 生成推理步骤，再用 <strong>"Therefore, the answer is"</strong> 得出答案</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>涌现能力</strong>：Zero-shot CoT 在模型规模超过一定阈值时大幅提高性能，但对小模型无效。</p>
+</blockquote>
+<h3 id="44-cot">4.4 CoT 的四个特点<a class="headerlink" href="#44-cot" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>逻辑性</strong>：每个思考步骤应有逻辑关系，相互连接形成完整思考过程</li>
+<li><strong>全面性</strong>：尽可能全面细致考虑问题，不忽略任何可能因素</li>
+<li><strong>可行性</strong>：每个步骤应可实际操作和实施</li>
+<li><strong>可验证性</strong>：每个步骤应可通过实际数据和事实验证正确性</li>
+</ol>
+<h3 id="45-few-shot-cot-zero-shot-cot">4.5 代码示例：Few-shot CoT 与 Zero-shot CoT<a class="headerlink" href="#45-few-shot-cot-zero-shot-cot" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># Few-shot CoT：示例里带上推理过程</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">few_shot_cot</span> <span class="o">=</span> <span class="s2">"""问：食堂原来有23个苹果，用了20个，又买了6个，现在有多少个？</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="s2">答：23 - 20 = 3；3 + 6 = 9，所以答案是 9。</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="s2">问：小明有3支笔，丢了1支，又买了4支，现在有几支？</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="s2">答：3 - 1 = 2；2 + 4 = 6，所以答案是 6。</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="s2">问：一箱牛奶有12瓶，喝了5瓶，又放进3瓶，现在有几瓶？</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="s2">答："""</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="c1"># Zero-shot CoT：用魔法提示词激发推理</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="n">zero_shot_cot</span> <span class="o">=</span> <span class="s2">"""问：一箱牛奶有12瓶，喝了5瓶，又放进3瓶，现在有几瓶？</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="s2">答：让我们一步步思考（Let's think step by step）"""</span>
+<a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>
+<a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"=== Few-shot CoT ==="</span><span class="p">)</span>
+<a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a><span class="nb">print</span><span class="p">(</span><span class="n">few_shot_cot</span><span class="p">)</span>
+<a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a><span class="nb">print</span><span class="p">(</span><span class="s2">"</span><span class="se">\n</span><span class="s2">=== Zero-shot CoT ==="</span><span class="p">)</span>
+<a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="nb">print</span><span class="p">(</span><span class="n">zero_shot_cot</span><span class="p">)</span>
+<a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+<a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="c1"># 提示词核心就两句：</span>
+<a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="c1">#   "Let's think step by step"（先生成推理）</span>
+<a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a><span class="c1">#   "Therefore, the answer is"（再给出答案）</span>
+</code></pre></div>
+<hr />
+<h2 id="peft">五、PEFT：大模型参数高效微调方法<a class="headerlink" href="#peft" title="Permanent link">&para;</a></h2>
+<h3 id="51-peft">5.1 PEFT 介绍<a class="headerlink" href="#51-peft" title="Permanent link">&para;</a></h3>
+<p><strong>PEFT（Parameter-Efficient Fine-Tuning）= 参数高效微调</strong>，目前大模型在工业界应用的主流方式。</p>
+<p><strong>核心思想</strong>：<strong>仅微调少量或额外的模型参数，固定大部分预训练参数</strong>，大大降低计算和存储成本；最先进的 PEFT 技术能实现与全量微调相当的性能。</p>
+<p><strong>优势</strong>：让大模型高效适配各种下游任务，无需微调全部参数；让<strong>大模型在消费级硬件上微调成为可能</strong>。</p>
+<h3 id="52-peft">5.2 PEFT 三种方法总览<a class="headerlink" href="#52-peft" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>思路</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Prefix/Prompt-Tuning</strong></td>
+<td>在输入或隐层添加 k 个额外可训练的<strong>前缀伪 tokens</strong>，只训练这些前缀参数</td>
+</tr>
+<tr>
+<td><strong>Adapter-Tuning</strong></td>
+<td>在预训练模型<strong>每一层内部插入小网络模块（适配器）</strong>，只训练适配器参数</td>
+</tr>
+<tr>
+<td><strong>LoRA</strong></td>
+<td>学习<strong>低秩矩阵</strong>近似模型权重矩阵 W 的参数更新，只优化低秩矩阵参数</td>
+</tr>
+</tbody>
+</table>
+<h3 id="53-prefix-tuning2021">5.3 Prefix-Tuning（2021）<a class="headerlink" href="#53-prefix-tuning2021" title="Permanent link">&para;</a></h3>
+<p>论文《Prefix-Tuning: Optimizing Continuous Prompts for Generation》。</p>
+<ul>
+<li>做法：<strong>在输入 token 之前构造任务相关的 virtual tokens 作为 Prefix</strong>，训练时只更新 Prefix 参数，Transformer 其他参数固定</li>
+<li>输入形式：<code>z = [Prefix, x, y]</code>，Prefix 长度 |Pidx|，对应参数化向量矩阵 Pθ（维度 |Pidx|×dim(hi)）</li>
+<li><strong>坑</strong>：直接更新 Prefix 参数训练不稳定 → 作者在 Prefix 层前加 <strong>MLP 结构</strong>（把 Prefix 分解为小维度 Input 与 MLP 组合的输出），<strong>训练完成后只保留 Prefix 参数</strong></li>
+</ul>
+<h3 id="54-adapter-tuning2019">5.4 Adapter-Tuning（2019）<a class="headerlink" href="#54-adapter-tuning2019" title="Permanent link">&para;</a></h3>
+<p>论文《Parameter-Efficient Transfer Learning for NLP》，<strong>拉开 PEFT 研究序幕</strong>。</p>
+<ul>
+<li>做法：在<strong>预训练模型内部的网络层之间</strong>添加新网络层/模块（adapter），训练时固定原模型参数，只微调 Adapter</li>
+<li><strong>Adapter 内部结构</strong>（三个组件）：</li>
+<li><strong>down-project</strong>：高维特征 → 低维特征（降维）</li>
+<li><strong>非线性层</strong>：激活</li>
+<li><strong>up-project</strong>：低维特征 → 高维特征（升维）</li>
+<li>外加 <strong>skip-connection</strong>（残差结构）：最差情况可退化为 identity</li>
+</ul>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="c1"># Adapter 结构伪代码（理解用）</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="k">class</span><span class="w"> </span><span class="nc">Adapter</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="o">=</span><span class="mi">768</span><span class="p">,</span> <span class="n">bottleneck</span><span class="o">=</span><span class="mi">64</span><span class="p">):</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">down</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">hidden_dim</span><span class="p">,</span> <span class="n">bottleneck</span><span class="p">)</span>   <span class="c1"># 高维 → 低维</span>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">act</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">ReLU</span><span class="p">()</span>
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">up</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">bottleneck</span><span class="p">,</span> <span class="n">hidden_dim</span><span class="p">)</span>     <span class="c1"># 低维 → 高维</span>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>        <span class="c1"># skip-connection：输出 = 原特征 + adapter(原特征)</span>
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="k">return</span> <span class="n">x</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">up</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">act</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">down</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>      <span class="c1"># 残差结构</span>
+</code></pre></div>
+<h3 id="55-lora">5.5 LoRA（低秩适应，当前最通用效果最好）<a class="headerlink" href="#55-lora" title="Permanent link">&para;</a></h3>
+<p><strong>为什么提出 LoRA</strong>（前两个方法的痛点）：
+- Adapter-Tuning：添加适配器层引入<strong>额外计算，带来推理延迟</strong>
+- Prefix-Tuning：<strong>难以优化</strong>，性能随可训练参数规模非单调变化；且<strong>占用序列长度</strong>，减少处理下游任务的序列空间</p>
+<p><strong>LoRA 原理</strong>：
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>冻结预训练模型权重
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>→ 在每个 Transformer 块的 Linear 层旁加"旁支" A 和 B
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>→ A：d 维降到 r 维（r = LoRA 的秩，重要超参数）
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>→ B：r 维升到 d 维，B 初始化为 0
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>→ 训练只更新 A、B
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>→ 训练结束：A+B 的参数与原大模型参数合并使用（不增加推理开销）
+</code></pre></div></p>
+<p><strong>代码</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">torch.nn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">nn</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">input_dim</span> <span class="o">=</span> <span class="mi">768</span>   <span class="c1"># 预训练模型的隐藏大小</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">output_dim</span> <span class="o">=</span> <span class="mi">768</span>  <span class="c1"># 层的输出大小</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">rank</span> <span class="o">=</span> <span class="mi">8</span>          <span class="c1"># 低秩适应的等级 'r'</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a><span class="n">alpha</span> <span class="o">=</span> <span class="mf">1.0</span>       <span class="c1"># 缩放因子</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="n">W</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randn</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">)</span>   <span class="c1"># 预训练权重（冻结）</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="n">W_A</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">input_dim</span><span class="p">,</span> <span class="n">rank</span><span class="p">))</span>   <span class="c1"># LoRA 权重 A</span>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="n">W_B</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Parameter</span><span class="p">(</span><span class="n">torch</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">rank</span><span class="p">,</span> <span class="n">output_dim</span><span class="p">))</span>  <span class="c1"># LoRA 权重 B</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a><span class="c1"># 初始化：A 用 Kaiming，B 全 0（保证初始时旁支输出为 0，等于没加）</span>
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">kaiming_uniform_</span><span class="p">(</span><span class="n">W_A</span><span class="p">,</span> <span class="n">a</span><span class="o">=</span><span class="n">math</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">5</span><span class="p">))</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="n">nn</span><span class="o">.</span><span class="n">init</span><span class="o">.</span><span class="n">zeros_</span><span class="p">(</span><span class="n">W_B</span><span class="p">)</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="k">def</span><span class="w"> </span><span class="nf">regular_forward_matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">):</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>    <span class="n">h</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">W</span>
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>    <span class="k">return</span> <span class="n">h</span>
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a><span class="k">def</span><span class="w"> </span><span class="nf">lora_forward_matmul</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">W</span><span class="p">,</span> <span class="n">W_A</span><span class="p">,</span> <span class="n">W_B</span><span class="p">):</span>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a>    <span class="n">h</span> <span class="o">=</span> <span class="n">x</span> <span class="o">@</span> <span class="n">W</span>                    <span class="c1"># 常规矩阵乘法（原模型路径）</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>    <span class="n">h</span> <span class="o">+=</span> <span class="n">x</span> <span class="o">@</span> <span class="p">(</span><span class="n">W_A</span> <span class="o">@</span> <span class="n">W_B</span><span class="p">)</span> <span class="o">*</span> <span class="n">alpha</span> <span class="c1"># 旁支路径（LoRA 更新量）</span>
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a>    <span class="k">return</span> <span class="n">h</span>
+</code></pre></div>
+<p><strong>记忆点</strong>：
+- A 负责<strong>降维</strong>（d→r），B 负责<strong>升维</strong>（r→d）
+- <strong>B 初始化为 0</strong>：保证刚开始训练时旁支不干扰原模型
+- 训练完<strong>必须合并</strong> <code>W + W_A @ W_B * alpha</code>，推理时零额外开销</p>
+<hr />
+<h2 id="peft-lora">六、动手实验：用 peft 库一行代码做 LoRA 微调<a class="headerlink" href="#peft-lora" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>工业界最常用的是 HuggingFace 的 <code>peft</code> 库，实际微调只需几行配置（需 <code>pip install peft transformers</code>）。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">peft</span><span class="w"> </span><span class="kn">import</span> <span class="n">LoraConfig</span><span class="p">,</span> <span class="n">get_peft_model</span><span class="p">,</span> <span class="n">TaskType</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">transformers</span><span class="w"> </span><span class="kn">import</span> <span class="n">AutoModelForCausalLM</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="n">model</span> <span class="o">=</span> <span class="n">AutoModelForCausalLM</span><span class="o">.</span><span class="n">from_pretrained</span><span class="p">(</span><span class="s2">"Qwen/Qwen2.5-7B-Instruct"</span><span class="p">)</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a><span class="c1"># LoRA 配置：r=8 就是上面说的"秩"</span>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="n">lora_config</span> <span class="o">=</span> <span class="n">LoraConfig</span><span class="p">(</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>    <span class="n">task_type</span><span class="o">=</span><span class="n">TaskType</span><span class="o">.</span><span class="n">CAUSAL_LM</span><span class="p">,</span>   <span class="c1"># 任务类型：因果语言模型</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>    <span class="n">r</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>                             <span class="c1"># 秩（核心超参数，越小省得越多，但别太小）</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>    <span class="n">lora_alpha</span><span class="o">=</span><span class="mi">32</span><span class="p">,</span>                   <span class="c1"># 缩放因子（对应伪代码里的 alpha）</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>    <span class="n">lora_dropout</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>                <span class="c1"># 丢弃率</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>    <span class="n">target_modules</span><span class="o">=</span><span class="p">[</span><span class="s2">"q_proj"</span><span class="p">,</span> <span class="s2">"k_proj"</span><span class="p">,</span> <span class="s2">"v_proj"</span><span class="p">,</span> <span class="s2">"o_proj"</span><span class="p">],</span>  <span class="c1"># 给哪些 Linear 加旁支</span>
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="p">)</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a>
+<a id="__codelineno-8-15" name="__codelineno-8-15" href="#__codelineno-8-15"></a><span class="c1"># 一行代码把模型变成"LoRA 版"：只训练旁支参数，原参数冻结</span>
+<a id="__codelineno-8-16" name="__codelineno-8-16" href="#__codelineno-8-16"></a><span class="n">lora_model</span> <span class="o">=</span> <span class="n">get_peft_model</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">lora_config</span><span class="p">)</span>
+<a id="__codelineno-8-17" name="__codelineno-8-17" href="#__codelineno-8-17"></a>
+<a id="__codelineno-8-18" name="__codelineno-8-18" href="#__codelineno-8-18"></a><span class="c1"># 看看到底训练了多少参数（通常 &lt;1%）</span>
+<a id="__codelineno-8-19" name="__codelineno-8-19" href="#__codelineno-8-19"></a><span class="n">lora_model</span><span class="o">.</span><span class="n">print_trainable_parameters</span><span class="p">()</span>
+<a id="__codelineno-8-20" name="__codelineno-8-20" href="#__codelineno-8-20"></a><span class="c1"># 输出示例: trainable params: 8,388,608 || all params: 7,000,000,000 || trainable%: 0.12</span>
+</code></pre></div>
+<blockquote>
+<p><strong>感受一下</strong>：7B 模型全参微调要几百 GB 显存，LoRA 只训练 0.1% 的参数，一张消费级显卡就能跑——这就是 PEFT 的意义。</p>
+</blockquote>
+<hr />
+<h2 id="ppt">结尾 · 自测题（PPT 原版思考总结）<a class="headerlink" href="#ppt" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>答案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>什么是指令学习？</td>
+<td>通过给出更明显的指令/指示，让模型理解并做出正确的 action</td>
+</tr>
+<tr>
+<td>指令学习和 Prompt 的区别？</td>
+<td>指令学习激发理解能力（判别式）；Prompt 激发补全能力（生成式）；指令学习必须精调</td>
+</tr>
+<tr>
+<td>什么是思维链方法？</td>
+<td>相比传统上下文学习（x1,y1,x2,y2...→ytest），多了中间的推导提示</td>
+</tr>
+<tr>
+<td>思维链的分类？</td>
+<td>Few-shot CoT 和 Zero-shot CoT</td>
+</tr>
+<tr>
+<td>什么是 Prefix-Tuning？</td>
+<td>输入 token 前构造任务相关的 virtual tokens 作为 Prefix，只更新 Prefix 参数</td>
+</tr>
+<tr>
+<td>Prefix-Tuning 和 P-Tuning 区别？</td>
+<td>①Prefix 加在开头，P-Tuning 位置不固定；②Prefix 每层添加、MLP 初始化，P-Tuning 只在输入加 embedding、LSTM+MLP 初始化</td>
+</tr>
+<tr>
+<td>Prefix-Tuning 和 Prompt-Tuning 区别？</td>
+<td>Prompt Tuning 是 Prefix Tuning 的简化，只在输入层加 prompt tokens，不需 MLP</td>
+</tr>
+<tr>
+<td>什么是 Adapter-Tuning？</td>
+<td>在预训练模型内部的网络层之间添加新网络层/模块适配下游任务</td>
+</tr>
+<tr>
+<td>什么是 LoRA？</td>
+<td>对大型模型权重矩阵进行隐式低秩转换的参数高效微调方法</td>
+</tr>
+<tr>
+<td>LoRA 原理？</td>
+<td>冻结预训练权重，注入秩分解矩阵 A/B 旁支；A 降维、B 升维且初始为 0；训练后合并</td>
+</tr>
+</tbody>
+</table>
+<p><strong>一张图记住进阶篇脉络</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>超大规模模型 Prompt 方法
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>├── In-Context Learning（零样本/单样本/小样本，不改模型）
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>├── Instruction-Tuning（指令判别式，需精调）
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>└── Chain-of-Thought（Few-shot CoT / Zero-shot CoT "Let's think step by step"）
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>PEFT 参数高效微调（只训少量参数）
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>├── Prefix-Tuning（输入前加可训练前缀 + MLP 初始化）
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>├── Adapter-Tuning（每层内插小模块：down→激活→up + 残差）
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>└── LoRA（Linear 旁支 A/B：降维+升维，B 初始 0，训练后合并）★ 最常用
+</code></pre></div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 大模型Prompt-Tuning方法入门学习笔记">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                大模型Prompt-Tuning方法入门学习笔记
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%BA%94%E7%94%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-footer__link md-footer__link--next" aria-label="下一页: 大模型提示词工程应用学习笔记">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                大模型提示词工程应用学习笔记
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.footer", "content.code.copy", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

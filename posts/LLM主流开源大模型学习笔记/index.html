@@ -1,0 +1,1980 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录学习、项目与踩坑的技术博客">
+      
+      
+        <meta name="author" content="smog-mgy">
+      
+      
+      
+        <link rel="prev" href="../LLM%E4%B8%BB%E8%A6%81%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+      
+      
+        <link rel="next" href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>LLM主流开源大模型学习笔记 - 我的技术博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#llm" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="我的技术博客" class="md-header__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            我的技术博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              LLM主流开源大模型学习笔记
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="我的技术博客" class="md-nav__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    我的技术博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于我
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技术文章
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    技术文章
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python函数进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python面向对象进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python模块化与工程结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Git%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Git基础与分支管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%86%99Todo%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%94%B6%E8%8E%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    写Todo命令行项目的收获
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PyTorch%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyTorch框架学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    神经网络基础学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    卷积神经网络学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    循环神经网络学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LLM%E4%B8%BB%E8%A6%81%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主要架构学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主流开源大模型学习笔记
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主流开源大模型学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#llm_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、LLM 主流大模型类别（总览）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chatglm-6b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、ChatGLM-6B（中文支持最好的早期开源模型）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、ChatGLM-6B（中文支持最好的早期开源模型）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 简介
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22-glm" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 训练目标（GLM 核心思想）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.3 模型结构（核心改动点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.4 模型配置与硬件要求
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.5 优缺点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.6 衍生应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.7 迭代版本（了解）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#llamameta" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、LLaMA（Meta 的开源基础模型，衍生模型之王）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、LLaMA（Meta 的开源基础模型，衍生模型之王）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.1 简介与训练目标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#32-decoder-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.2 模型结构（Decoder-only）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#33-7b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.3 模型配置（7B）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.4 优缺点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.5 衍生应用（重点记）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#36" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3.6 迭代版本（了解）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#bloomhugging-face" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、BLOOM（Hugging Face 的多语言模型）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、BLOOM（Hugging Face 的多语言模型）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 简介与训练目标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-decoder-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 模型结构（Decoder-only）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#43-176b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.3 模型配置（176B）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#44" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.4 优缺点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#45" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.5 衍生应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#baichuan-7b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、Baichuan-7B（百川智能的开源可商用模型）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、Baichuan-7B（百川智能的开源可商用模型）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 简介与训练目标
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52-llama-decoder-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 模型结构（和 LLaMA 一样的 Decoder-only）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#53-7b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.3 模型配置（7B）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#54" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.4 模型特点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#55-baichuan-13b" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.5 迭代版本：Baichuan-13B
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#qwen" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、Qwen（阿里的通义千问系列）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、Qwen（阿里的通义千问系列）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#61" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.1 简介
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#62-decoder-only" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.2 模型结构（Decoder-only）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#63-qwen25-7b-instruct" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.3 模型配置（Qwen2.5-7B-Instruct）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6.4 模型特点
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        结尾 · 五个模型一张表速记
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法入门学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法进阶学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%BA%94%E7%94%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型提示词工程应用学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="llm">LLM 主流开源大模型学习笔记<a class="headerlink" href="#llm" title="Permanent link">&para;</a></h1>
+<p><strong>前置</strong>：这篇里所有模型的"模型结构"部分，都是在拿 Decoder-only / Prefix-Decoder 架构做对比。看完你就能回答面试常问的"这几个开源模型各有什么特点？"</p>
+<hr />
+<h2 id="llm_1">一、LLM 主流大模型类别（总览）<a class="headerlink" href="#llm_1" title="Permanent link">&para;</a></h2>
+<p>ChatGPT 火爆后引发大模型时代变革，国内外近百款大模型发布。开源语言大模型主要有四大家族 + Qwen：</p>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>开发方</th>
+<th>衍生模型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>ChatGLM</strong></td>
+<td>清华大学</td>
+<td>wenda、ChatSQL 等</td>
+</tr>
+<tr>
+<td><strong>LLaMA</strong></td>
+<td>Meta AI</td>
+<td>Alpaca、Vicuna、BELLE、Phoenix、Chimera 等</td>
+</tr>
+<tr>
+<td><strong>BLOOM</strong></td>
+<td>Hugging Face</td>
+<td>Bloomz、BELLE、Phoenix 等</td>
+</tr>
+<tr>
+<td><strong>Baichuan</strong></td>
+<td>百川智能</td>
+<td>Baichuan-7B、13B、Baichuan2-13B 等</td>
+</tr>
+<tr>
+<td><strong>Qwen（通义千问）</strong></td>
+<td>阿里巴巴</td>
+<td>Qwen、Qwen1.5、Qwen2、Qwen2.5 系列</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="chatglm-6b">二、ChatGLM-6B（中文支持最好的早期开源模型）<a class="headerlink" href="#chatglm-6b" title="Permanent link">&para;</a></h2>
+<h3 id="21">2.1 简介<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<ul>
+<li>清华大学提出，开源、支持中英双语的对话模型</li>
+<li>基于 <strong>GLM（General Language Model）架构</strong>，<strong>62 亿参数</strong></li>
+<li>使用与 ChatGPT 相似的技术：约 <strong>1T 标识符</strong>中英双语训练（比例 1:1）+ 监督微调 + 反馈自助 + RLHF</li>
+<li>优点：当时<strong>中文支持最好</strong></li>
+</ul>
+<h3 id="22-glm">2.2 训练目标（GLM 核心思想）<a class="headerlink" href="#22-glm" title="Permanent link">&para;</a></h3>
+<p><strong>GLM = 基于自回归空白填充目标的通用预训练框架。</strong></p>
+<p>原理：
+1. 在输入文本中<strong>随机挖去一些连续的文本片段</strong>（用 [M] 替换）
+2. 打乱片段顺序（捕捉跨度间内在联系）
+3. 训练模型<strong>按任意顺序自回归重建这些片段</strong></p>
+<blockquote>
+<p>通俗理解：把文章挖掉几段话，让模型像做完形填空一样把被挖掉的段落"重新写出来"——既是填空（双向），又是生成（自回归）。</p>
+</blockquote>
+<p><strong>关键符号</strong>：<code>[M]</code>=MASK，<code>[S]</code>=START，<code>[E]</code>=END；Part A 的词互相可见、看不到 Part B；Part B 的词可以看到 Part A 和 Part B 前面的词。</p>
+<h3 id="23">2.3 模型结构（核心改动点）<a class="headerlink" href="#23" title="Permanent link">&para;</a></h3>
+<p>采用 Transformer 的 <strong>Decoder 模块</strong>，但属于 <strong>Prefix-Decoder</strong>（某些位置可看到双向，因此得名"类 decoder"）。相比原始 Decoder 的改动：</p>
+<table>
+<thead>
+<tr>
+<th>改动点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Embedding 层梯度缩减</td>
+<td>梯度缩小 10 倍，提升训练稳定性</td>
+</tr>
+<tr>
+<td>Layer Normalization</td>
+<td>采用基于 <strong>Deep Norm</strong> 的 post layer norm</td>
+</tr>
+<tr>
+<td>激活函数</td>
+<td>ReLU → <strong>GeGLU</strong></td>
+</tr>
+<tr>
+<td>位置编码</td>
+<td>去掉绝对位置编码 → <strong>RoPE 旋转位置编码</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="24">2.4 模型配置与硬件要求<a class="headerlink" href="#24" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数</td>
+<td>6.2B</td>
+</tr>
+<tr>
+<td>隐藏层维度</td>
+<td>4096</td>
+</tr>
+<tr>
+<td>层数</td>
+<td>28</td>
+</tr>
+<tr>
+<td>注意力头数</td>
+<td>32</td>
+</tr>
+<tr>
+<td>训练数据</td>
+<td>1T</td>
+</tr>
+<tr>
+<td>词表大小</td>
+<td>130528</td>
+</tr>
+<tr>
+<td>最大长度</td>
+<td>2048</td>
+</tr>
+</tbody>
+</table>
+<p><strong>硬件要求（推理/微调最低显存）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>量化等级</th>
+<th>推理</th>
+<th>高效参数微调</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FP16（无量化）</td>
+<td>13GB</td>
+<td>14GB</td>
+</tr>
+<tr>
+<td>INT8</td>
+<td>10GB</td>
+<td>9GB</td>
+</tr>
+<tr>
+<td>INT4</td>
+<td><strong>6GB</strong></td>
+<td>7GB</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>记忆点：<strong>INT4 量化只需 6GB 显存 → 可以部署在消费级显卡上</strong>（这就是它当年火的原因——普通人有显卡就能跑）。</p>
+</blockquote>
+<h3 id="25">2.5 优缺点<a class="headerlink" href="#25" title="Permanent link">&para;</a></h3>
+<p><strong>优点</strong>：
+- 部署门槛低（INT4 只要 6GB 显存）
+- 人类意图对齐训练
+- ChatGLM2-6B 升级后支持 32K 长序列（第一代 2K）</p>
+<p><strong>缺点</strong>：
+- 模型容量小，记忆和语言能力相对较弱
+- 多轮对话能力较弱</p>
+<h3 id="26">2.6 衍生应用<a class="headerlink" href="#26" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>langchain-ChatGLM</strong>：基于 langchain 的可扩展知识库问答</li>
+<li><strong>闻达</strong>：大型语言模型调用平台，实现类 ChatPDF 功能</li>
+</ul>
+<h3 id="27">2.7 迭代版本（了解）<a class="headerlink" href="#27" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>ChatGLM2-6B</strong>：性能大幅提升（数学任务 +571%）、FlashAttention 支持 32K 上下文、Multi-Query Attention 推理提速 42%</li>
+<li><strong>ChatGLM3-6B</strong>：多模态理解 SOTA、代码增强模块、网络搜索增强</li>
+</ul>
+<hr />
+<h2 id="llamameta">三、LLaMA（Meta 的开源基础模型，衍生模型之王）<a class="headerlink" href="#llamameta" title="Permanent link">&para;</a></h2>
+<h3 id="31">3.1 简介与训练目标<a class="headerlink" href="#31" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Meta AI 于 2023 年发布，开放且高效的大型基础语言模型</li>
+<li>版本：<strong>7B、13B、33B、65B（650 亿）</strong>四种</li>
+<li>训练数据：以英语为主的拉丁语系 + GitHub 代码数据，<strong>不包含中韩日文</strong></li>
+<li>65B/33B 在 1.4T token 上训练；7B/13B 在 1T token 上训练</li>
+<li><strong>训练目标：语言模型——根据已有的上文预测下一个词</strong>（Causal LM）</li>
+</ul>
+<p><strong>Tokenizer 特点</strong>：BPE 分词，词表只有 <strong>32000</strong>；中文 token 只有几百个 → <strong>对中文编码效率低</strong></p>
+<h3 id="32-decoder-only">3.2 模型结构（Decoder-only）<a class="headerlink" href="#32-decoder-only" title="Permanent link">&para;</a></h3>
+<p>和 GPT 系列一样是 <strong>Decoder-only</strong>，改动点：</p>
+<table>
+<thead>
+<tr>
+<th>改动点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Normalization</td>
+<td><strong>Pre Layer Norm + RMSNorm</strong>（去掉减去均值的部分）</td>
+</tr>
+<tr>
+<td>激活函数</td>
+<td>ReLU → <strong>SwiGLU</strong></td>
+</tr>
+<tr>
+<td>位置编码</td>
+<td>绝对位置编码 → <strong>RoPE</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="33-7b">3.3 模型配置（7B）<a class="headerlink" href="#33-7b" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数</td>
+<td>6.7B</td>
+</tr>
+<tr>
+<td>隐藏层维度</td>
+<td>4096</td>
+</tr>
+<tr>
+<td>层数</td>
+<td>32</td>
+</tr>
+<tr>
+<td>注意力头数</td>
+<td>32</td>
+</tr>
+<tr>
+<td>训练数据</td>
+<td>1T</td>
+</tr>
+<tr>
+<td>词表大小</td>
+<td>32000</td>
+</tr>
+<tr>
+<td>最大长度</td>
+<td>2048</td>
+</tr>
+</tbody>
+</table>
+<p><strong>训练成本感受一下</strong>：65B 模型在 2048 个 80G A100 GPU 上，380 tokens/sec/GPU，训练 1.4T tokens 需要 <strong>21 天</strong>。</p>
+<h3 id="34">3.4 优缺点<a class="headerlink" href="#34" title="Permanent link">&para;</a></h3>
+<p><strong>优点</strong>：
+- <strong>13B 的 LLaMA 在大多数基准上胜过 GPT-3（1750 亿参数）</strong>——小模型大能量
+- 可以在单块 V100 GPU 上运行
+- 65B 媲美 Chinchilla-70B、PaLM-540B</p>
+<p><strong>缺点</strong>：
+- 会产生偏见性、有毒或虚假内容
+- <strong>中文效果差</strong>（语料不含中文，一个汉字可能切成多个 token，编码效率低）</p>
+<h3 id="35">3.5 衍生应用（重点记）<a class="headerlink" href="#35" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>衍生模型</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Alpaca</strong></td>
+<td>斯坦福，52k 英文指令数据微调 7B LLaMA</td>
+</tr>
+<tr>
+<td><strong>Vicuna</strong></td>
+<td>UC Berkeley，ShareGPT 用户共享对话微调 13B</td>
+</tr>
+<tr>
+<td><strong>BELLE</strong></td>
+<td>仅用 ChatGPT 生成的数据对 LLaMA 指令微调，针对中文优化</td>
+</tr>
+<tr>
+<td><strong>Chinese LLaMA</strong></td>
+<td><strong>扩充中文词表</strong>：用中文语料训练 20000 词的 SentencePiece tokenizer，与原 tokenizer 合并 → 词表 49953</td>
+</tr>
+</tbody>
+</table>
+<h3 id="36">3.6 迭代版本（了解）<a class="headerlink" href="#36" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>LLaMA 2</strong>：训练语料多 40%、上下文 2048→4096、注重安全隐私、出 chat 版本（SFT + RLHF）</li>
+<li><strong>LLaMA 3</strong>：词表扩到 <strong>128k</strong>、用 <strong>GQA</strong> 分组查询注意力提速、预训练数据超 <strong>15T token</strong>（比 Llama 2 大 7 倍）</li>
+</ul>
+<hr />
+<h2 id="bloomhugging-face">四、BLOOM（Hugging Face 的多语言模型）<a class="headerlink" href="#bloomhugging-face" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 简介与训练目标<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Hugging Face 训练的大语言模型</li>
+<li>训练数据：<strong>46 种语言</strong> + 13 种编程语言，1.5TB 去重清洗文本，<strong>中文占 16.2%</strong></li>
+<li>参数规模：560M、1.1B、1.7B、3B、7.1B、<strong>176B</strong></li>
+<li><strong>训练目标：语言模型，根据上文预测下一个词</strong></li>
+</ul>
+<p><strong>Tokenizer</strong>：多语种语料上训练 BPE，词表大小 <strong>250880</strong></p>
+<h3 id="42-decoder-only">4.2 模型结构（Decoder-only）<a class="headerlink" href="#42-decoder-only" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>改动点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>激活函数</td>
+<td><strong>GeLU</strong></td>
+</tr>
+<tr>
+<td>Embedding Layer Norm</td>
+<td>embedding 层后加 layer norm，训练更稳定</td>
+</tr>
+<tr>
+<td>Normalization</td>
+<td><strong>Pre Layer Norm</strong></td>
+</tr>
+<tr>
+<td>位置编码</td>
+<td>绝对位置编码 → <strong>ALiBi 相对位置编码</strong>（外推性更好）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="43-176b">4.3 模型配置（176B）<a class="headerlink" href="#43-176b" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数</td>
+<td>176B</td>
+</tr>
+<tr>
+<td>隐藏层维度</td>
+<td>14336</td>
+</tr>
+<tr>
+<td>层数</td>
+<td>70</td>
+</tr>
+<tr>
+<td>注意力头数</td>
+<td>112</td>
+</tr>
+<tr>
+<td>训练数据</td>
+<td>366B</td>
+</tr>
+<tr>
+<td>词表大小</td>
+<td>250880</td>
+</tr>
+<tr>
+<td>最大长度</td>
+<td>2048</td>
+</tr>
+</tbody>
+</table>
+<p><strong>训练成本</strong>：384 张 A100 80GB GPU，训练约 3.5 个月（约 100 万计算时），算力成本超过 <strong>300 万欧元</strong>。</p>
+<h3 id="44">4.4 优缺点<a class="headerlink" href="#44" title="Permanent link">&para;</a></h3>
+<p><strong>优点</strong>：良好的多语言适应性，多语言间切换无需重新训练
+<strong>缺点</strong>：会产生偏见性、有毒或虚假内容</p>
+<h3 id="45">4.5 衍生应用<a class="headerlink" href="#45" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>轩辕</strong>：金融领域大模型，度小满基于 BLOOM-176B 对中文通用+金融领域预训练与微调</li>
+<li><strong>BELLE</strong>：用 ChatGPT 生成的数据对 BLOOMZ-7B1-mt 指令微调</li>
+</ul>
+<hr />
+<h2 id="baichuan-7b">五、Baichuan-7B（百川智能的开源可商用模型）<a class="headerlink" href="#baichuan-7b" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 简介与训练目标<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<ul>
+<li>百川智能 2023 年 6 月发布，开放且<strong>可商用</strong>的预训练模型</li>
+<li>支持中英双语，约 <strong>1.2T token</strong> 训练的 70 亿参数模型</li>
+<li><strong>训练目标：语言模型，根据上文预测下一个词</strong></li>
+<li>Tokenizer：BPE，词表 <strong>64000</strong></li>
+<li>数据：开源中英文数据 + 自行抓取的中文互联网数据 + 高质量知识性数据</li>
+</ul>
+<h3 id="52-llama-decoder-only">5.2 模型结构（和 LLaMA 一样的 Decoder-only）<a class="headerlink" href="#52-llama-decoder-only" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>改动点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Pre-normalization</td>
+<td>Pre Layer Norm + <strong>RMSNorm</strong>（简化 Layer Norm，<strong>减少约 7%~64% 计算时间</strong>）</td>
+</tr>
+<tr>
+<td>激活函数</td>
+<td><strong>SwiGLU</strong></td>
+</tr>
+<tr>
+<td>位置编码</td>
+<td><strong>RoPE</strong></td>
+</tr>
+</tbody>
+</table>
+<h3 id="53-7b">5.3 模型配置（7B）<a class="headerlink" href="#53-7b" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数</td>
+<td>7B</td>
+</tr>
+<tr>
+<td>隐藏层维度</td>
+<td>4096</td>
+</tr>
+<tr>
+<td>层数</td>
+<td>32</td>
+</tr>
+<tr>
+<td>注意力头数</td>
+<td>32</td>
+</tr>
+<tr>
+<td>训练数据</td>
+<td>1.2T</td>
+</tr>
+<tr>
+<td>词表大小</td>
+<td>64000</td>
+</tr>
+<tr>
+<td>最大长度</td>
+<td>4096</td>
+</tr>
+</tbody>
+</table>
+<h3 id="54">5.4 模型特点<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<ul>
+<li>通用性强：NLP、机器翻译、问答系统、智能客服、金融、医疗、教育等应用前景大</li>
+<li>在中文 C-EVAL 和英文 MMLU 权威 benchmark 上<strong>同参数规模最好效果</strong></li>
+</ul>
+<h3 id="55-baichuan-13b">5.5 迭代版本：Baichuan-13B<a class="headerlink" href="#55-baichuan-13b" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>更大</strong>：130 亿参数，训练 1.4T tokens，ALiBi 位置编码，上下文 4096</li>
+<li><strong>更高效</strong>：开源 int8/int4 量化版，可部署在 <strong>Nvidia 3090 消费级显卡</strong></li>
+<li><strong>免费可商用</strong>：学术开放，邮件申请即可免费商用</li>
+</ol>
+<hr />
+<h2 id="qwen">六、Qwen（阿里的通义千问系列）<a class="headerlink" href="#qwen" title="Permanent link">&para;</a></h2>
+<h3 id="61">6.1 简介<a class="headerlink" href="#61" title="Permanent link">&para;</a></h3>
+<ul>
+<li>阿里巴巴训练并开源的一系列大模型</li>
+<li>2023 年 8 月开源 7B，随后陆续开源 4 个规模版本（<strong>最低 1.8B，最高 720B</strong>）</li>
+<li>系列：Qwen、Qwen1.5、Qwen2、<strong>Qwen2.5（热门）</strong></li>
+</ul>
+<h3 id="62-decoder-only">6.2 模型结构（Decoder-only）<a class="headerlink" href="#62-decoder-only" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>改动点</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GQA 分组查询注意力</strong></td>
+<td>减少 KV 缓存使用，提升推理效率</td>
+</tr>
+<tr>
+<td>激活函数</td>
+<td><strong>SwiGLU</strong></td>
+</tr>
+<tr>
+<td>位置编码</td>
+<td><strong>RoPE</strong>（提升长序列处理能力）</td>
+</tr>
+<tr>
+<td>Layer Norm</td>
+<td><strong>RMSNorm</strong>（训练稳定）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="63-qwen25-7b-instruct">6.3 模型配置（Qwen2.5-7B-Instruct）<a class="headerlink" href="#63-qwen25-7b-instruct" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>配置项</th>
+<th>数值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数</td>
+<td>7B</td>
+</tr>
+<tr>
+<td>隐藏层维度</td>
+<td>3584</td>
+</tr>
+<tr>
+<td>层数</td>
+<td>28</td>
+</tr>
+<tr>
+<td>注意力头</td>
+<td>28 个 query、4 个 key-value</td>
+</tr>
+<tr>
+<td>训练数据</td>
+<td>1.2T</td>
+</tr>
+<tr>
+<td>词表大小</td>
+<td>151936</td>
+</tr>
+<tr>
+<td>最大长度</td>
+<td>32768（32K）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="64">6.4 模型特点<a class="headerlink" href="#64" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Qwen2.5 预训练用了高达 <strong>18 万亿 token</strong>（Qwen2 是 7 万亿）</li>
+<li>后训练引入复杂监督微调 + 多阶段强化学习</li>
+<li>长文本生成、结构化数据分析、指令遵循能力显著提升</li>
+</ul>
+<hr />
+<h2 id="_1">结尾 · 五个模型一张表速记<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>ChatGLM-6B</th>
+<th>LLaMA</th>
+<th>BLOOM</th>
+<th>Baichuan-7B</th>
+<th>Qwen</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开发方</td>
+<td>清华</td>
+<td>Meta</td>
+<td>Hugging Face</td>
+<td>百川智能</td>
+<td>阿里</td>
+</tr>
+<tr>
+<td>架构</td>
+<td><strong>Prefix-Decoder</strong></td>
+<td>Decoder-only</td>
+<td>Decoder-only</td>
+<td>Decoder-only</td>
+<td>Decoder-only</td>
+</tr>
+<tr>
+<td>训练目标</td>
+<td>自回归<strong>空白填充</strong></td>
+<td>预测下一个词</td>
+<td>预测下一个词</td>
+<td>预测下一个词</td>
+<td>预测下一个词</td>
+</tr>
+<tr>
+<td>激活函数</td>
+<td><strong>GeGLU</strong></td>
+<td><strong>SwiGLU</strong></td>
+<td><strong>GeLU</strong></td>
+<td><strong>SwiGLU</strong></td>
+<td><strong>SwiGLU</strong></td>
+</tr>
+<tr>
+<td>Norm</td>
+<td>Deep Norm</td>
+<td>RMSNorm</td>
+<td>LN(pre+embed)</td>
+<td>RMSNorm</td>
+<td>RMSNorm</td>
+</tr>
+<tr>
+<td>位置编码</td>
+<td>RoPE</td>
+<td>RoPE</td>
+<td><strong>ALiBi</strong></td>
+<td>RoPE</td>
+<td>RoPE</td>
+</tr>
+<tr>
+<td>词表大小</td>
+<td>130528</td>
+<td>32000</td>
+<td>250880</td>
+<td>64000</td>
+<td>151936</td>
+</tr>
+<tr>
+<td>中文支持</td>
+<td><strong>最好</strong></td>
+<td>差</td>
+<td>较好(16.2%)</td>
+<td>好</td>
+<td>好</td>
+</tr>
+<tr>
+<td>特色</td>
+<td>INT4 6GB 可部署</td>
+<td>衍生模型之王</td>
+<td>46 语言</td>
+<td>可商用、量化</td>
+<td>长序列 32K</td>
+</tr>
+</tbody>
+</table>
+<p><strong>自测题（思考总结）</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>答案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ChatGLM-6B 的模型架构？</td>
+<td>Prefix-Decoder-Only（基于 GLM 自回归空白填充）</td>
+</tr>
+<tr>
+<td>ChatGLM-6B 的训练目标？</td>
+<td>随机挖去连续文本片段，训练模型按任意顺序重建</td>
+</tr>
+<tr>
+<td>ChatGLM-6B 的改动点？</td>
+<td>Embedding 梯度缩减、Deep Norm、GeGLU、RoPE</td>
+</tr>
+<tr>
+<td>LLaMA 的模型架构？</td>
+<td>Decoder-only（同 GPT 系列）</td>
+</tr>
+<tr>
+<td>LLaMA 的训练目标？</td>
+<td>根据已有上文预测下一个词</td>
+</tr>
+<tr>
+<td>LLaMA 的改动点？</td>
+<td>RMSNorm（Pre LN）、SwiGLU、RoPE</td>
+</tr>
+<tr>
+<td>BLOOM 的模型架构？</td>
+<td>Decoder-only</td>
+</tr>
+<tr>
+<td>BLOOM 的改动点？</td>
+<td>Embedding LN、Pre LN、GeLU、ALiBi</td>
+</tr>
+<tr>
+<td>Baichuan-7B 的模型架构？</td>
+<td>和 LLaMA 一致，Decoder-only</td>
+</tr>
+<tr>
+<td>Baichuan-7B 的改动点？</td>
+<td>Pre LN、SwiGLU、RoPE</td>
+</tr>
+<tr>
+<td>Qwen-2.5 的模型架构？</td>
+<td>基于 Transformer 的 Decoder-only（Causal Model）</td>
+</tr>
+<tr>
+<td>Qwen-2.5 的改动点？</td>
+<td>GQA、RMSNorm、SwiGLU、RoPE</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p><strong>发现规律了吗开源模型的结构改动几乎都是"三件套"——</strong>激活函数换 SwiGLU/GeGLU、Norm 换 RMSNorm/Pre-LN、位置编码换 RoPE**。</p>
+</blockquote>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../LLM%E4%B8%BB%E8%A6%81%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-footer__link md-footer__link--prev" aria-label="上一页: LLM主要架构学习笔记">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                LLM主要架构学习笔记
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-footer__link md-footer__link--next" aria-label="下一页: 大模型Prompt-Tuning方法入门学习笔记">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                大模型Prompt-Tuning方法入门学习笔记
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.footer", "content.code.copy", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1399 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录学习、项目与踩坑的技术博客">
+      
+      
+        <meta name="author" content="smog-mgy">
+      
+      
+      
+        <link rel="prev" href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>大模型提示词工程应用学习笔记 - 我的技术博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#_1" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="我的技术博客" class="md-header__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            我的技术博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              大模型提示词工程应用学习笔记
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="我的技术博客" class="md-nav__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    我的技术博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于我
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技术文章
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    技术文章
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python函数进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python面向对象进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python模块化与工程结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Git%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Git基础与分支管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%86%99Todo%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%94%B6%E8%8E%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    写Todo命令行项目的收获
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PyTorch%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyTorch框架学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    神经网络基础学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    卷积神经网络学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    循环神经网络学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LLM%E4%B8%BB%E8%A6%81%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主要架构学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LLM%E4%B8%BB%E6%B5%81%E5%BC%80%E6%BA%90%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主流开源大模型学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法入门学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法进阶学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型提示词工程应用学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="_1">大模型提示词工程应用学习笔记<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p>主题：提示工程的核心方法与实操 —— 从"提示工程指南"到"金融行业三大实战任务"</p>
+</blockquote>
+<p><strong>前置</strong>：这篇是 Prompt 系列的应用实战篇。第一部分讲提示工程的通用方法论（指南），第二部分用<strong>金融领域三个真实任务</strong>（分类/抽取/匹配）把方法论落地——重点掌握 <strong>Prompt 的书写方式</strong>。</p>
+<hr />
+<h1 id="_2">第一部分：大模型提示工程指南<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h1>
+<h2 id="_3">一、什么是提示工程<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<p><strong>提示工程（Prompt Engineering）= 通过精心设计的提示技术来引导 LLM 行为，而无需更改模型权重。</strong></p>
+<ul>
+<li>目标：使模型输出与给定任务的人类意图一致</li>
+<li>帮助用户控制语言模型输出，生成适合特定需求的内容</li>
+<li><strong>注意</strong>：提示调整对确切措辞和设计很敏感 → 需要精心制定的准则</li>
+</ul>
+<blockquote>
+<p>一句话：<strong>不改模型，靠"说话技巧"让模型听你的。</strong></p>
+</blockquote>
+<h2 id="_4">二、提示工程的两大原则<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>原则</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>① 给模型清晰指令</strong></td>
+<td>Prompt 要清晰明确表达需求、提供充足上下文；过于简略的 Prompt 让模型难以把握任务</td>
+</tr>
+<tr>
+<td><strong>② 让模型充足思考</strong></td>
+<td>像人类解题一样，匆忙得出的结论多有失误；Prompt 应加入逐步推理要求，留出思考时间</td>
+</tr>
+</tbody>
+</table>
+<h3 id="21">2.1 原则一：清晰的指令（四个技巧）<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p><strong>① 分隔符</strong>：分隔符像 Prompt 中的"墙"，把指令、上下文、输入隔开，避免混淆</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># 用 ``` 作为分隔符：指令与待处理文本分开</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="n">text</span> <span class="o">=</span> <span class="s2">"""您应该提供尽可能清晰、具体的指示，以表达您希望模型执行的任务。"""</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""把用三个反引号括起来的文本总结成一句话。```</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">```"""</span>
+</code></pre></div>
+<blockquote>
+<p>常用分隔符：<code>```</code>、<code>"""</code>、<code>&lt; &gt;</code>、<code>&lt;tag&gt; &lt;/tag&gt;</code>、<code>:</code>，只要明确起到隔断作用即可。</p>
+</blockquote>
+<p><strong>② 结构化输出</strong>：要求模型按某种格式输出（JSON、HTML 等），方便代码解析</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""请生成包括书名、作者和类别的虚构的、非真实存在的中文书籍清单，</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="s2">并以 JSON 格式提供，其中包含以下键：book_id、title、author、genre。"""</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># 输出示例：[{"book_id": 1, "title": "幻境之夜", "author": "李梦飞", "genre": "奇幻小说"}]</span>
+</code></pre></div>
+<p><strong>③ 参考示例（Few-shot）</strong>：给一两个已完成的样例，"预热"模型，让它了解要求和输出样式</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""您的任务是以一致的风格回答问题。</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="s2">&lt;孩子&gt;: 请教我何为耐心。</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="s2">&lt;祖父母&gt;: 挖出最深峡谷的河流源于一处不起眼的泉眼；最宏伟的交响乐从单一的音符开始。</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="s2">&lt;孩子&gt;: 请教我何为韧性。"""</span>
+</code></pre></div>
+<p><strong>④ 角色扮演</strong>：让模型充当一个角色，回答更专业明确</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>我需要你充当一个AI算法面试官的角色，自主地对我进行AI面试中常考的面试题，
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>一次说一个问题，我回答完你再出第二道题。
+</code></pre></div>
+<h3 id="22">2.2 原则二：让模型思考（两个技巧）<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<p><strong>① 指定步骤</strong>：把复杂任务拆成一步步做，要求按指定格式输出</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">text</span> <span class="o">=</span> <span class="s2">"在一个迷人的村庄里，兄妹杰克和吉尔出发去一个山顶井里打水……"</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""1-用一句话概括下面用&lt;&gt;括起来的文本。2-将摘要翻译成英语。3-在英语摘要中列出每个名称。4-输出一个 JSON 对象，其中包含以下键：English_summary、num_names。</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="s2">请使用以下格式：</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="s2">文本：&lt;要总结的文本&gt;</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="s2">摘要：&lt;摘要&gt;</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a><span class="s2">翻译：&lt;摘要的翻译&gt;</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="s2">名称：&lt;英语摘要中的名称列表&gt;</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="s2">输出 JSON：&lt;带有 English_summary 和 num_names 的 JSON&gt;</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="s2">Text: &lt;</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">&gt;"""</span>
+</code></pre></div>
+<p><strong>② 指导模型求解</strong>：先让模型<strong>自己解决问题</strong>，再对比学生解法判断对错——比直接判断更准</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""请判断学生的解决方案是否正确，请通过如下步骤解决这个问题：</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="s2">步骤：首先，自己解决问题。然后将您的解决方案与学生的解决方案进行比较，</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="s2">对比计算得到的总费用与学生计算的总费用是否一致，并评估学生的解决方案是否正确。</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="s2">在自己完成问题之前，请勿决定学生的解决方案是否正确。……"""</span>
+</code></pre></div>
+<blockquote>
+<p><strong>为什么有效</strong>：直接让模型判断，它会"偷懒"顺着学生思路走；让它先自己算一遍，才能发现"维护费用 100x 应为 10x"这种错误。</p>
+</blockquote>
+<h2 id="prompt">三、迭代优化（Prompt 不是一次写成的）<a class="headerlink" href="#prompt" title="Permanent link">&para;</a></h2>
+<p><strong>基本步骤</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>初步想法（编写初版 Prompt，清晰明确）
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>→ 输入模型（给模型充足思考时间）
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>→ 结果检查（分析 Prompt 做出改进）
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>→ 循环迭代（得到适合应用的 Prompt）
+</code></pre></div>
+<p><strong>案例：产品说明书 → 营销文案（三次迭代）</strong></p>
+<table>
+<thead>
+<tr>
+<th>迭代</th>
+<th>问题</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>初版</td>
+<td>生成文本太长</td>
+<td>加长度限制："使用最多50个词"</td>
+</tr>
+<tr>
+<td>第1次</td>
+<td>目标受众错（是家具零售商不是消费者），技术细节少</td>
+<td>明确受众："该描述面向家具零售商，应具有技术性质，侧重于材料构造"</td>
+</tr>
+<tr>
+<td>第2次</td>
+<td>需要更结构化</td>
+<td>加表格要求 + HTML 格式："包括一个表格提供产品尺寸……格式化为可用于网站的HTML"</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>结论：<strong>第一版 Prompt 满足"清晰 + 让模型思考"两个原则即可，之后靠多轮试错逼近最优。</strong></p>
+</blockquote>
+<h2 id="_5">四、文本概括<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>说明</th>
+<th>Prompt 要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>限制输出文本长度</td>
+<td>指定最多多少字/词</td>
+<td>"最多30个字"</td>
+</tr>
+<tr>
+<td>设置关键角度侧重</td>
+<td>按业务场景侧重（物流看运输、商家看价格质量）</td>
+<td>"并且侧重在快递服务上"</td>
+</tr>
+<tr>
+<td>关键信息抽取（Extract）</td>
+<td>只提取某一角度信息，过滤其他</td>
+<td>"提取产品运输相关的信息"（用 Extract 而非 Summarize）</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>例子：评论"熊猫公仔软可爱，女儿喜欢，但有点小。快递提前一天到货。"——侧重价格质量时输出"可爱的熊猫公仔，质量好但有点小，价格稍高"；如果只想保留运输信息，就要用"提取"而不是"概括"。</p>
+</blockquote>
+<h2 id="_6">五、文本转换（四大能力）<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="51">5.1 文本翻译<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">prompt</span> <span class="o">=</span> <span class="s2">"将以下中文翻译成西班牙语: ```您好，我想订购一个搅拌机。```"</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># 输出：Hola, me gustaría ordenar una batidora.</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">prompt</span> <span class="o">=</span> <span class="s2">"请告诉我以下文本是什么语种: ```Combien coûte le lampadaire?```"</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1"># 输出：这句话是法语。</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="n">prompt</span> <span class="o">=</span> <span class="s2">"请将以下文本分别翻译成中文、英文、法语和西班牙语: ```I want to order a basketball.```"</span>
+</code></pre></div>
+<h3 id="52">5.2 语气与写作风格调整<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">prompt</span> <span class="o">=</span> <span class="s2">"将以下文本翻译成商务信函的格式: ```小老弟，我小羊，上回你说咱部门要采购的显示器是多少寸来着？```"</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="c1"># 输出：尊敬的[收信人姓名/部门]，我是[你的姓名]，我们部门之前讨论过需要采购显示器的事宜……</span>
+</code></pre></div>
+<h3 id="53-json-html">5.3 文件格式转换（JSON → HTML 表格等）<a class="headerlink" href="#53-json-html" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">data_json</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"resturant employees"</span><span class="p">:</span> <span class="p">[{</span><span class="s2">"name"</span><span class="p">:</span> <span class="s2">"Shyam"</span><span class="p">,</span> <span class="s2">"email"</span><span class="p">:</span> <span class="s2">"shyamjaiswal@gmail.com"</span><span class="p">},</span> <span class="o">...</span><span class="p">]}</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"将以下Python字典从JSON转换为HTML表格，保留表格标题和列名：</span><span class="si">{</span><span class="n">data_json</span><span class="si">}</span><span class="s2">"</span>
+</code></pre></div>
+<h3 id="54">5.4 拼写及语法纠正<a class="headerlink" href="#54" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="n">text</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"The girl with the black and white puppies have a ball."</span><span class="p">,</span> <span class="s2">"Yolanda has her notebook."</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""请校对并更正以下文本，注意纠正文本保持原始语种，无需输出原始文本。</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="s2">如果您没有发现任何错误，请说"未发现错误"。</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="s2">例如：输入：I are happy. 输出：I am happy.</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="s2">​```</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">```"""</span>
+</code></pre></div>
+<h3 id="55-prompt">5.5 综合样例（一个 Prompt 同时做多件事）<a class="headerlink" href="#55-prompt" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="n">prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"""针对以下三个反引号之间的英文评论文本，首先进行拼写及语法纠错，</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="s2">然后将其转化成中文，再将其转化成优质淘宝评论的风格，从各种角度出发，</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="s2">分别说明产品的优点与缺点，并进行总结。</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="s2">输出结果格式为：【优点】xxx【缺点】xxx【总结】xxx</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="s2">注意，只需填写xxx部分，并分段输出。将结果输出成Markdown格式。</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="s2">​```</span><span class="si">{</span><span class="n">text</span><span class="si">}</span><span class="s2">```"""</span>
+</code></pre></div>
+<hr />
+<h1 id="_7">第二部分：金融行业动态方向评估项目（实战）<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h1>
+<h2 id="_8">六、项目背景与任务<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<p><strong>背景</strong>：金融领域数据大量激增，如何从繁杂数据中获取有效信息，帮助投资者减少决策失误损失，是金融数据分析的热门话题。</p>
+<p><strong>AI 在金融行业的应用</strong>：风险评估（识别风险事件、反欺诈）、投资决策（分析历史数据与财报）、客户服务（智能客服）。</p>
+<p><strong>传统应用 vs 大模型应用</strong>：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>传统方式</th>
+<th>大模型方式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>门槛</td>
+<td>需要 NLP/CV/机器学习专业知识 + 专业算法人员训练模型</td>
+<td>不需要特别专业算法知识</td>
+</tr>
+<tr>
+<td>关键</td>
+<td>分析数据、训练模型</td>
+<td><strong>设计合理的 Prompt 挖掘大模型的涌现能力</strong></td>
+</tr>
+</tbody>
+</table>
+<p><strong>项目三大任务</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>业务场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>金融文本分类</strong></td>
+<td>识别和评估不同类型的风险（信用风险、市场风险、操作风险等）</td>
+</tr>
+<tr>
+<td><strong>金融信息抽取</strong></td>
+<td>自动识别提取关键信息（实体名称、日期、金额等）</td>
+</tr>
+<tr>
+<td><strong>金融文本匹配</strong></td>
+<td>信息检索和过滤，匹配相关金融信息文本</td>
+</tr>
+</tbody>
+</table>
+<p><strong>方法</strong>：Qwen 模型 + In-context Learning（Few-shot / Zero-shot 设计 Prompt）</p>
+<h2 id="few-shot-zero-shot">七、Few-shot / Zero-shot 思想回顾<a class="headerlink" href="#few-shot-zero-shot" title="Permanent link">&para;</a></h2>
+<p><strong>Zero-shot（零样本）</strong>：训练时没见过新类别，但模型用已有知识推广到新类别上。</p>
+<blockquote>
+<p>经典例子：小明认识马、老虎、熊猫后，爸爸描述"斑马有马的轮廓、老虎的条纹、熊猫的黑白"，小明就能认出从没见过的斑马。</p>
+</blockquote>
+<p><strong>Few-shot（少样本）</strong>：学会大量类别后，对新类别只需要少量样本就能快速学习（让机器学会"学习"）。</p>
+<blockquote>
+<p>核心：用大模型学会事物异同，然后根据 support set（带标签的小样本）识别 query，即使训练集里没有这个类别。</p>
+</blockquote>
+<h2 id="_9">八、项目环境配置<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>依赖包：rich、ollama
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>模型下载：ollama run qwen2.5:7b   （约 4.7GB，确保磁盘空间充足）
+</code></pre></div>
+<blockquote>
+<p>本机已验证：<code>qwen2.5:7b</code> 已安装（4.7GB）。如果显存紧张可以换小模型（如 <code>qwen2:1.5b</code>），效果会略降。</p>
+</blockquote>
+<h2 id="_10">九、任务一：金融文本分类<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<p><strong>任务目标</strong>：判断一句话属于 <code>['新闻报道', '公司公告', '财务公告', '分析师报告']</code> 中哪一类。</p>
+<p><strong>Prompt 设计要点</strong>：
+1. 向模型解释什么叫作「文本分类任务」
+2. 让模型按照指定格式输出
+3. 用 <strong>In-context Learning</strong>：先给几个正确例子（User 是输入、Bot 是人工标注的期望回答）</p>
+<p><strong>完整代码（finance_classify.py）</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># -*- coding:utf-8 -*-</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="sd">"""</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a><span class="sd">利用 LLM 进行文本分类任务。</span>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="sd">"""</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rich</span><span class="w"> </span><span class="kn">import</span> <span class="nb">print</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rich.console</span><span class="w"> </span><span class="kn">import</span> <span class="n">Console</span>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="kn">import</span><span class="w"> </span><span class="nn">ollama</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a><span class="c1"># 提供所有类别以及每个类别下的样例</span>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="n">class_examples</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>    <span class="s1">'新闻报道'</span><span class="p">:</span> <span class="s1">'今日，股市经历了一轮震荡，受到宏观经济数据和全球贸易紧张局势的影响。投资者密切关注美联储可能的政策调整，以适应市场的不确定性。'</span><span class="p">,</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a>    <span class="s1">'财务报告'</span><span class="p">:</span> <span class="s1">'本公司年度财务报告显示，去年公司实现了稳步增长的盈利，同时资产负债表呈现强劲的状况。经济环境的稳定和管理层的有效战略执行为公司的健康发展奠定了基础。'</span><span class="p">,</span>
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>    <span class="s1">'公司公告'</span><span class="p">:</span> <span class="s1">'本公司高兴地宣布成功完成最新一轮并购交易，收购了一家在人工智能领域领先的公司。这一战略举措将有助于扩大我们的业务领域，提高市场竞争力'</span><span class="p">,</span>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a>    <span class="s1">'分析师报告'</span><span class="p">:</span> <span class="s1">'最新的行业分析报告指出，科技公司的创新将成为未来增长的主要推动力。云计算、人工智能和数字化转型被认为是引领行业发展的关键因素，投资者应关注这些趋势'</span><span class="p">}</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="k">def</span><span class="w"> </span><span class="nf">init_prompts</span><span class="p">():</span>
+<a id="__codelineno-13-18" name="__codelineno-13-18" href="#__codelineno-13-18"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-13-19" name="__codelineno-13-19" href="#__codelineno-13-19"></a><span class="sd">    初始化前置prompt，便于模型做 incontext learning。</span>
+<a id="__codelineno-13-20" name="__codelineno-13-20" href="#__codelineno-13-20"></a><span class="sd">    """</span>
+<a id="__codelineno-13-21" name="__codelineno-13-21" href="#__codelineno-13-21"></a>    <span class="n">class_list</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">class_examples</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<a id="__codelineno-13-22" name="__codelineno-13-22" href="#__codelineno-13-22"></a>    <span class="c1"># 【角色设定】告诉模型它是文本分类器</span>
+<a id="__codelineno-13-23" name="__codelineno-13-23" href="#__codelineno-13-23"></a>    <span class="n">pre_history</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span>
+<a id="__codelineno-13-24" name="__codelineno-13-24" href="#__codelineno-13-24"></a>                    <span class="s2">"content"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"现在你是一个文本分类器，你需要按照要求将我给你的句子分类到：</span><span class="si">{</span><span class="n">class_list</span><span class="si">}</span><span class="s2">类别中。"</span><span class="p">},</span> <span class="p">]</span>
+<a id="__codelineno-13-25" name="__codelineno-13-25" href="#__codelineno-13-25"></a>
+<a id="__codelineno-13-26" name="__codelineno-13-26" href="#__codelineno-13-26"></a>    <span class="c1"># 【Few-shot 示例】每个类别给一个正确例子（user 输入 + assistant 期望答案）</span>
+<a id="__codelineno-13-27" name="__codelineno-13-27" href="#__codelineno-13-27"></a>    <span class="k">for</span> <span class="n">_type</span><span class="p">,</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">class_examples</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-13-28" name="__codelineno-13-28" href="#__codelineno-13-28"></a>        <span class="n">pre_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'“</span><span class="si">{</span><span class="n">example</span><span class="si">}</span><span class="s1">”是 </span><span class="si">{</span><span class="n">class_list</span><span class="si">}</span><span class="s1"> 里的什么类别？'</span><span class="p">})</span>
+<a id="__codelineno-13-29" name="__codelineno-13-29" href="#__codelineno-13-29"></a>        <span class="n">pre_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"assistant"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">_type</span><span class="p">})</span>
+<a id="__codelineno-13-30" name="__codelineno-13-30" href="#__codelineno-13-30"></a>
+<a id="__codelineno-13-31" name="__codelineno-13-31" href="#__codelineno-13-31"></a>    <span class="k">return</span> <span class="p">{</span><span class="s1">'class_list'</span><span class="p">:</span> <span class="n">class_list</span><span class="p">,</span> <span class="s1">'pre_history'</span><span class="p">:</span> <span class="n">pre_history</span><span class="p">}</span>
+<a id="__codelineno-13-32" name="__codelineno-13-32" href="#__codelineno-13-32"></a>
+<a id="__codelineno-13-33" name="__codelineno-13-33" href="#__codelineno-13-33"></a>
+<a id="__codelineno-13-34" name="__codelineno-13-34" href="#__codelineno-13-34"></a><span class="k">def</span><span class="w"> </span><span class="nf">inference</span><span class="p">(</span><span class="n">sentences</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">custom_settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<a id="__codelineno-13-35" name="__codelineno-13-35" href="#__codelineno-13-35"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-13-36" name="__codelineno-13-36" href="#__codelineno-13-36"></a><span class="sd">    推理函数。</span>
+<a id="__codelineno-13-37" name="__codelineno-13-37" href="#__codelineno-13-37"></a><span class="sd">    Args:</span>
+<a id="__codelineno-13-38" name="__codelineno-13-38" href="#__codelineno-13-38"></a><span class="sd">        sentences (List[str]): 待推理的句子。</span>
+<a id="__codelineno-13-39" name="__codelineno-13-39" href="#__codelineno-13-39"></a><span class="sd">        custom_settings (dict): 初始设定，包含人为给定的 few-shot example。</span>
+<a id="__codelineno-13-40" name="__codelineno-13-40" href="#__codelineno-13-40"></a><span class="sd">    """</span>
+<a id="__codelineno-13-41" name="__codelineno-13-41" href="#__codelineno-13-41"></a>    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+<a id="__codelineno-13-42" name="__codelineno-13-42" href="#__codelineno-13-42"></a>        <span class="k">with</span> <span class="n">console</span><span class="o">.</span><span class="n">status</span><span class="p">(</span><span class="s2">"[bold bright_green] Model Inference..."</span><span class="p">):</span>
+<a id="__codelineno-13-43" name="__codelineno-13-43" href="#__codelineno-13-43"></a>            <span class="n">sentence_with_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"“</span><span class="si">{</span><span class="n">sentence</span><span class="si">}</span><span class="s2">”是 </span><span class="si">{</span><span class="n">custom_settings</span><span class="p">[</span><span class="s1">'class_list'</span><span class="p">]</span><span class="si">}</span><span class="s2"> 里的什么类别？"</span>
+<a id="__codelineno-13-44" name="__codelineno-13-44" href="#__codelineno-13-44"></a>            <span class="c1"># 将前置历史 + 当前问题一起发给模型</span>
+<a id="__codelineno-13-45" name="__codelineno-13-45" href="#__codelineno-13-45"></a>            <span class="n">response</span> <span class="o">=</span> <span class="n">ollama</span><span class="o">.</span><span class="n">chat</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s1">'qwen2.5:7b'</span><span class="p">,</span>
+<a id="__codelineno-13-46" name="__codelineno-13-46" href="#__codelineno-13-46"></a>                                   <span class="n">messages</span><span class="o">=</span><span class="p">[</span><span class="o">*</span><span class="n">custom_settings</span><span class="p">[</span><span class="s1">'pre_history'</span><span class="p">],</span>
+<a id="__codelineno-13-47" name="__codelineno-13-47" href="#__codelineno-13-47"></a>                                             <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">sentence_with_prompt</span><span class="p">}])</span>
+<a id="__codelineno-13-48" name="__codelineno-13-48" href="#__codelineno-13-48"></a>            <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s2">"message"</span><span class="p">][</span><span class="s2">"content"</span><span class="p">]</span>
+<a id="__codelineno-13-49" name="__codelineno-13-49" href="#__codelineno-13-49"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'&gt;&gt;&gt; [bold bright_red]sentence: </span><span class="si">{</span><span class="n">sentence</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<a id="__codelineno-13-50" name="__codelineno-13-50" href="#__codelineno-13-50"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'&gt;&gt;&gt; [bold bright_green]inference answer: </span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<a id="__codelineno-13-51" name="__codelineno-13-51" href="#__codelineno-13-51"></a>
+<a id="__codelineno-13-52" name="__codelineno-13-52" href="#__codelineno-13-52"></a>
+<a id="__codelineno-13-53" name="__codelineno-13-53" href="#__codelineno-13-53"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a id="__codelineno-13-54" name="__codelineno-13-54" href="#__codelineno-13-54"></a>    <span class="n">console</span> <span class="o">=</span> <span class="n">Console</span><span class="p">()</span>
+<a id="__codelineno-13-55" name="__codelineno-13-55" href="#__codelineno-13-55"></a>
+<a id="__codelineno-13-56" name="__codelineno-13-56" href="#__codelineno-13-56"></a>    <span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-13-57" name="__codelineno-13-57" href="#__codelineno-13-57"></a>        <span class="s2">"今日，央行发布公告宣布降低利率，以刺激经济增长。这一降息举措将影响贷款利率，并在未来几个季度内对金融市场产生影响。"</span><span class="p">,</span>
+<a id="__codelineno-13-58" name="__codelineno-13-58" href="#__codelineno-13-58"></a>        <span class="s2">"本公司宣布成功收购一家在创新科技领域领先的公司，这一战略性收购将有助于公司拓展技术能力和加速产品研发。"</span><span class="p">,</span>
+<a id="__codelineno-13-59" name="__codelineno-13-59" href="#__codelineno-13-59"></a>        <span class="s2">"公司资产负债表显示，公司偿债能力强劲，现金流充足，为未来投资和扩张提供了坚实的财务基础。"</span><span class="p">,</span>
+<a id="__codelineno-13-60" name="__codelineno-13-60" href="#__codelineno-13-60"></a>        <span class="s2">"最新的分析报告指出，可再生能源行业预计将在未来几年经历持续增长，投资者应该关注这一领域的投资机会"</span><span class="p">,</span>
+<a id="__codelineno-13-61" name="__codelineno-13-61" href="#__codelineno-13-61"></a>    <span class="p">]</span>
+<a id="__codelineno-13-62" name="__codelineno-13-62" href="#__codelineno-13-62"></a>
+<a id="__codelineno-13-63" name="__codelineno-13-63" href="#__codelineno-13-63"></a>    <span class="n">custom_settings</span> <span class="o">=</span> <span class="n">init_prompts</span><span class="p">()</span>
+<a id="__codelineno-13-64" name="__codelineno-13-64" href="#__codelineno-13-64"></a>    <span class="n">inference</span><span class="p">(</span><span class="n">sentences</span><span class="p">,</span> <span class="n">custom_settings</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>代码结构解读</strong>：
+- <code>init_prompts()</code>：构造<strong>角色设定 + Few-shot 示例</strong>的前置对话历史
+- <code>inference()</code>：对每句话拼上问题 prompt，连同前置历史发给 Ollama
+- <code>[*pre_history, {...}]</code>：<code>*</code> 是解包操作，把列表元素逐一展开作为 messages 的一部分</p>
+<h2 id="_11">十、任务二：金融信息抽取<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p><strong>任务目标</strong>：抽取句子中的 <code>['日期', '股票名称', '开盘价', '收盘价', '成交量']</code> 关键实体，<strong>按 JSON 格式输出</strong>。</p>
+<p><strong>Prompt 设计要点</strong>：
+1. 向模型解释什么叫作「信息抽取任务」
+2. 让模型按照指定格式（<strong>JSON</strong>）输出
+3. In-context Learning 给正确例子
+4. <strong>后处理</strong>：模型输出可能带 <code>```json</code> 标记，需要清洗成标准 JSON</p>
+<p><strong>完整代码（finance_ie.py）</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="kn">import</span><span class="w"> </span><span class="nn">ollama</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a><span class="c1"># 定义不同实体下的具备属性（Schema）</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="n">schema</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>    <span class="s1">'金融'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'日期'</span><span class="p">,</span> <span class="s1">'股票名称'</span><span class="p">,</span> <span class="s1">'开盘价'</span><span class="p">,</span> <span class="s1">'收盘价'</span><span class="p">,</span> <span class="s1">'成交量'</span><span class="p">],</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="p">}</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="n">IE_PATTERN</span> <span class="o">=</span> <span class="s2">"</span><span class="si">{}</span><span class="se">\n\n</span><span class="s2">提取上述句子中</span><span class="si">{}</span><span class="s2">的实体，并按照JSON格式输出，上述句子中不存在的信息用['原文中未提及']来表示，多个值之间用','分隔。"</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="c1"># 提供一些例子供模型参考</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="n">ie_examples</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>    <span class="s1">'金融'</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>        <span class="p">{</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>            <span class="s1">'content'</span><span class="p">:</span> <span class="s1">'2023-01-10，股市震荡。股票古哥-D[EOOE]美股今日开盘价100美元，一度飙升至105美元，随后回落至98美元，最终以102美元收盘，成交量达到520000。'</span><span class="p">,</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>            <span class="s1">'answers'</span><span class="p">:</span> <span class="p">{</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>                <span class="s1">'日期'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'2023-01-10'</span><span class="p">],</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>                <span class="s1">'股票名称'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'古哥-D[EOOE]美股'</span><span class="p">],</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>                <span class="s1">'开盘价'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'100美元'</span><span class="p">],</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>                <span class="s1">'收盘价'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'102美元'</span><span class="p">],</span>
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>                <span class="s1">'成交量'</span><span class="p">:</span> <span class="p">[</span><span class="s1">'520000'</span><span class="p">],</span>
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a>            <span class="p">}</span>
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a>        <span class="p">}</span>
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a>    <span class="p">]</span>
+<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a><span class="p">}</span>
+<a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a>
+<a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a>
+<a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a><span class="k">def</span><span class="w"> </span><span class="nf">init_prompts</span><span class="p">():</span>
+<a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a><span class="sd">    初始化前置prompt，便于模型做 incontext learning。</span>
+<a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a><span class="sd">    """</span>
+<a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a>    <span class="n">ie_pre_history</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"你是一个信息抽取助手。"</span><span class="p">},</span> <span class="p">]</span>
+<a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a>
+<a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a>    <span class="k">for</span> <span class="n">_type</span><span class="p">,</span> <span class="n">example_list</span> <span class="ow">in</span> <span class="n">ie_examples</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a>        <span class="k">for</span> <span class="n">example</span> <span class="ow">in</span> <span class="n">example_list</span><span class="p">:</span>
+<a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a>            <span class="n">sentence</span> <span class="o">=</span> <span class="n">example</span><span class="p">[</span><span class="s1">'content'</span><span class="p">]</span>
+<a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a>            <span class="n">properties_str</span> <span class="o">=</span> <span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">schema</span><span class="p">[</span><span class="n">_type</span><span class="p">])</span>
+<a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a>            <span class="n">schema_str_list</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'“</span><span class="si">{</span><span class="n">_type</span><span class="si">}</span><span class="s1">”(</span><span class="si">{</span><span class="n">properties_str</span><span class="si">}</span><span class="s1">)'</span>
+<a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a>            <span class="n">sentence_with_prompt</span> <span class="o">=</span> <span class="n">IE_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">schema_str_list</span><span class="p">)</span>
+<a id="__codelineno-14-41" name="__codelineno-14-41" href="#__codelineno-14-41"></a>            <span class="n">ie_pre_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">sentence_with_prompt</span><span class="si">}</span><span class="s1">'</span><span class="p">})</span>
+<a id="__codelineno-14-42" name="__codelineno-14-42" href="#__codelineno-14-42"></a>            <span class="n">ie_pre_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"assistant"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">example</span><span class="p">[</span><span class="s1">'answers'</span><span class="p">],</span><span class="w"> </span><span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">})</span>
+<a id="__codelineno-14-43" name="__codelineno-14-43" href="#__codelineno-14-43"></a>
+<a id="__codelineno-14-44" name="__codelineno-14-44" href="#__codelineno-14-44"></a>    <span class="k">return</span> <span class="p">{</span><span class="s1">'ie_pre_history'</span><span class="p">:</span> <span class="n">ie_pre_history</span><span class="p">}</span>
+<a id="__codelineno-14-45" name="__codelineno-14-45" href="#__codelineno-14-45"></a>
+<a id="__codelineno-14-46" name="__codelineno-14-46" href="#__codelineno-14-46"></a>
+<a id="__codelineno-14-47" name="__codelineno-14-47" href="#__codelineno-14-47"></a><span class="k">def</span><span class="w"> </span><span class="nf">clean_response</span><span class="p">(</span><span class="n">response</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<a id="__codelineno-14-48" name="__codelineno-14-48" href="#__codelineno-14-48"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-14-49" name="__codelineno-14-49" href="#__codelineno-14-49"></a><span class="sd">    后处理模型输出：去掉 ```json ... ``` 包裹，解析成 JSON。</span>
+<a id="__codelineno-14-50" name="__codelineno-14-50" href="#__codelineno-14-50"></a><span class="sd">    """</span>
+<a id="__codelineno-14-51" name="__codelineno-14-51" href="#__codelineno-14-51"></a>    <span class="k">if</span> <span class="s1">'```json'</span> <span class="ow">in</span> <span class="n">response</span><span class="p">:</span>
+<a id="__codelineno-14-52" name="__codelineno-14-52" href="#__codelineno-14-52"></a>        <span class="n">res</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">findall</span><span class="p">(</span><span class="sa">r</span><span class="s1">'```json(.*?)```'</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">re</span><span class="o">.</span><span class="n">DOTALL</span><span class="p">)</span>
+<a id="__codelineno-14-53" name="__codelineno-14-53" href="#__codelineno-14-53"></a>        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="ow">and</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+<a id="__codelineno-14-54" name="__codelineno-14-54" href="#__codelineno-14-54"></a>            <span class="n">response</span> <span class="o">=</span> <span class="n">res</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<a id="__codelineno-14-55" name="__codelineno-14-55" href="#__codelineno-14-55"></a>        <span class="n">response</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'、'</span><span class="p">,</span> <span class="s1">','</span><span class="p">)</span>
+<a id="__codelineno-14-56" name="__codelineno-14-56" href="#__codelineno-14-56"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-14-57" name="__codelineno-14-57" href="#__codelineno-14-57"></a>        <span class="k">return</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<a id="__codelineno-14-58" name="__codelineno-14-58" href="#__codelineno-14-58"></a>    <span class="k">except</span><span class="p">:</span>
+<a id="__codelineno-14-59" name="__codelineno-14-59" href="#__codelineno-14-59"></a>        <span class="k">return</span> <span class="n">response</span>
+<a id="__codelineno-14-60" name="__codelineno-14-60" href="#__codelineno-14-60"></a>
+<a id="__codelineno-14-61" name="__codelineno-14-61" href="#__codelineno-14-61"></a>
+<a id="__codelineno-14-62" name="__codelineno-14-62" href="#__codelineno-14-62"></a><span class="k">def</span><span class="w"> </span><span class="nf">inference</span><span class="p">(</span><span class="n">sentences</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">custom_settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<a id="__codelineno-14-63" name="__codelineno-14-63" href="#__codelineno-14-63"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-14-64" name="__codelineno-14-64" href="#__codelineno-14-64"></a><span class="sd">    推理函数。</span>
+<a id="__codelineno-14-65" name="__codelineno-14-65" href="#__codelineno-14-65"></a><span class="sd">    Args:</span>
+<a id="__codelineno-14-66" name="__codelineno-14-66" href="#__codelineno-14-66"></a><span class="sd">        sentences (List[str]): 待抽取的句子。</span>
+<a id="__codelineno-14-67" name="__codelineno-14-67" href="#__codelineno-14-67"></a><span class="sd">        custom_settings (dict): 初始设定，包含人为给定的 few-shot example。</span>
+<a id="__codelineno-14-68" name="__codelineno-14-68" href="#__codelineno-14-68"></a><span class="sd">    """</span>
+<a id="__codelineno-14-69" name="__codelineno-14-69" href="#__codelineno-14-69"></a>    <span class="k">for</span> <span class="n">sentence</span> <span class="ow">in</span> <span class="n">sentences</span><span class="p">:</span>
+<a id="__codelineno-14-70" name="__codelineno-14-70" href="#__codelineno-14-70"></a>        <span class="n">cls_res</span> <span class="o">=</span> <span class="s2">"金融"</span>
+<a id="__codelineno-14-71" name="__codelineno-14-71" href="#__codelineno-14-71"></a>        <span class="k">if</span> <span class="n">cls_res</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">schema</span><span class="p">:</span>
+<a id="__codelineno-14-72" name="__codelineno-14-72" href="#__codelineno-14-72"></a>            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'The type model inferenced </span><span class="si">{</span><span class="n">cls_res</span><span class="si">}</span><span class="s1"> which is not in schema dict, exited.'</span><span class="p">)</span>
+<a id="__codelineno-14-73" name="__codelineno-14-73" href="#__codelineno-14-73"></a>            <span class="n">exit</span><span class="p">()</span>
+<a id="__codelineno-14-74" name="__codelineno-14-74" href="#__codelineno-14-74"></a>        <span class="n">properties_str</span> <span class="o">=</span> <span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">schema</span><span class="p">[</span><span class="n">cls_res</span><span class="p">])</span>
+<a id="__codelineno-14-75" name="__codelineno-14-75" href="#__codelineno-14-75"></a>        <span class="n">schema_str_list</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'“</span><span class="si">{</span><span class="n">cls_res</span><span class="si">}</span><span class="s1">”(</span><span class="si">{</span><span class="n">properties_str</span><span class="si">}</span><span class="s1">)'</span>
+<a id="__codelineno-14-76" name="__codelineno-14-76" href="#__codelineno-14-76"></a>        <span class="n">sentence_with_ie_prompt</span> <span class="o">=</span> <span class="n">IE_PATTERN</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">sentence</span><span class="p">,</span> <span class="n">schema_str_list</span><span class="p">)</span>
+<a id="__codelineno-14-77" name="__codelineno-14-77" href="#__codelineno-14-77"></a>
+<a id="__codelineno-14-78" name="__codelineno-14-78" href="#__codelineno-14-78"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">ollama</span><span class="o">.</span><span class="n">chat</span><span class="p">(</span>
+<a id="__codelineno-14-79" name="__codelineno-14-79" href="#__codelineno-14-79"></a>            <span class="n">model</span><span class="o">=</span><span class="s2">"qwen2.5:7b"</span><span class="p">,</span>
+<a id="__codelineno-14-80" name="__codelineno-14-80" href="#__codelineno-14-80"></a>            <span class="n">messages</span><span class="o">=</span><span class="p">[</span>
+<a id="__codelineno-14-81" name="__codelineno-14-81" href="#__codelineno-14-81"></a>                <span class="o">*</span><span class="n">custom_settings</span><span class="p">[</span><span class="s1">'ie_pre_history'</span><span class="p">],</span>
+<a id="__codelineno-14-82" name="__codelineno-14-82" href="#__codelineno-14-82"></a>                <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">sentence_with_ie_prompt</span><span class="p">}</span>
+<a id="__codelineno-14-83" name="__codelineno-14-83" href="#__codelineno-14-83"></a>            <span class="p">]</span>
+<a id="__codelineno-14-84" name="__codelineno-14-84" href="#__codelineno-14-84"></a>        <span class="p">)</span>
+<a id="__codelineno-14-85" name="__codelineno-14-85" href="#__codelineno-14-85"></a>        <span class="n">res_content</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s2">"message"</span><span class="p">][</span><span class="s2">"content"</span><span class="p">]</span>
+<a id="__codelineno-14-86" name="__codelineno-14-86" href="#__codelineno-14-86"></a>        <span class="n">ie_res</span> <span class="o">=</span> <span class="n">clean_response</span><span class="p">(</span><span class="n">res_content</span><span class="p">)</span>
+<a id="__codelineno-14-87" name="__codelineno-14-87" href="#__codelineno-14-87"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'&gt;&gt;&gt; [bold bright_red]sentence: </span><span class="si">{</span><span class="n">sentence</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<a id="__codelineno-14-88" name="__codelineno-14-88" href="#__codelineno-14-88"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'&gt;&gt;&gt; [bold bright_green]inference answer: </span><span class="si">{</span><span class="n">ie_res</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<a id="__codelineno-14-89" name="__codelineno-14-89" href="#__codelineno-14-89"></a>
+<a id="__codelineno-14-90" name="__codelineno-14-90" href="#__codelineno-14-90"></a>
+<a id="__codelineno-14-91" name="__codelineno-14-91" href="#__codelineno-14-91"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a id="__codelineno-14-92" name="__codelineno-14-92" href="#__codelineno-14-92"></a>    <span class="n">sentences</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-14-93" name="__codelineno-14-93" href="#__codelineno-14-93"></a>        <span class="s1">'2023-02-15，寓意吉祥的节日，股票佰笃[BD]美股开盘价10美元，虽然经历了波动，但最终以13美元收盘，成交量微幅增加至460,000，投资者情绪较为平稳。'</span><span class="p">,</span>
+<a id="__codelineno-14-94" name="__codelineno-14-94" href="#__codelineno-14-94"></a>        <span class="s1">'2023-04-05，市场迎来轻松氛围，股票盘古(0021)开盘价23元，尽管经历了波动，但最终以26美元收盘，成交量缩小至310,000，投资者保持观望态度。'</span><span class="p">,</span>
+<a id="__codelineno-14-95" name="__codelineno-14-95" href="#__codelineno-14-95"></a>    <span class="p">]</span>
+<a id="__codelineno-14-96" name="__codelineno-14-96" href="#__codelineno-14-96"></a>    <span class="n">custom_settings</span> <span class="o">=</span> <span class="n">init_prompts</span><span class="p">()</span>
+<a id="__codelineno-14-97" name="__codelineno-14-97" href="#__codelineno-14-97"></a>    <span class="n">inference</span><span class="p">(</span><span class="n">sentences</span><span class="p">,</span> <span class="n">custom_settings</span><span class="p">)</span>
+</code></pre></div>
+<p><strong>代码结构解读</strong>：
+- <code>schema</code>：定义要抽取的实体类型（<strong>告诉模型抽取哪些字段</strong>）
+- <code>IE_PATTERN</code>：抽取任务的标准 Prompt 模板
+- <code>clean_response()</code>：模型常输出 <code>```json {...} ```</code>，用正则取出中间部分再 <code>json.loads</code>
+- 期望输出：<code>{'日期': ['2023-02-15'], '股票名称': ['佰笃[BD]美股'], '开盘价': ['10美元'], '收盘价': ['13美元'], '成交量': ['460,000']}</code></p>
+<h2 id="_12">十一、任务三：金融文本匹配<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p><strong>任务目标</strong>：判断两个句子语义是否相似，输出 <code>['相似', '不相似']</code>。</p>
+<p><strong>Prompt 设计要点</strong>：
+1. 向模型解释什么叫作「文本匹配任务」
+2. 让模型按指定格式输出（只回答是否相似）
+3. In-context Learning 给相似/不相似各几个例子</p>
+<p><strong>完整代码（finance_text_matching.py）</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1"># !/usr/bin/env python3</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="sd">"""</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="sd">利用 LLM 进行文本匹配任务。</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="sd">"""</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="kn">from</span><span class="w"> </span><span class="nn">rich</span><span class="w"> </span><span class="kn">import</span> <span class="nb">print</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="kn">import</span><span class="w"> </span><span class="nn">ollama</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="c1"># 提供相似、不相似的语义匹配例子</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="n">examples</span> <span class="o">=</span> <span class="p">{</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>    <span class="s1">'是'</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>        <span class="p">(</span><span class="s1">'公司ABC发布了季度财报，显示盈利增长。'</span><span class="p">,</span> <span class="s1">'财报披露，公司ABC利润上升。'</span><span class="p">),</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>    <span class="p">],</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>    <span class="s1">'不是'</span><span class="p">:</span> <span class="p">[</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>        <span class="p">(</span><span class="s1">'黄金价格下跌，投资者抛售。'</span><span class="p">,</span> <span class="s1">'外汇市场交易额创下新高。'</span><span class="p">),</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>        <span class="p">(</span><span class="s1">'央行降息，刺激经济增长。'</span><span class="p">,</span> <span class="s1">'新能源技术的创新。'</span><span class="p">)</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>    <span class="p">]</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="p">}</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="k">def</span><span class="w"> </span><span class="nf">init_prompts</span><span class="p">():</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a><span class="sd">    初始化前置prompt，便于模型做 incontext learning。</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a><span class="sd">    """</span>
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>    <span class="n">pre_history</span> <span class="o">=</span> <span class="p">[{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"system"</span><span class="p">,</span>
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>                    <span class="s2">"content"</span><span class="p">:</span> <span class="s2">"现在你需要帮助我完成文本匹配任务，当我给你两个句子时，你需要回答我这两句话语义是否相似。只需要回答是否相似，不要做多余的回答。"</span><span class="p">},</span> <span class="p">]</span>
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>    <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">sentence_pairs</span> <span class="ow">in</span> <span class="n">examples</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a>        <span class="k">for</span> <span class="n">sentence_pair</span> <span class="ow">in</span> <span class="n">sentence_pairs</span><span class="p">:</span>
+<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a>            <span class="n">sentence1</span><span class="p">,</span> <span class="n">sentence2</span> <span class="o">=</span> <span class="n">sentence_pair</span>
+<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a>            <span class="n">pre_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"user"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="sa">f</span><span class="s1">'句子一: </span><span class="si">{</span><span class="n">sentence1</span><span class="si">}</span><span class="se">\n</span><span class="s1">句子二: </span><span class="si">{</span><span class="n">sentence2</span><span class="si">}</span><span class="se">\n</span><span class="s1">上面两句话是相似的语义吗？'</span><span class="p">})</span>
+<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>            <span class="n">pre_history</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"role"</span><span class="p">:</span> <span class="s2">"assistant"</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">key</span><span class="p">})</span>
+<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a>
+<a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a>    <span class="k">return</span> <span class="p">{</span><span class="s1">'pre_history'</span><span class="p">:</span> <span class="n">pre_history</span><span class="p">}</span>
+<a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a>
+<a id="__codelineno-15-34" name="__codelineno-15-34" href="#__codelineno-15-34"></a>
+<a id="__codelineno-15-35" name="__codelineno-15-35" href="#__codelineno-15-35"></a><span class="k">def</span><span class="w"> </span><span class="nf">inference</span><span class="p">(</span><span class="n">sentence_pairs</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">custom_settings</span><span class="p">:</span> <span class="nb">dict</span><span class="p">):</span>
+<a id="__codelineno-15-36" name="__codelineno-15-36" href="#__codelineno-15-36"></a><span class="w">    </span><span class="sd">"""</span>
+<a id="__codelineno-15-37" name="__codelineno-15-37" href="#__codelineno-15-37"></a><span class="sd">    推理函数。</span>
+<a id="__codelineno-15-38" name="__codelineno-15-38" href="#__codelineno-15-38"></a><span class="sd">    Args:</span>
+<a id="__codelineno-15-39" name="__codelineno-15-39" href="#__codelineno-15-39"></a><span class="sd">        sentence_pairs (List[str]): 待推理的句子对。</span>
+<a id="__codelineno-15-40" name="__codelineno-15-40" href="#__codelineno-15-40"></a><span class="sd">        custom_settings (dict): 初始设定，包含人为给定的 few-shot example。</span>
+<a id="__codelineno-15-41" name="__codelineno-15-41" href="#__codelineno-15-41"></a><span class="sd">    """</span>
+<a id="__codelineno-15-42" name="__codelineno-15-42" href="#__codelineno-15-42"></a>    <span class="k">for</span> <span class="n">sentence_pair</span> <span class="ow">in</span> <span class="n">sentence_pairs</span><span class="p">:</span>
+<a id="__codelineno-15-43" name="__codelineno-15-43" href="#__codelineno-15-43"></a>        <span class="n">sentence1</span><span class="p">,</span> <span class="n">sentence2</span> <span class="o">=</span> <span class="n">sentence_pair</span>
+<a id="__codelineno-15-44" name="__codelineno-15-44" href="#__codelineno-15-44"></a>        <span class="n">sentence_with_prompt</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'句子一: </span><span class="si">{</span><span class="n">sentence1</span><span class="si">}</span><span class="se">\n</span><span class="s1">句子二: </span><span class="si">{</span><span class="n">sentence2</span><span class="si">}</span><span class="se">\n</span><span class="s1">上面两句话是相似的语义吗？'</span>
+<a id="__codelineno-15-45" name="__codelineno-15-45" href="#__codelineno-15-45"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">ollama</span><span class="o">.</span><span class="n">chat</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"qwen2.5:7b"</span><span class="p">,</span>
+<a id="__codelineno-15-46" name="__codelineno-15-46" href="#__codelineno-15-46"></a>                               <span class="n">messages</span><span class="o">=</span><span class="p">[</span><span class="o">*</span><span class="n">custom_settings</span><span class="p">[</span><span class="s2">"pre_history"</span><span class="p">],</span>
+<a id="__codelineno-15-47" name="__codelineno-15-47" href="#__codelineno-15-47"></a>                                         <span class="p">{</span><span class="s2">"role"</span><span class="p">:</span> <span class="s1">'user'</span><span class="p">,</span> <span class="s2">"content"</span><span class="p">:</span> <span class="n">sentence_with_prompt</span><span class="p">}])</span>
+<a id="__codelineno-15-48" name="__codelineno-15-48" href="#__codelineno-15-48"></a>        <span class="n">response</span> <span class="o">=</span> <span class="n">response</span><span class="p">[</span><span class="s2">"message"</span><span class="p">][</span><span class="s2">"content"</span><span class="p">]</span>
+<a id="__codelineno-15-49" name="__codelineno-15-49" href="#__codelineno-15-49"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'&gt;&gt;&gt; [bold bright_red]sentence: </span><span class="si">{</span><span class="n">sentence_pair</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<a id="__codelineno-15-50" name="__codelineno-15-50" href="#__codelineno-15-50"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'&gt;&gt;&gt; [bold bright_green]inference answer: </span><span class="si">{</span><span class="n">response</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<a id="__codelineno-15-51" name="__codelineno-15-51" href="#__codelineno-15-51"></a>
+<a id="__codelineno-15-52" name="__codelineno-15-52" href="#__codelineno-15-52"></a>
+<a id="__codelineno-15-53" name="__codelineno-15-53" href="#__codelineno-15-53"></a><span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">'__main__'</span><span class="p">:</span>
+<a id="__codelineno-15-54" name="__codelineno-15-54" href="#__codelineno-15-54"></a>    <span class="n">sentence_pairs</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-15-55" name="__codelineno-15-55" href="#__codelineno-15-55"></a>        <span class="p">(</span><span class="s1">'股票市场今日大涨，投资者乐观。'</span><span class="p">,</span> <span class="s1">'持续上涨的市场让投资者感到满意。'</span><span class="p">),</span>
+<a id="__codelineno-15-56" name="__codelineno-15-56" href="#__codelineno-15-56"></a>        <span class="p">(</span><span class="s1">'油价大幅下跌，能源公司面临挑战。'</span><span class="p">,</span> <span class="s1">'未来智能城市的建设趋势愈发明显。'</span><span class="p">),</span>
+<a id="__codelineno-15-57" name="__codelineno-15-57" href="#__codelineno-15-57"></a>        <span class="p">(</span><span class="s1">'利率上升，影响房地产市场。'</span><span class="p">,</span> <span class="s1">'高利率对房地产有一定冲击。'</span><span class="p">),</span>
+<a id="__codelineno-15-58" name="__codelineno-15-58" href="#__codelineno-15-58"></a>    <span class="p">]</span>
+<a id="__codelineno-15-59" name="__codelineno-15-59" href="#__codelineno-15-59"></a>    <span class="n">custom_settings</span> <span class="o">=</span> <span class="n">init_prompts</span><span class="p">()</span>
+<a id="__codelineno-15-60" name="__codelineno-15-60" href="#__codelineno-15-60"></a>    <span class="n">inference</span><span class="p">(</span><span class="n">sentence_pairs</span><span class="p">,</span> <span class="n">custom_settings</span><span class="p">)</span>
+</code></pre></div>
+<blockquote>
+<p>期望输出：相似 / 不相似 / 相似（第 1 对和第 3 对语义相近，第 2 对无关）。</p>
+</blockquote>
+<hr />
+<h2 id="_13">结尾 · 项目总结与自测<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<p><strong>三大任务对比</strong>：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>金融文本分类</th>
+<th>金融信息抽取</th>
+<th>金融文本匹配</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>任务本质</td>
+<td>判断文本属于哪个类别</td>
+<td>按 Schema 抽 JSON 实体</td>
+<td>判断两句话是否相似</td>
+</tr>
+<tr>
+<td>输出格式</td>
+<td>类别名</td>
+<td>JSON</td>
+<td>是/不是</td>
+</tr>
+<tr>
+<td>关键 Prompt 设计</td>
+<td>角色设定 + 每类一个示例</td>
+<td>标准模板 + Schema + JSON 要求</td>
+<td>角色设定 + 正负示例</td>
+</tr>
+<tr>
+<td>额外处理</td>
+<td>无</td>
+<td><strong>clean_response 清洗 JSON</strong></td>
+<td>无</td>
+</tr>
+<tr>
+<td>模型</td>
+<td>qwen2.5:7b（本机已装）</td>
+<td>qwen2.5:7b</td>
+<td>qwen2.5:7b</td>
+</tr>
+</tbody>
+</table>
+<p><strong>通用套路</strong>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>① 角色设定：system 告诉模型"你是谁、做什么任务"
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>② Few-shot 示例：每个输出类别/格式给一个正确例子（user + assistant 配对）
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>③ 任务 Prompt：把当前输入套进标准问法
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>④ 后处理：抽取任务清洗 JSON 输出
+</code></pre></div>
+<p><strong>自测题</strong>：
+1. 提示工程的两大原则是什么？—— 清晰的指令、让模型充足思考
+2. 清晰的指令构造技巧？—— 分隔符、结构化输出、参考示例、角色扮演
+3. 让模型思考的技巧？—— 指定步骤、指导模型求解
+4. 迭代优化的基本步骤？—— 初步想法 → 输入模型 → 结果检查 → 循环迭代
+5. 文本概括的主要方式？—— 限制输出长度、设置关键角度侧重、关键信息抽取
+6. 文本转换的主要方式？—— 文本翻译、语气与写作风格调整、格式转换、拼写及语法纠正
+7. Zero-shot 和 Few-shot 的核心区别？—— Zero-shot 不给例子直接用知识推广；Few-shot 给少量标注样本
+8. 信息抽取为什么需要 clean_response？—— 模型输出常带 <code>```json</code> 包裹，需要清洗成标准 JSON 才能解析</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 大模型Prompt-Tuning方法进阶学习笔记">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                大模型Prompt-Tuning方法进阶学习笔记
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.footer", "content.code.copy", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
