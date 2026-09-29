@@ -1,0 +1,2584 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录学习、项目与踩坑的技术博客">
+      
+      
+        <meta name="author" content="smog-mgy">
+      
+      
+      
+        <link rel="prev" href="../%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%BA%94%E7%94%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">
+      
+      
+        <link rel="next" href="../02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>AI智能客服实战·01 LLM接入与Prompt工程 - 我的技术博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#01llm-prompt" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="我的技术博客" class="md-header__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            我的技术博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AI智能客服实战·01 LLM接入与Prompt工程
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="我的技术博客" class="md-nav__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    我的技术博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于我
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技术文章
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    技术文章
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python函数进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python面向对象进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python模块化与工程结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Git%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Git基础与分支管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%86%99Todo%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%94%B6%E8%8E%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    写Todo命令行项目的收获
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PyTorch%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyTorch框架学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    神经网络基础学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    卷积神经网络学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    循环神经网络学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LLM%E4%B8%BB%E8%A6%81%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主要架构学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LLM%E4%B8%BB%E6%B5%81%E5%BC%80%E6%BA%90%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主流开源大模型学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法入门学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法进阶学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%BA%94%E7%94%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型提示词工程应用学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·01 LLM接入与Prompt工程
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·01 LLM接入与Prompt工程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、一次对话在网络上长什么样
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、一次对话在网络上长什么样">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        请求长什么样
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        响应长什么样
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#chat-completions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        最关键的设定：Chat Completions 是「无状态」的
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#openai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、OpenAI 协议就是"普通话"
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#api-langchain" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、从裸调 API 到 LangChain 三件套
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="三、从裸调 API 到 LangChain 三件套">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#chatopenai" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ChatOpenAI 最小用法
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#env" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、配置管理：把上游收进 .env
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、Prompt 工程化：把话术当资产管
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、Prompt 工程化：把话术当资产管">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#system-prompt" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        System Prompt 三层结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#prompttemplate" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        PromptTemplate：模板与业务分离
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        结构化输出：模型说人话，系统要字段
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、流式输出：别让用户盯着转圈
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、流式输出：别让用户盯着转圈">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流式接口的错误处理（重点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        七、多轮对话：每次请求都是一位新客服
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、多轮对话：每次请求都是一位新客服">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        历史不能无限长：两笔账
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#token" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        裁剪：按 token 预算裁
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        八、代码实现走读（项目结构）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="八、代码实现走读（项目结构）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        模型工厂
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sse" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SSE 对话接口
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        结构化提取接口
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        九、实战验证（本章验收）
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十、本章小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附：本章踩坑记录
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·02 Function Calling工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-RAG%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%9E%84%E5%BB%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·03 RAG基础与知识库构建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-RAG%E8%BF%9B%E9%98%B6%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8E%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·04 RAG进阶混合检索与评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-Workflow%E4%B8%8EAgent%E6%B7%B7%E5%90%88%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·05 Workflow与Agent混合架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB%E4%B8%8E%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·06 意图识别与对话管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E4%BC%9A%E8%AF%9D%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·07 会话上下文管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E5%B7%A5%E5%85%B7%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·08 工具系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-Agent%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%A3%9E%E8%BD%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·09 Agent可观测性与数据飞轮
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·10 模型微调
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-%E5%85%A8%E9%93%BE%E8%B7%AF%E4%B8%B2%E8%81%94%E4%B8%8E%E8%B8%A9%E5%9D%91%E5%A4%8D%E7%9B%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·11 全链路串联与复盘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-01-LLM%E6%8E%A5%E5%85%A5%E4%B8%8EPrompt%E5%B7%A5%E7%A8%8B-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·01 LLM接入与Prompt工程（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-01-LLM%E6%8E%A5%E5%85%A5%E4%B8%8EPrompt%E5%B7%A5%E7%A8%8B-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·01 LLM接入与Prompt工程（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·02 Function Calling工具链（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·02 Function Calling工具链（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-03-RAG%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%9E%84%E5%BB%BA-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·03 RAG基础与知识库构建（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-03-RAG%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%9E%84%E5%BB%BA-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·03 RAG基础与知识库构建（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-04-%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8E%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·04 混合检索与评估体系（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-04-%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8E%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·04 混合检索与评估体系（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-05-Workflow%E4%B8%8EAgent%E6%B7%B7%E5%90%88%E6%9E%B6%E6%9E%84-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·05 Workflow与Agent混合架构（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-05-Workflow%E4%B8%8EAgent%E6%B7%B7%E5%90%88%E6%9E%B6%E6%9E%84-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·05 Workflow与Agent混合架构（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-06-%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB%E4%B8%8E%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·06 意图识别与对话管理（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-06-%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB%E4%B8%8E%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·06 意图识别与对话管理（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-07-%E4%BC%9A%E8%AF%9D%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·07 会话上下文管理（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-07-%E4%BC%9A%E8%AF%9D%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·07 会话上下文管理（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-08-%E5%B7%A5%E5%85%B7%E7%B3%BB%E7%BB%9F%E4%B8%8EMCP%E6%89%A9%E5%B1%95-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·08 工具系统与MCP扩展（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-08-%E5%B7%A5%E5%85%B7%E7%B3%BB%E7%BB%9F%E4%B8%8EMCP%E6%89%A9%E5%B1%95-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·08 工具系统与MCP扩展（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-09-%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%A3%9E%E8%BD%AE-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·09 可观测性与数据飞轮（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-09-%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%A3%9E%E8%BD%AE-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·09 可观测性与数据飞轮（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-10-%E4%B8%BB%E9%A2%98%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·10 主题分类器与模型微调（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-10-%E4%B8%BB%E9%A2%98%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·10 主题分类器与模型微调（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-11-%E5%85%A8%E9%93%BE%E8%B7%AF%E4%B8%B2%E8%81%94%E4%B8%8E%E5%A4%8D%E7%9B%98-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·11 全链路串联与复盘（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-11-%E5%85%A8%E9%93%BE%E8%B7%AF%E4%B8%B2%E8%81%94%E4%B8%8E%E5%A4%8D%E7%9B%98-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·11 全链路串联与复盘（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="01llm-prompt">学习笔记 01｜LLM 接入与 Prompt 工程<a class="headerlink" href="#01llm-prompt" title="Permanent link">&para;</a></h1>
+<p><strong>日期</strong>：2026-06-06
+<strong>标签</strong>：AI Agent · LangChain · Prompt 工程</p>
+<blockquote>
+<p>项目背景：我在做一个电商 AI 智能客服系统（后端 Python + FastAPI，AI 层 LangChain / LangGraph）。
+本章是第一站：先把「跟大模型对话」这条通路打通——说得稳、说得专业、反应快、记得住上文。
+本章不做工具调用、不做 Agent 循环，先跑通纯对话。</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、一次对话在网络上长什么样<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>大模型对外就是一个跑在机房里的 HTTP 服务：你 POST 一个 JSON 过去，它回一个 JSON 回来，和调一个天气接口没有本质区别。如今最通用的形态叫 <strong>Chat Completions</strong>。</p>
+<h3 id="_2">请求长什么样<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"model"</span><span class="p">:</span><span class="w"> </span><span class="s2">"deepseek-v4-flash"</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"messages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="p">{</span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"system"</span><span class="p">,</span><span class="w"> </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"你是喵购商城的智能客服"</span><span class="p">},</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="p">{</span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"user"</span><span class="p">,</span><span class="w"> </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"到手不喜欢能退吗？"</span><span class="p">}</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">  </span><span class="p">]</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="p">}</span>
+</code></pre></div>
+<p>核心是 <code>messages</code> 数组，每条消息带一个 <code>role</code>：</p>
+<table>
+<thead>
+<tr>
+<th>role</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>system</code></td>
+<td>开发者塞给模型的幕后指令，用户看不见，立人设、定规矩全靠它</td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td>用户说的话</td>
+</tr>
+<tr>
+<td><code>assistant</code></td>
+<td>模型自己说过的话（下一轮要由我们把它发回去）</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_3">响应长什么样<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"choices"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">    </span><span class="nt">"message"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assistant"</span><span class="p">,</span><span class="w"> </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"可以的，本店支持七天无理由退货……"</span><span class="p">},</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="nt">"finish_reason"</span><span class="p">:</span><span class="w"> </span><span class="s2">"stop"</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="p">}],</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nt">"usage"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"prompt_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">28</span><span class="p">,</span><span class="w"> </span><span class="nt">"completion_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">45</span><span class="p">,</span><span class="w"> </span><span class="nt">"total_tokens"</span><span class="p">:</span><span class="w"> </span><span class="mi">73</span><span class="p">}</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>message.content</code>：回答本体</li>
+<li><code>finish_reason</code>：<code>stop</code> 是自然说完；<code>length</code> 是被长度上限硬掐断（回答可能说到一半就断了）</li>
+<li><code>usage</code>：本次调用的账单，按 <strong>token</strong> 计费。注意 token ≠ 字数，中文里可能一个字算一个 token，也可能半个词算一个，各家切法不同</li>
+</ul>
+<h3 id="chat-completions">最关键的设定：Chat Completions 是「无状态」的<a class="headerlink" href="#chat-completions" title="Permanent link">&para;</a></h3>
+<p>服务器不保存任何对话，每次调用都是全新的一单。多轮对话的"记忆"全靠调用方自己攒——后面多轮对话一节会展开讲。</p>
+<hr />
+<h2 id="openai">二、OpenAI 协议就是"普通话"<a class="headerlink" href="#openai" title="Permanent link">&para;</a></h2>
+<p>各家模型服务（DeepSeek、Qwen、GLM）连同本地运行工具 Ollama，全都提供 OpenAI 兼容接口，业内叫 <strong>OpenAI 协议</strong>。换上游 = 改 <code>base_url</code> + 换 API key，代码一行不用动。</p>
+<p>目前市面上有三套协议在流通：</p>
+<table>
+<thead>
+<tr>
+<th>协议</th>
+<th>端点</th>
+<th>现状</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Chat Completions</td>
+<td><code>/v1/chat/completions</code></td>
+<td>覆盖面最广，几乎所有模型服务都支持</td>
+</tr>
+<tr>
+<td>Messages（Anthropic）</td>
+<td><code>/v1/messages</code></td>
+<td>Claude 原生协议，国内厂商（智谱/MiniMax/Kimi）陆续开了兼容端点</td>
+</tr>
+<tr>
+<td>Responses API</td>
+<td><code>/v1/responses</code></td>
+<td>OpenAI 2025 年主推，国内覆盖面还很薄</td>
+</tr>
+</tbody>
+</table>
+<p><strong>我的项目统一用第一套 Chat Completions</strong>——它是我换任何一家上游都能接上的那套，把 <code>base_url</code> 指向 DeepSeek、硅基流动、本地 Ollama 都能跑。</p>
+<hr />
+<h2 id="api-langchain">三、从裸调 API 到 LangChain 三件套<a class="headerlink" href="#api-langchain" title="Permanent link">&para;</a></h2>
+<p>裸调能跑通 demo，但撑不起系统：prompt 散落在代码里改一处漏三处、模型输出解析逻辑到处重复、换模型要翻工。所以我选 LangChain（1.0 系列，本仓库钉 1.3.13）。</p>
+<p>本章用到三个组件：</p>
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>职责</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>ChatOpenAI</code></td>
+<td>管调模型，把 HTTP 收发、消息拼装、异常重试收进一个对象</td>
+</tr>
+<tr>
+<td><code>PromptTemplate</code> / <code>ChatPromptTemplate</code></td>
+<td>管话术模板，固定句式 + 变量槽</td>
+</tr>
+<tr>
+<td><code>with_structured_output</code></td>
+<td>结构化输出，把"格式要求 + 校验"焊进模型调用</td>
+</tr>
+</tbody>
+</table>
+<h3 id="chatopenai">ChatOpenAI 最小用法<a class="headerlink" href="#chatopenai" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_openai</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatOpenAI</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">llm</span> <span class="o">=</span> <span class="n">ChatOpenAI</span><span class="p">(</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>    <span class="n">model</span><span class="o">=</span><span class="s2">"deepseek-v4-flash"</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>    <span class="n">base_url</span><span class="o">=</span><span class="s2">"https://api.deepseek.com/v1"</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>    <span class="n">api_key</span><span class="o">=</span><span class="s2">"sk-xxx"</span><span class="p">,</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="p">)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="n">reply</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">"到手不喜欢能退吗？"</span><span class="p">)</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="nb">print</span><span class="p">(</span><span class="n">reply</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="env">四、配置管理：把上游收进 .env<a class="headerlink" href="#env" title="Permanent link">&para;</a></h2>
+<p>生产系统里模型不止一个（聊天、嵌入、重排是三件不同的事），地址、模型名、密钥三样都是配置。我把它们从代码挪进 <code>.env</code>：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># 聊天上游</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="nv">CHAT_BASE_URL</span><span class="o">=</span>https://api.siliconflow.cn/v1
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="nv">CHAT_MODEL</span><span class="o">=</span>deepseek-ai/DeepSeek-V4-Flash
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="nv">CHAT_API_KEY</span><span class="o">=</span>sk-xxx
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># 嵌入（第3章建知识库用）</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="nv">EMBED_API_KEY</span><span class="o">=</span>sk-xxx<span class="w">        </span><span class="c1"># BAAI/bge-m3</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># 重排（第4章用）</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="nv">RERANK_API_KEY</span><span class="o">=</span>sk-xxx<span class="w">       </span><span class="c1"># BAAI/bge-reranker-v2-m3</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="c1"># 历史裁剪 token 预算</span>
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a><span class="nv">TOKEN_BUDGET</span><span class="o">=</span><span class="m">2000</span>
+</code></pre></div>
+<p><strong>踩坑提醒</strong>：<code>CHAT_MODEL</code> 必须写上游认的真实模型名，没有别名这一层。同一个 DeepSeek V4 Flash，官方叫 <code>deepseek-v4-flash</code>，硅基流动上叫 <code>deepseek-ai/DeepSeek-V4-Flash</code>，写错了上游回一句 <code>Model does not exist</code>。</p>
+<p>用 pydantic-settings 加载：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic_settings</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseSettings</span><span class="p">,</span> <span class="n">SettingsConfigDict</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">Settings</span><span class="p">(</span><span class="n">BaseSettings</span><span class="p">):</span>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">model_config</span> <span class="o">=</span> <span class="n">SettingsConfigDict</span><span class="p">(</span><span class="n">env_file</span><span class="o">=</span><span class="s2">".env"</span><span class="p">,</span> <span class="n">extra</span><span class="o">=</span><span class="s2">"ignore"</span><span class="p">)</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="c1"># 跟着账号走的必填，故意不给默认值：缺了在启动就报 Field required，直接指向 .env</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="n">chat_model</span><span class="p">:</span> <span class="nb">str</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>    <span class="n">chat_base_url</span><span class="p">:</span> <span class="nb">str</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="n">chat_api_key</span><span class="p">:</span> <span class="nb">str</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="c1"># 跟着代码走的调优常量，给默认值留在代码里</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>    <span class="n">token_budget</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">2000</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a><span class="n">settings</span> <span class="o">=</span> <span class="n">Settings</span><span class="p">()</span>  <span class="c1"># 模块级单例</span>
+</code></pre></div>
+<p>要点：<code>extra="ignore"</code> 让 <code>.env</code> 里多出来的键不炸启动；字段分"跟着账号走（必填）/跟着代码走（默认值）"两类，把配置缺失的报错时机提前到启动那一刻。</p>
+<hr />
+<h2 id="prompt">五、Prompt 工程化：把话术当资产管<a class="headerlink" href="#prompt" title="Permanent link">&para;</a></h2>
+<p>真人客服团队有一整套家当：培训手册、话术库、工单表单。Prompt 工程化就是把这套管理搬进代码：</p>
+<table>
+<thead>
+<tr>
+<th>真人客服</th>
+<th>代码对应</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>培训手册</td>
+<td>System Prompt</td>
+</tr>
+<tr>
+<td>话术库</td>
+<td>PromptTemplate</td>
+</tr>
+<tr>
+<td>工单表单</td>
+<td>with_structured_output</td>
+</tr>
+</tbody>
+</table>
+<h3 id="system-prompt">System Prompt 三层结构<a class="headerlink" href="#system-prompt" title="Permanent link">&para;</a></h3>
+<p>一份像样的客服 System Prompt 至少交代三层：<strong>我是谁、管什么、什么不能碰</strong>。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>你是「喵喵优选」电商平台的智能客服「小喵」。
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>## 角色
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>- 语气亲切专业，回答简洁，中文作答，适度使用礼貌用语，不卖萌刷屏。
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>## 职责范围
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>- 解答商品咨询、订单、物流、售后（退款/换货/维修/投诉）相关问题。
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>- 与购物无关的话题（写代码、闲聊时政等），礼貌说明职责范围并引导回购物相关问题。
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>## 行为约束（必须遵守）
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>- 不臆造任何订单、物流、库存、价格信息；查不到就明说，并引导用户提供订单号。
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>- 本阶段没有查询系统的权限，涉及具体订单状态时，告知用户会转人工核实，不编造进度。
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>- 不承诺无法保证的赔偿或时效；退款政策表述统一为「以平台售后规则为准」。
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>- 用户情绪激动时先安抚再处理问题，不与用户争执。
+</code></pre></div>
+<p>关键认知：
+- 模型训练时被教成<strong>优先遵从 system 消息</strong>，这一条等于攥在开发者手里的岗前培训
+- 行为约束每条都要<strong>反着写</strong>（不许做什么），别指望模型自己懂分寸
+- 红线必须立在 system 里、别混进用户消息——这到后面讲历史裁剪时还有第二层用意
+- 但 System Prompt 说到底在"劝"，劝不住的那一小撮拦不住，事实兜底要靠后面章节的检索和拒答</p>
+<h3 id="prompttemplate">PromptTemplate：模板与业务分离<a class="headerlink" href="#prompttemplate" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.prompts</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChatPromptTemplate</span><span class="p">,</span> <span class="n">MessagesPlaceholder</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">CUSTOMER_SERVICE_PROMPT</span> <span class="o">=</span> <span class="n">ChatPromptTemplate</span><span class="o">.</span><span class="n">from_messages</span><span class="p">(</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>    <span class="p">[</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>        <span class="p">(</span><span class="s2">"system"</span><span class="p">,</span> <span class="n">CUSTOMER_SERVICE_SYSTEM</span><span class="p">),</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>        <span class="n">MessagesPlaceholder</span><span class="p">(</span><span class="s2">"history"</span><span class="p">),</span>   <span class="c1"># 多轮历史整段展开成多条消息</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>    <span class="p">]</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="p">)</span>
+</code></pre></div>
+<ul>
+<li>花括号是变量槽，<code>invoke</code> 时用字典填；漏填当场抛错，不会揣着空槽发请求</li>
+<li><code>MessagesPlaceholder("history")</code> 是多轮对话接口：传一个消息列表进去整段展开，<strong>而不是拼成字符串</strong>。后面工具调用、工具结果都是消息，只有保持消息结构才装得下</li>
+<li>竖线 <code>|</code> 是 LangChain 组合语法，把模板和模型串成链，数据从左往右淌</li>
+</ul>
+<h3 id="_4">结构化输出：模型说人话，系统要字段<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">pydantic</span><span class="w"> </span><span class="kn">import</span> <span class="n">BaseModel</span><span class="p">,</span> <span class="n">Field</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">class</span><span class="w"> </span><span class="nc">AfterSalesTicket</span><span class="p">(</span><span class="n">BaseModel</span><span class="p">):</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">    </span><span class="sd">"""从用户售后描述中提取的结构化工单。"""</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="n">order_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>        <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">description</span><span class="o">=</span><span class="s2">"订单号，原文未出现则为 null，禁止编造"</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>    <span class="p">)</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>    <span class="n">request_type</span><span class="p">:</span> <span class="n">RequestType</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"用户诉求类型"</span><span class="p">)</span>  <span class="c1"># 枚举兜底</span>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>    <span class="n">expected_solution</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">description</span><span class="o">=</span><span class="s2">"用户期望的处理方案，一句话概括"</span><span class="p">)</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="n">structured_llm</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">with_structured_output</span><span class="p">(</span><span class="n">AfterSalesTicket</span><span class="p">)</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a><span class="n">chain</span> <span class="o">=</span> <span class="n">prompt</span> <span class="o">|</span> <span class="n">structured_llm</span>
+</code></pre></div>
+<ul>
+<li><code>description</code> 不是注释！它会被翻译成模型看到的 schema，属于提示词的一部分</li>
+<li>模型支持原生结构化输出的（OpenAI/Claude）走原生能力；不支持的自动改走工具调用方式</li>
+<li>老代码里的 <code>PydanticOutputParser</code> 效果类似，但格式说明要手动拼进 prompt、文本要自己解析校验；<code>with_structured_output</code> 把两步收成一步</li>
+</ul>
+<p><strong>一个真实的模型坑</strong>：原文没有订单号时，模型偶尔会传字符串 <code>"null"</code> 或 <code>"无"</code> 进来。除了在提示词里写"千万不要传占位文本"，我在 pydantic 里加了一道 validator 兜底：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="nd">@field_validator</span><span class="p">(</span><span class="s2">"order_id"</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"before"</span><span class="p">)</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="nd">@classmethod</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">_normalize_missing_order_id</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">v</span><span class="p">):</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="n">v</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">in</span> <span class="p">{</span><span class="s2">""</span><span class="p">,</span> <span class="s2">"null"</span><span class="p">,</span> <span class="s2">"none"</span><span class="p">,</span> <span class="s2">"n/a"</span><span class="p">,</span> <span class="s2">"无"</span><span class="p">}:</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>        <span class="k">return</span> <span class="kc">None</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>    <span class="k">return</span> <span class="n">v</span>
+</code></pre></div>
+<p>prompt 那道是劝，validator 这道是兜，两道防线一前一后。</p>
+<hr />
+<h2 id="_5">六、流式输出：别让用户盯着转圈<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>模型天生是边想边说的（一个 token 一个 token 往外蹦），非流式接口只是攒齐了才交货。流式要做的事：<strong>生成一个就递一个</strong>，用户看到文字逐字往外冒。</p>
+<p>三个方案对比：</p>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>特点</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>轮询</td>
+<td>前端每秒问一次，请求满天飞</td>
+<td>聊天场景基本不考虑</td>
+</tr>
+<tr>
+<td>WebSocket</td>
+<td>全双工长连接，能推能收</td>
+<td>我们的数据方向是单向的，没必要为单向流搭双向架子</td>
+</tr>
+<tr>
+<td><strong>SSE</strong></td>
+<td>HTTP 原生单向推送，一条迟迟不关闭的响应</td>
+<td><strong>正合适</strong></td>
+</tr>
+</tbody>
+</table>
+<p>SSE 格式很简单：响应头 <code>text/event-stream</code>，正文一行行 <code>data:</code> 打头的消息、空行隔开，最后以 <code>data: [DONE]</code> 结束：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>data: {"delta": "您"}
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>data: {"delta": "好"}
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>data: [DONE]
+</code></pre></div>
+<p>顺带一提：OpenAI/Anthropic 协议自己的流式响应本来就是 SSE 格式，从上游收到的、推给前端的本来就是一路东西。</p>
+<h3 id="_6">流式接口的错误处理（重点）<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>响应头在第一帧发出去那一刻就定了，之后改不了状态码——<strong>错误只能以帧的形式发出去，不能抛 HTTP 500</strong>。前端靠 <code>event: error</code> 这一帧知道出事了：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">_sse</span><span class="p">(</span><span class="n">payload</span><span class="p">:</span> <span class="nb">dict</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="k">return</span> <span class="sa">f</span><span class="s2">"data: </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">"</span>  <span class="c1"># ensure_ascii=False 不能省，否则中文变转义序列</span>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="k">def</span><span class="w"> </span><span class="nf">_sse_error</span><span class="p">(</span><span class="n">message</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="k">yield</span> <span class="s2">"event: error</span><span class="se">\n</span><span class="s2">"</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>    <span class="k">yield</span> <span class="n">_sse</span><span class="p">({</span><span class="s2">"message"</span><span class="p">:</span> <span class="n">message</span><span class="p">})</span>
+</code></pre></div>
+<hr />
+<h2 id="_7">七、多轮对话：每次请求都是一位新客服<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p><strong>真相</strong>：模型没有记忆，所谓上下文全是调用方自己攒的。每次请求把 system、历次 user、历次 assistant 按顺序码进 <code>messages</code>，模型现场通读一遍，才接得住"那它多少钱？"里的"它"。</p>
+<p>assistant 的话必须发回去——不发，模型连自己上一轮说了什么都没法接。</p>
+<h3 id="_8">历史不能无限长：两笔账<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>钱的账</strong>：每次请求重发全部历史，<code>prompt_tokens</code> 随轮次涨，越聊越贵</li>
+<li><strong>容量的账</strong>：上下文窗口有硬上限，塞爆直接报错；历史里混着噪声还会搅浑当前问题</li>
+</ol>
+<h3 id="token">裁剪：按 token 预算裁<a class="headerlink" href="#token" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">trim_history</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">,</span> <span class="n">budget</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    <span class="n">system</span><span class="p">,</span> <span class="n">history</span> <span class="o">=</span> <span class="n">messages</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">messages</span><span class="p">[</span><span class="mi">1</span><span class="p">:]</span>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    <span class="k">while</span> <span class="n">history</span> <span class="ow">and</span> <span class="n">count_tokens</span><span class="p">(</span><span class="n">system</span><span class="p">,</span> <span class="o">*</span><span class="n">history</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">budget</span><span class="p">:</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>        <span class="n">history</span> <span class="o">=</span> <span class="n">history</span><span class="p">[</span><span class="mi">2</span><span class="p">:]</span>   <span class="c1"># 掐掉最老的一问一答</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>    <span class="k">return</span> <span class="p">[</span><span class="n">system</span><span class="p">,</span> <span class="o">*</span><span class="n">history</span><span class="p">]</span>
+</code></pre></div>
+<p>两个留神点：
+- <strong>扔要成对扔</strong>：一问一答一起掐，留半截会打乱 user/assistant 交替节奏，有的模型服务对顺序挑剔得很
+- <strong>数 token 用 tokenizer 实算</strong>，别拿字数瞎估</p>
+<p>用 LangChain 现成的 <code>trim_messages</code> 更省心：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_core.messages.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">count_tokens_approximately</span><span class="p">,</span> <span class="n">trim_messages</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">trim_history</span><span class="p">(</span><span class="n">messages</span><span class="p">,</span> <span class="n">max_tokens</span><span class="p">):</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>    <span class="k">return</span> <span class="n">trim_messages</span><span class="p">(</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>        <span class="n">messages</span><span class="p">,</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>        <span class="n">strategy</span><span class="o">=</span><span class="s2">"last"</span><span class="p">,</span>          <span class="c1"># 从后往前保留，最近的通常最相关</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>        <span class="n">token_counter</span><span class="o">=</span><span class="n">count_tokens_approximately</span><span class="p">,</span>  <span class="c1"># 近似计数，省一次真实分词</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>        <span class="n">max_tokens</span><span class="o">=</span><span class="n">max_tokens</span><span class="p">,</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>        <span class="n">start_on</span><span class="o">=</span><span class="s2">"human"</span><span class="p">,</span>         <span class="c1"># 裁完从一条用户消息开头，不出现开局就是模型回话的怪结构</span>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>        <span class="n">allow_partial</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>      <span class="c1"># 不切半条消息，宁可少留一轮</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>    <span class="p">)</span>
+</code></pre></div>
+<p><code>system</code> 永远原样保留——这就是前面说"规矩必须立在 system 里"的第二层用意：人设和红线不能跟着历史一起被裁掉。</p>
+<hr />
+<h2 id="_9">八、代码实现走读（项目结构）<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<p>第 1 章最终的项目骨架：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>app/
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>  main.py              # FastAPI 入口（装配路由）
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>  config.py            # pydantic-settings 读 .env
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>  api/chat.py          # POST /api/chat（SSE 流式对话）
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>  api/extract.py       # POST /api/extract（结构化提取）
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>  core/llm.py          # ChatOpenAI 工厂（get_chat_model）
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>  core/prompts.py      # Prompt 模板集中管理
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>  core/memory.py       # 会话存储 + token 预算裁剪
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>  schemas/             # pydantic 请求/响应/结构化提取模型
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a>scripts/dev.sh         # 单入口启动脚本
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>tests/                 # pytest 单测
+</code></pre></div>
+<h3 id="_10">模型工厂<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_chat_model</span><span class="p">(</span><span class="n">streaming</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ChatOpenAI</span><span class="p">:</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a><span class="w">    </span><span class="sd">"""直连聊天上游。地址、模型名、密钥全从 .env 来，换上游不动这里。"""</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    <span class="k">return</span> <span class="n">ChatOpenAI</span><span class="p">(</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>        <span class="n">model</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">chat_model</span><span class="p">,</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>        <span class="n">base_url</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">chat_base_url</span><span class="p">,</span>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>        <span class="n">api_key</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">chat_api_key</span><span class="p">,</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>        <span class="n">streaming</span><span class="o">=</span><span class="n">streaming</span><span class="p">,</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>        <span class="n">temperature</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>    <span class="p">)</span>
+</code></pre></div>
+<h3 id="sse">SSE 对话接口<a class="headerlink" href="#sse" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/api/chat"</span><span class="p">)</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">chat</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">ChatRequest</span><span class="p">,</span> <span class="n">model</span><span class="p">:</span> <span class="n">BaseChatModel</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_model</span><span class="p">)):</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    <span class="n">history</span> <span class="o">=</span> <span class="p">[</span><span class="o">*</span><span class="n">store</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">session_id</span><span class="p">),</span> <span class="n">HumanMessage</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">message</span><span class="p">)]</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>    <span class="n">history</span> <span class="o">=</span> <span class="n">trim_history</span><span class="p">(</span><span class="n">history</span><span class="p">,</span> <span class="n">max_tokens</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">token_budget</span><span class="p">)</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>    <span class="n">messages</span> <span class="o">=</span> <span class="n">CUSTOMER_SERVICE_PROMPT</span><span class="o">.</span><span class="n">format_messages</span><span class="p">(</span><span class="n">history</span><span class="o">=</span><span class="n">history</span><span class="p">)</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>    <span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">event_stream</span><span class="p">():</span>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>        <span class="n">chunks</span> <span class="o">=</span> <span class="p">[]</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>        <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>            <span class="k">async</span> <span class="k">for</span> <span class="n">chunk</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">astream</span><span class="p">(</span><span class="n">messages</span><span class="p">):</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>                <span class="n">text</span> <span class="o">=</span> <span class="n">chunk</span><span class="o">.</span><span class="n">content</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">chunk</span><span class="o">.</span><span class="n">content</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">else</span> <span class="s2">""</span>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>                <span class="k">if</span> <span class="ow">not</span> <span class="n">text</span><span class="p">:</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>                    <span class="k">continue</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>                <span class="n">chunks</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>                <span class="k">yield</span> <span class="sa">f</span><span class="s2">"data: </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s1">'delta'</span><span class="p">:</span><span class="w"> </span><span class="n">text</span><span class="p">},</span><span class="w"> </span><span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">"</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>            <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">"上游 LLM 流式调用失败"</span><span class="p">)</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>            <span class="k">yield</span> <span class="s2">"event: error</span><span class="se">\n</span><span class="s2">"</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>            <span class="k">yield</span> <span class="sa">f</span><span class="s2">"data: </span><span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">({</span><span class="s1">'message'</span><span class="p">:</span><span class="w"> </span><span class="s1">'上游模型暂时不可用，请稍后重试'</span><span class="p">},</span><span class="w"> </span><span class="n">ensure_ascii</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">"</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>            <span class="k">return</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>        <span class="n">store</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">session_id</span><span class="p">,</span> <span class="n">HumanMessage</span><span class="p">(</span><span class="n">req</span><span class="o">.</span><span class="n">message</span><span class="p">),</span> <span class="n">AIMessage</span><span class="p">(</span><span class="s2">""</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">chunks</span><span class="p">)))</span>
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>        <span class="k">yield</span> <span class="s2">"data: [DONE]</span><span class="se">\n\n</span><span class="s2">"</span>
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>    <span class="k">return</span> <span class="n">StreamingResponse</span><span class="p">(</span><span class="n">event_stream</span><span class="p">(),</span> <span class="n">media_type</span><span class="o">=</span><span class="s2">"text/event-stream"</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_11">结构化提取接口<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="k">def</span><span class="w"> </span><span class="nf">get_extractor</span><span class="p">()</span> <span class="o">-&gt;</span> <span class="n">Runnable</span><span class="p">:</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">get_chat_model</span><span class="p">()</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    <span class="k">return</span> <span class="n">EXTRACT_PROMPT</span> <span class="o">|</span> <span class="n">model</span><span class="o">.</span><span class="n">with_structured_output</span><span class="p">(</span><span class="n">AfterSalesTicket</span><span class="p">)</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a><span class="nd">@router</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">"/api/extract"</span><span class="p">,</span> <span class="n">response_model</span><span class="o">=</span><span class="n">AfterSalesTicket</span><span class="p">)</span>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">extract</span><span class="p">(</span><span class="n">req</span><span class="p">:</span> <span class="n">ExtractRequest</span><span class="p">,</span> <span class="n">extractor</span><span class="p">:</span> <span class="n">Runnable</span> <span class="o">=</span> <span class="n">Depends</span><span class="p">(</span><span class="n">get_extractor</span><span class="p">)):</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>    <span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>        <span class="k">return</span> <span class="k">await</span> <span class="n">extractor</span><span class="o">.</span><span class="n">ainvoke</span><span class="p">({</span><span class="s2">"text"</span><span class="p">:</span> <span class="n">req</span><span class="o">.</span><span class="n">text</span><span class="p">})</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">exc</span><span class="p">:</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>        <span class="n">logger</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s2">"结构化提取失败"</span><span class="p">)</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>        <span class="k">raise</span> <span class="n">HTTPException</span><span class="p">(</span><span class="n">status_code</span><span class="o">=</span><span class="mi">502</span><span class="p">,</span> <span class="n">detail</span><span class="o">=</span><span class="s2">"上游模型暂时不可用，请稍后重试"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">exc</span>
+</code></pre></div>
+<p>设计细节：
+- <code>Depends(get_extractor)</code> 让链每次请求现建，测试时能整条替换（<code>app.dependency_overrides</code>），不用打补丁
+- 上游异常翻译成 502 + 一句人话，原始异常只进日志——上游报错文本常带内部地址和模型名
+- 单测用 <code>FakeListChatModel</code> / <code>RunnableLambda</code> 替身，不打真实模型</p>
+<hr />
+<h2 id="_12">九、实战验证（本章验收）<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<p>启动：<code>make dev</code>（uvicorn :8000）</p>
+<p><strong>1. 流式对话</strong></p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>curl<span class="w"> </span>-sN<span class="w"> </span>http://localhost:8000/api/chat<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="w">  </span>-d<span class="w"> </span><span class="s1">'{"session_id": "s1", "message": "你们卖猫粮吗?"}'</span>
+</code></pre></div>
+看到逐 token 的 <code>data: {"delta": ...}</code> 帧，最后 <code>[DONE]</code>。</p>
+<p><strong>2. 两轮上下文</strong></p>
+<p><div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="nv">SID</span><span class="o">=</span><span class="s2">"demo-1"</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="c1"># 第一轮</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>curl<span class="w"> </span>-sN<span class="w"> </span>http://localhost:8000/api/chat<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">"{\"session_id\": \"</span><span class="nv">$SID</span><span class="s2">\", \"message\": \"我叫王小明，昨天买了你们的智能猫砂盆\"}"</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="c1"># 第二轮：考上下文</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>curl<span class="w"> </span>-sN<span class="w"> </span>http://localhost:8000/api/chat<span class="w"> </span>-H<span class="w"> </span><span class="s1">'Content-Type: application/json'</span><span class="w"> </span><span class="se">\</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">  </span>-d<span class="w"> </span><span class="s2">"{\"session_id\": \"</span><span class="nv">$SID</span><span class="s2">\", \"message\": \"还记得我叫什么、买了什么吗?\"}"</span>
+</code></pre></div>
+第二轮回复能复述出"王小明"和"智能猫砂盆"即通过。</p>
+<p><strong>3. 结构化提取 + 标注样例评估</strong></p>
+<p>预置 5 条标注好的售后样例（覆盖：有订单号退款、换货、订单号缺失、投诉、闲聊兜底），跑评估脚本：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>uv<span class="w"> </span>run<span class="w"> </span>python<span class="w"> </span>scripts/eval_extract.py
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="c1"># 期望 5/5 通过；expected_solution 人工目检合理</span>
+</code></pre></div>
+<p>调不到 5/5 时先调 <code>EXTRACT_SYSTEM</code>（prompt 调优允许迭代），连续 3 次调不好就停下来对着样例看输出。</p>
+<hr />
+<h2 id="_13">十、本章小结<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>协议</strong>：Chat Completions 是"普通话"，换上游就是改 <code>base_url</code> + 模型名</li>
+<li><strong>工程化</strong>：LangChain 三件套（ChatOpenAI / ChatPromptTemplate / with_structured_output）把调用、话术、解析收拾服帖</li>
+<li><strong>体验</strong>：SSE 流式让回答逐字蹦到用户眼前；记住错误只能发帧、不能抛 500</li>
+<li><strong>记忆</strong>：模型无状态，上下文靠调用方攒；历史裁剪按 token 预算、成对扔、system 永不裁</li>
+<li><strong>配置</strong>：跟着账号走的必填无默认值，跟着代码走的留默认值；报错时机提前到启动</li>
+</ul>
+<p>客服从"会聊天"到"能办事"，就差让模型学会使工具——那是第 2 章 Function Calling 的戏份，顺带要把项目骨架和数据库搭起来。</p>
+<hr />
+<h2 id="_14">附：本章踩坑记录<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>现象</th>
+<th>解法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>模型名写错</td>
+<td>启动正常，第一次调用报 <code>Model does not exist</code></td>
+<td><code>CHAT_MODEL</code> 写上游认的真实名，无别名层</td>
+</tr>
+<tr>
+<td>中文变转义</td>
+<td>SSE 帧里中文变成 <code>\uXXXX</code></td>
+<td>JSON 序列化必须 <code>ensure_ascii=False</code></td>
+</tr>
+<tr>
+<td>模型传占位符</td>
+<td>order_id 填了字符串 "null"</td>
+<td>prompt 劝 + pydantic <code>field_validator</code> 兜</td>
+</tr>
+<tr>
+<td>日志看不到</td>
+<td><code>logger.info</code> 不输出</td>
+<td>uvicorn 默认不给应用 logger 配 handler，手动加 StreamHandler，<code>propagate=False</code> 隔离访问日志</td>
+</tr>
+<tr>
+<td>中文编码</td>
+<td>Windows 下读带中文的 md/jsonl 抛 UnicodeDecodeError</td>
+<td>启动脚本 <code>export PYTHONUTF8=1</code>，在 Python 启动前生效</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%BA%94%E7%94%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-footer__link md-footer__link--prev" aria-label="上一页: 大模型提示词工程应用学习笔记">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                大模型提示词工程应用学习笔记
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-footer__link md-footer__link--next" aria-label="下一页: AI智能客服实战·02 Function Calling工具链">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                AI智能客服实战·02 Function Calling工具链
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.footer", "content.code.copy", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

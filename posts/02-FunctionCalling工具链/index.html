@@ -1,0 +1,2470 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录学习、项目与踩坑的技术博客">
+      
+      
+        <meta name="author" content="smog-mgy">
+      
+      
+      
+        <link rel="prev" href="../01-LangChain%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A5%E5%85%A5%E4%B8%8EPrompt%E5%B7%A5%E7%A8%8B/">
+      
+      
+        <link rel="next" href="../03-RAG%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%9E%84%E5%BB%BA/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>AI智能客服实战·02 Function Calling工具链 - 我的技术博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#02function-calling" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="我的技术博客" class="md-header__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            我的技术博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AI智能客服实战·02 Function Calling工具链
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="我的技术博客" class="md-nav__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    我的技术博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于我
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技术文章
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    技术文章
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python函数进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python面向对象进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python模块化与工程结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Git%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Git基础与分支管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%86%99Todo%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%94%B6%E8%8E%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    写Todo命令行项目的收获
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PyTorch%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyTorch框架学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    神经网络基础学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    卷积神经网络学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    循环神经网络学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LLM%E4%B8%BB%E8%A6%81%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主要架构学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LLM%E4%B8%BB%E6%B5%81%E5%BC%80%E6%BA%90%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主流开源大模型学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法入门学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法进阶学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%BA%94%E7%94%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型提示词工程应用学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-LangChain%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A5%E5%85%A5%E4%B8%8EPrompt%E5%B7%A5%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·01 LLM接入与Prompt工程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·02 Function Calling工具链
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·02 Function Calling工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#function-calling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、为什么需要 Function Calling
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#function-calling_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、Function Calling 原理：模型只张嘴，不动手
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、Function Calling 原理：模型只张嘴，不动手">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        流程四步（模型出场两次）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#json" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        协议层面：三份 JSON
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、打地基：项目骨架与四张表
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、五个业务工具的设计
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="四、五个业务工具的设计">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三条设计原则
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query_order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        query_order：订单查询
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query_product" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        query_product：商品查询
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query_logistics" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        query_logistics：物流查询
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#query_faq" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        query_faq：政策与常见问题查询
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#create_ticket" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        create_ticket：转人工工单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、@tool 装饰器：把函数亮给模型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、@tool 装饰器：把函数亮给模型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        参数描述的两种写法
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#injectedtoolarg" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        模型看不见的参数：InjectedToolArg
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、执行链：注册、分发与容错
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、执行链：注册、分发与容错">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        注册
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        分发
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        容错：工具执行失败分三种，处理各不相同
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        超时与重试
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        七、结果回灌：把数据翻译给模型听
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        八、单轮调用：全流程串起来
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#query_faq_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        九、章尾翻车现场：query_faq 查了个空
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十、实战验收（本章验证方法）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十、实战验收（本章验证方法）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        编排核心设计（两个出口共用一个核心）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十一、本章小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附：本章踩坑记录
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-RAG%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%9E%84%E5%BB%BA/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·03 RAG基础与知识库构建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-RAG%E8%BF%9B%E9%98%B6%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8E%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·04 RAG进阶混合检索与评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-Workflow%E4%B8%8EAgent%E6%B7%B7%E5%90%88%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·05 Workflow与Agent混合架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB%E4%B8%8E%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·06 意图识别与对话管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E4%BC%9A%E8%AF%9D%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·07 会话上下文管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E5%B7%A5%E5%85%B7%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·08 工具系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-Agent%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%A3%9E%E8%BD%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·09 Agent可观测性与数据飞轮
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·10 模型微调
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-%E5%85%A8%E9%93%BE%E8%B7%AF%E4%B8%B2%E8%81%94%E4%B8%8E%E8%B8%A9%E5%9D%91%E5%A4%8D%E7%9B%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·11 全链路串联与复盘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-01-LLM%E6%8E%A5%E5%85%A5%E4%B8%8EPrompt%E5%B7%A5%E7%A8%8B-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·01 LLM接入与Prompt工程（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-01-LLM%E6%8E%A5%E5%85%A5%E4%B8%8EPrompt%E5%B7%A5%E7%A8%8B-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·01 LLM接入与Prompt工程（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·02 Function Calling工具链（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·02 Function Calling工具链（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-03-RAG%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%9E%84%E5%BB%BA-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·03 RAG基础与知识库构建（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-03-RAG%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%9E%84%E5%BB%BA-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·03 RAG基础与知识库构建（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-04-%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8E%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·04 混合检索与评估体系（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-04-%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8E%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·04 混合检索与评估体系（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-05-Workflow%E4%B8%8EAgent%E6%B7%B7%E5%90%88%E6%9E%B6%E6%9E%84-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·05 Workflow与Agent混合架构（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-05-Workflow%E4%B8%8EAgent%E6%B7%B7%E5%90%88%E6%9E%B6%E6%9E%84-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·05 Workflow与Agent混合架构（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-06-%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB%E4%B8%8E%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·06 意图识别与对话管理（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-06-%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB%E4%B8%8E%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·06 意图识别与对话管理（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-07-%E4%BC%9A%E8%AF%9D%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·07 会话上下文管理（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-07-%E4%BC%9A%E8%AF%9D%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·07 会话上下文管理（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-08-%E5%B7%A5%E5%85%B7%E7%B3%BB%E7%BB%9F%E4%B8%8EMCP%E6%89%A9%E5%B1%95-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·08 工具系统与MCP扩展（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-08-%E5%B7%A5%E5%85%B7%E7%B3%BB%E7%BB%9F%E4%B8%8EMCP%E6%89%A9%E5%B1%95-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·08 工具系统与MCP扩展（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-09-%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%A3%9E%E8%BD%AE-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·09 可观测性与数据飞轮（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-09-%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%A3%9E%E8%BD%AE-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·09 可观测性与数据飞轮（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-10-%E4%B8%BB%E9%A2%98%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·10 主题分类器与模型微调（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-10-%E4%B8%BB%E9%A2%98%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·10 主题分类器与模型微调（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-11-%E5%85%A8%E9%93%BE%E8%B7%AF%E4%B8%B2%E8%81%94%E4%B8%8E%E5%A4%8D%E7%9B%98-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·11 全链路串联与复盘（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-11-%E5%85%A8%E9%93%BE%E8%B7%AF%E4%B8%B2%E8%81%94%E4%B8%8E%E5%A4%8D%E7%9B%98-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·11 全链路串联与复盘（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="02function-calling">学习笔记 02｜Function Calling 工具链：让模型学会"查数据"<a class="headerlink" href="#02function-calling" title="Permanent link">&para;</a></h1>
+<p><strong>日期</strong>：2026-06-12
+<strong>标签</strong>：AI Agent · Function Calling · 工具链</p>
+<blockquote>
+<p>上一章收工，客服能聊天了，但用户一句「我上周买的蓝牙耳机怎么还没到？」就露馅——订单数据躺在公司数据库里，模型的知识是训练时固化进参数的，它上哪知道你家昨天的订单？这一章给客服装上手脚：从「会聊天」变成「能查数据、能办事」。</p>
+</blockquote>
+<hr />
+<h2 id="function-calling">一、为什么需要 Function Calling<a class="headerlink" href="#function-calling" title="Permanent link">&para;</a></h2>
+<p>用户问订单，模型只剩两条路：
+- <strong>诚实</strong>：「抱歉，我无法查询您的订单信息」→ 用户扭头去找人工
+- <strong>不诚实</strong>：一本正经编「您的订单预计明天送达」→ 编得越流畅，客诉来得越快</p>
+<p>把订单数据塞进 Prompt？行不通：
+- 订单是<strong>活数据</strong>，状态随时在变，塞进去的那一刻就开始过期
+- 全库几十万条订单，上下文窗口塞得下吗？</p>
+<p><strong>正确的姿势</strong>：数据别动，让模型开口「要」。它发现自己缺订单信息，就说一声「帮我查一下这个手机号的单」，我们的代码去取数据、把结果递回给它，它再组织语言回答。<strong>模型出的是大脑判断，代码出的是手脚。</strong></p>
+<hr />
+<h2 id="function-calling_1">二、Function Calling 原理：模型只张嘴，不动手<a class="headerlink" href="#function-calling_1" title="Permanent link">&para;</a></h2>
+<p>先破除最大误区：<strong>模型从头到尾没有执行过任何代码</strong>。它做的唯一一件事是输出一段结构化文本：「我想调用某某工具，参数是某某」。真正执行函数的是我们自己的程序。</p>
+<p>类比：新客服工位上贴着一张内线清单——查订单打 8001、查物流打 8002、转工单打 8003。模型是那个客服，工具函数是电话那头的系统。</p>
+<p><strong>安全边界</strong>也顺带清楚了：模型能碰哪些数据、能做哪些操作，完全由我们递给它的工具清单说了算。没给它删库的工具，它说破天也删不了库。</p>
+<h3 id="_1">流程四步（模型出场两次）<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<ol>
+<li>模型从用户话里识别意图（要查订单）</li>
+<li>生成结构化工具调用请求（函数名 + 参数）——这就是「申请单」</li>
+<li>我们的代码执行函数，拿到真实数据</li>
+<li>结果「回灌」给模型，它据此组织给用户的回答</li>
+</ol>
+<h3 id="json">协议层面：三份 JSON<a class="headerlink" href="#json" title="Permanent link">&para;</a></h3>
+<p><strong>① 说明书（tools 数组，随请求发给模型）</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"function"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="w">    </span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"query_order"</span><span class="p">,</span>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="w">    </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"根据订单号或下单手机号查询订单的状态、商品与金额"</span><span class="p">,</span>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="w">    </span><span class="nt">"parameters"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="w">      </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"object"</span><span class="p">,</span>
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="w">      </span><span class="nt">"properties"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="w">        </span><span class="nt">"order_no"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"订单号，形如 SO20260625001"</span><span class="p">},</span>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a><span class="w">        </span><span class="nt">"phone"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"string"</span><span class="p">,</span><span class="w"> </span><span class="nt">"description"</span><span class="p">:</span><span class="w"> </span><span class="s2">"下单时使用的 11 位手机号"</span><span class="p">}</span>
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a><span class="w">      </span><span class="p">},</span>
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a><span class="w">      </span><span class="nt">"required"</span><span class="p">:</span><span class="w"> </span><span class="p">[]</span>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="w">  </span><span class="p">}</span>
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><code>name</code> 工具名；<code>description</code> 告诉模型这工具干什么、什么时候用；<code>parameters</code> 用 JSON Schema 描述参数（就是参数的"格式合同"）</li>
+<li><strong>这份说明书就是会塞进上下文的 Prompt</strong>，模型每次回答前先翻一遍，判断用不用工具、用哪个。所以 <code>description</code> 写得好不好，直接决定模型会不会在该出手时出手</li>
+</ul>
+<p><strong>② 申请单（模型回复）</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"assistant"</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">"tool_calls"</span><span class="p">:</span><span class="w"> </span><span class="p">[{</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">    </span><span class="nt">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"call_7f3a"</span><span class="p">,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">    </span><span class="nt">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"function"</span><span class="p">,</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">    </span><span class="nt">"function"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="nt">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"query_order"</span><span class="p">,</span><span class="w"> </span><span class="nt">"arguments"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{\"phone\": \"13800001234\"}"</span><span class="p">}</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="p">}]</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="p">}</span>
+</code></pre></div>
+<p>两个细节：<code>content</code> 是空的（模型这轮没说人话，只提交取数申请单）；<code>arguments</code> 是<strong>字符串包着的 JSON</strong>，拿到手得再解析一层——头一回对接几乎人人踩的坑。</p>
+<p><strong>③ 结果单（我们回灌）</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">"role"</span><span class="p">:</span><span class="w"> </span><span class="s2">"tool"</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">"tool_call_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"call_7f3a"</span><span class="p">,</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nt">"content"</span><span class="p">:</span><span class="w"> </span><span class="s2">"{\"order_no\": \"SO20260625001\", \"status\": \"已发货\", \"item\": \"蓝牙耳机\"}"</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="p">}</span>
+</code></pre></div>
+<p><code>tool_call_id</code> 必须跟申请单的 <code>id</code> 对上，模型才知道这份结果回应哪次调用。</p>
+<p><strong>本质</strong>：Function Calling 是一种消息格式的约定 + 一轮额外的对话往返。</p>
+<hr />
+<h2 id="_2">三、打地基：项目骨架与四张表<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Web 层 FastAPI，数据层 SQLAlchemy 2.0 异步 + MySQL（Docker 起）</li>
+<li>商品、订单、物流：真实生产里在电商/物流系统的 API 里，客服系统只管调接口拿数据；<strong>本项目演示起见，在工具内部随机生成数据，不接真实接口、不建表</strong></li>
+<li>真正落库四张表：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>表</th>
+<th>存什么</th>
+<th>伺候谁</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>faq</code></td>
+<td>问答对：问题、答案、分类</td>
+<td><code>query_faq</code></td>
+</tr>
+<tr>
+<td><code>conversations</code></td>
+<td>会话壳：谁什么时候开启、处理状态</td>
+<td>对话服务</td>
+</tr>
+<tr>
+<td><code>messages</code></td>
+<td>消息流水：每条消息的角色与内容</td>
+<td>对话服务</td>
+</tr>
+<tr>
+<td><code>tickets</code></td>
+<td>人工工单：工单号、关联会话、问题、类型、状态</td>
+<td><code>create_ticket</code></td>
+</tr>
+</tbody>
+</table>
+<p><strong>设计要点</strong>：
+- <code>conversations</code> 和 <code>messages</code> 拆两张、一对多：消息是流水，会话是流水的壳。做转人工、做工单都要引用「这通会话」，全捏在消息表里就没有稳定的东西可指
+- <code>messages.role</code> 对齐协议：<code>user</code> / <code>assistant</code> / <code>tool</code>。工具调用的申请单和结果单也是消息，原样落库，一通对话就能完整回放——后面可观测性章节，这些流水是排查问题的第一手材料
+- <code>content</code> 字段<strong>允许为空</strong>：模型只发工具调用不说话时，正文本来就没有。设成 NOT NULL 第一次跑通工具调用就插入失败
+- DDL 顶部 <code>SET NAMES utf8mb4</code> 别删：docker mysql client 默认 latin1，会把中文 ENUM 值 double-encode 成乱码，报错还指不到这里</p>
+<hr />
+<h2 id="_3">四、五个业务工具的设计<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h3 id="_4">三条设计原则<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>一个工具只管一件事</strong>。「查订单」和「查物流」别合成「查订单相关信息」，工具边界越清楚，模型选起来越不犯迷糊</li>
+<li><strong>参数宁少勿多</strong>。每个参数都得让模型有地方取值（用户的话或上下文），模型凭空变不出参数</li>
+<li><strong>进出参都为「模型读得懂」服务</strong>。工具的使用者是模型，返回一堆裸 ID 和内部枚举码，它没法跟用户交代</li>
+</ol>
+<h3 id="query_order">query_order：订单查询<a class="headerlink" href="#query_order" title="Permanent link">&para;</a></h3>
+<ul>
+<li>进参：订单号、手机号都可选，但<strong>至少给一个</strong>——用户多半报不出单号，会说「用 138 那个手机号买的」</li>
+<li>出参：<strong>按订单列表返回</strong>。手机号下常挂好几个单，模型看到多条会自己追问「您问的是哪一单」，这层交互不用写一行分支逻辑</li>
+<li><strong>查无此单返回空列表 + 明确说明</strong>（「未查询到相关订单」），别丢 null 或空串——结果越含糊，模型越容易自由发挥，含糊就是给幻觉留门缝</li>
+</ul>
+<h3 id="query_product">query_product：商品查询<a class="headerlink" href="#query_product" title="Permanent link">&para;</a></h3>
+<ul>
+<li>进参：名称关键词 + 分类，接住用户两种问法（「XX 有货吗」/「你们 XX 都有什么」）</li>
+<li>出参：命中太多要<strong>限条数</strong>（如最多 10 条），超出截断并注明「还有更多商品，建议引导用户缩小范围」——把「数据太多」这个状态明明白白告诉模型</li>
+</ul>
+<h3 id="query_logistics">query_logistics：物流查询<a class="headerlink" href="#query_logistics" title="Permanent link">&para;</a></h3>
+<ul>
+<li>为什么有了 query_order 还要它？订单查询答「买了什么、什么状态」，物流查询答「货现在到哪了」。「到哪了」是头号高频问题，单独成工具路径更短；且二者数据本就在两个系统</li>
+<li>进参只收订单号。用户报手机号催物流怎么办？本章单轮系统只能开一次单，模型只能先追问单号（后面章节处理）</li>
+</ul>
+<h3 id="query_faq">query_faq：政策与常见问题查询<a class="headerlink" href="#query_faq" title="Permanent link">&para;</a></h3>
+<p>契约只有一进一出：进用户问题字符串，出答案文本。内部用 SQL LIKE 模糊匹配：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="k">SELECT</span><span class="w"> </span><span class="n">question</span><span class="p">,</span><span class="w"> </span><span class="n">answer</span><span class="w"> </span><span class="k">FROM</span><span class="w"> </span><span class="n">faq</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="k">WHERE</span><span class="w"> </span><span class="n">question</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="n">CONCAT</span><span class="p">(</span><span class="s1">'%'</span><span class="p">,</span><span class="w"> </span><span class="p">:</span><span class="n">keyword</span><span class="p">,</span><span class="w"> </span><span class="s1">'%'</span><span class="p">)</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">   </span><span class="k">OR</span><span class="w"> </span><span class="n">answer</span><span class="w"> </span><span class="k">LIKE</span><span class="w"> </span><span class="n">CONCAT</span><span class="p">(</span><span class="s1">'%'</span><span class="p">,</span><span class="w"> </span><span class="p">:</span><span class="n">keyword</span><span class="p">,</span><span class="w"> </span><span class="s1">'%'</span><span class="p">)</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="k">LIMIT</span><span class="w"> </span><span class="mi">3</span><span class="p">;</span>
+</code></pre></div>
+<h3 id="create_ticket">create_ticket：转人工工单<a class="headerlink" href="#create_ticket" title="Permanent link">&para;</a></h3>
+<p>四个读，这一个是写。<strong>智能客服的设计底线是搞不定就体面交接</strong>：用户情绪上来、问题超范围、反复查不到信息，都该有通往人工的路。出参给工单号 + 一句能直接念给用户听的确认话术。</p>
+<hr />
+<h2 id="tool">五、@tool 装饰器：把函数亮给模型<a class="headerlink" href="#tool" title="Permanent link">&para;</a></h2>
+<p>裸调 SDK 要手写两份：函数一份、Schema 一份——函数加参数忘了同步 Schema，模型拿旧说明书调新函数，错都不知道错在哪。</p>
+<p>LangChain 的 <code>@tool</code> 思路：<strong>一份代码、两份产出</strong>。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">tool</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Annotated</span>
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nd">@tool</span>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="k">def</span><span class="w"> </span><span class="nf">query_order</span><span class="p">(</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="n">order_no</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">"订单号，形如 SO20260625001"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>    <span class="n">phone</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span><span class="p">,</span> <span class="s2">"下单时使用的 11 位手机号"</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="p">):</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="w">    </span><span class="sd">"""根据订单号或手机号查询订单，返回订单状态、商品与金额。</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="sd">    订单号和手机号至少提供一个。用户报不出订单号时，用手机号查询。</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="sd">    """</span>
+<a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="o">...</span>
+</code></pre></div>
+<p>三个映射：<strong>函数名 → 工具名，docstring → description，类型注解 + Annotated 中文说明 → 参数 Schema</strong>。装饰器在定义那一刻抽取，与函数本体永远同步。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="nb">print</span><span class="p">(</span><span class="n">query_order</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>         <span class="c1"># query_order</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="nb">print</span><span class="p">(</span><span class="n">query_order</span><span class="o">.</span><span class="n">description</span><span class="p">)</span>  <span class="c1"># docstring 内容</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="nb">print</span><span class="p">(</span><span class="n">query_order</span><span class="o">.</span><span class="n">args</span><span class="p">)</span>         <span class="c1"># {'order_no': {'description': '...'}, 'phone': {'description': '...'}}</span>
+</code></pre></div>
+<p>写 docstring 要换一副心态：<strong>这段文字的读者是模型，它就是 Prompt 的一部分</strong>。「查询订单」四个字当注释合格，当工具描述不合格。什么时候该用、参数从哪取、有什么使用限制都要写进去。</p>
+<p>挂到模型一行：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">tools</span> <span class="o">=</span> <span class="p">[</span><span class="n">query_order</span><span class="p">,</span> <span class="n">query_product</span><span class="p">,</span> <span class="n">query_logistics</span><span class="p">,</span> <span class="n">query_faq</span><span class="p">,</span> <span class="n">create_ticket</span><span class="p">]</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="n">llm_with_tools</span> <span class="o">=</span> <span class="n">llm</span><span class="o">.</span><span class="n">bind_tools</span><span class="p">(</span><span class="n">tools</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="_5">参数描述的两种写法<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<ul>
+<li>参数少：<code>Annotated[str, Field(description="...")]</code> 直接写进注解</li>
+<li>参数多/要复用/挂校验：独立 pydantic 模型 + <code>@tool(args_schema=XxxInput)</code></li>
+</ul>
+<h3 id="injectedtoolarg">模型看不见的参数：InjectedToolArg<a class="headerlink" href="#injectedtoolarg" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="nd">@tool</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">create_ticket</span><span class="p">(</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="n">ticket_type</span><span class="p">:</span> <span class="n">Literal</span><span class="p">[</span><span class="s2">"售后"</span><span class="p">,</span> <span class="s2">"投诉"</span><span class="p">,</span> <span class="s2">"咨询"</span><span class="p">],</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>    <span class="n">conversation_id</span><span class="p">:</span> <span class="n">Annotated</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="n">InjectedToolArg</span><span class="p">],</span>   <span class="c1"># 系统注入，模型看不见</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">dict</span><span class="p">:</span>
+</code></pre></div>
+<p>凡是决定「这次调用代表谁」的参数，都不能让模型填——模型填的东西来自对话文本，而对话文本是用户可以随便写的。<code>InjectedToolArg</code> 让参数留在 args_schema 里（函数照样收到），但不进模型看到的 schema。真实的 <code>conversation_id</code> 由执行引擎调用前从可信通道补进去。</p>
+<p><code>Literal["售后","投诉","咨询"]</code> 会进 schema 变成枚举，模型只能从三个值里选。</p>
+<hr />
+<h2 id="_6">六、执行链：注册、分发与容错<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h3 id="_7">注册<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<p><code>tool_calls</code> 里只有工具名这个字符串，一行字典按名索骥：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">TOOL_REGISTRY</span> <span class="o">=</span> <span class="p">{</span><span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="p">:</span> <span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tools</span><span class="p">}</span>
+</code></pre></div>
+<h3 id="_8">分发<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>把 <code>tool_call</code> 整个递给 <code>tool.invoke</code>，LangChain 会把 <code>arguments</code> 那层"字符串里的 JSON"解析成字典、执行函数、把返回值包成待回灌的 <code>ToolMessage</code>，连 <code>tool_call_id</code> 都替你对齐。</p>
+<h3 id="_9">容错：工具执行失败分三种，处理各不相同<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>失败类型</th>
+<th>例子</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>参数不合法</td>
+<td>让查订单一个参数都没给、手机号 8 位</td>
+<td>Pydantic 校验拦住，把校验错误<strong>当执行结果回灌</strong>，模型会回头追问用户</td>
+</tr>
+<tr>
+<td>查询落空</td>
+<td>订单号没查到、FAQ 没命中</td>
+<td>业务上正常，<strong>返回明确「未查到」</strong>让模型跟用户周旋；当异常抛，前端只能给用户看「系统错误」</td>
+</tr>
+<tr>
+<td>真故障</td>
+<td>数据库连不上、查询报错</td>
+<td>捕获住，包成「工具暂时不可用」回灌，模型会道歉、建议稍后再试或转人工</td>
+</tr>
+</tbody>
+</table>
+<p><strong>坏消息也是有用输入</strong>：把坏消息如实告诉模型，它一样能做体面应对，前提是服务进程自己不能跟着倒。</p>
+<h3 id="_10">超时与重试<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>每个工具执行包超时</strong>（<code>asyncio.wait_for</code> 几秒上限）：用户正盯着光标等回复，「查询超时了，请稍后再试」远好过转半分钟的圈</li>
+<li><strong>重试只留给暂时性故障</strong>（网络抖一下）：业务性落空千万别重试，订单号错了查一百遍还是查不到</li>
+<li><strong>写操作不自动重试</strong>：网络超时未必代表工单没建成，闷头重试就是两张重复工单。要么不重试、失败如实告知；要么带幂等键。本项目选不自动重试</li>
+</ul>
+<hr />
+<h2 id="_11">七、结果回灌：把数据翻译给模型听<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<p>工具执行完手里是 ORM 对象，直接转字符串扔回去，token 的钱包和用户的隐私也一起扔出去了。回灌前三件事：</p>
+<ol>
+<li><strong>挑字段</strong>：只挑模型组织回答要用的（单号、状态、商品名、金额、时间）。它没拿到成本价，就永远不会把成本价念给用户听</li>
+<li><strong>翻译语义</strong>：数据库枚举码 <code>SHIPPED</code> / <code>REFUNDING</code> 翻译成「已发货」「退款中」，模型拿到的每个字段无歧义</li>
+<li><strong>序列化</strong>：<code>json.dumps(data, ensure_ascii=False)</code>，中文别转义成 <code>\u</code> 码；空结果写成明确的「未查询到」，别让模型对着空数组自行想象</li>
+</ol>
+<p><code>tool_call_id</code> 存在的理由：协议允许模型一条回复开出几张申请单（一句「帮我查下订单，顺便看看退货政策」同时唤起两个工具），结果逐个回灌全靠 id 对号入座。</p>
+<hr />
+<h2 id="_12">八、单轮调用：全流程串起来<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="k">async</span> <span class="k">def</span><span class="w"> </span><span class="nf">chat_once</span><span class="p">(</span><span class="n">messages</span><span class="p">:</span> <span class="nb">list</span><span class="p">):</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    <span class="n">ai_msg</span> <span class="o">=</span> <span class="k">await</span> <span class="n">llm_with_tools</span><span class="o">.</span><span class="n">ainvoke</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">ai_msg</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">:</span>                <span class="c1"># 不需要工具，直接回答</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>        <span class="k">return</span> <span class="n">ai_msg</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>    <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ai_msg</span><span class="p">)</span>                  <span class="c1"># 申请单入档</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>    <span class="k">for</span> <span class="n">tool_call</span> <span class="ow">in</span> <span class="n">ai_msg</span><span class="o">.</span><span class="n">tool_calls</span><span class="p">:</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a>        <span class="n">tool</span> <span class="o">=</span> <span class="n">TOOL_REGISTRY</span><span class="p">[</span><span class="n">tool_call</span><span class="p">[</span><span class="s2">"name"</span><span class="p">]]</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>        <span class="n">tool_msg</span> <span class="o">=</span> <span class="k">await</span> <span class="n">tool</span><span class="o">.</span><span class="n">ainvoke</span><span class="p">(</span><span class="n">tool_call</span><span class="p">)</span>   <span class="c1"># 执行，容错做在工具内部</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>        <span class="n">messages</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tool_msg</span><span class="p">)</span>            <span class="c1"># 结果单入档</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>    <span class="k">return</span> <span class="k">await</span> <span class="n">llm_with_tools</span><span class="o">.</span><span class="n">ainvoke</span><span class="p">(</span><span class="n">messages</span><span class="p">)</span>  <span class="c1"># 拿着数据组织最终回答</span>
+</code></pre></div>
+<p>时序：模型第一次调用翻说明书 → 开申请单 → 我们按注册表执行 → 申请单和结果单一起追加进消息 → 模型第二次调用，手里有真数据了 → 组织最终回答。<strong>两次模型调用，中间夹一次工具执行。</strong></p>
+<p><strong>单轮边界（硬约束）</strong>：模型拿到结果后的那次回复，万一还想再查一个？本章代码到此为止——收敛那一步故意<strong>不 bind_tools</strong>，模型想再申请也无从发起。这个"想接着调"的冲动，就是后面 Agent 的本质。</p>
+<hr />
+<h2 id="query_faq_1">九、章尾翻车现场：query_faq 查了个空<a class="headerlink" href="#query_faq_1" title="Permanent link">&para;</a></h2>
+<p>faq 表里躺着「运费怎么算 → 单笔订单满 99 元包邮……」，用户问「<strong>邮费</strong>是多少」。</p>
+<p>LIKE 认字面：「邮费」 vs 「运费」，字面对不上。模型只好老实说「未查询到相关信息」。「多少钱包邮」「快递费怎么收」照样落空，用户手滑打个错别字更别提。</p>
+<p><strong>病根</strong>：用户说法无穷无尽，同义词词表补到最后你维护的是一部《电商黑话大辞典》，还是补不完。下一章 RAG 用语义检索解决这个问题。</p>
+<hr />
+<h2 id="_13">十、实战验收（本章验证方法）<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>冒烟前置</strong>（风险闸）：先验上游模型会不会返回结构化 <code>tool_calls</code>——绑一个 <code>add</code> 工具让模型算 23+19，<code>ai.tool_calls</code> 里有 <code>add</code> 且参数对才 GO，否则停下问用户，不自行换方案</li>
+<li><strong>浏览器聊天页</strong>：</li>
+<li>「订单 1001 的物流到哪了」→ 气泡出工具徽章「🔧 调用了 query_logistics」+ 按结果作答</li>
+<li>「退货政策是什么」→ query_faq 命中，答出 7 天无理由</li>
+<li>「邮费是多少」→ 徽章 query_faq 但答不出（漏召回）——<strong>这是预期结果，如实记录留给 RAG 章</strong></li>
+<li><strong>标注样例评估</strong>（<code>eval_agent.py</code>）：「问法 → 期望工具」对照跑真实模型，如「订单 1001 的物流到哪了」→ {query_logistics}、「今天天气怎么样」→ 不调工具</li>
+<li><strong>前端 SSE 帧约定</strong>：<code>tool</code> 帧（徽章）→ <code>delta</code> 帧（逐字）→ <code>done</code> 帧（回传 conversation_id）→ <code>[DONE]</code></li>
+</ol>
+<h3 id="_14">编排核心设计（两个出口共用一个核心）<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<p>把「会话身份 + 落 user + turn1 定工具 + 落 assistant + 执行工具 + 落 tool」抽成共享 <code>_prepare_turn</code>：
+- <code>stream_agent_turn</code>（流式）：供 <code>/api/chat</code> 前端主入口，收敛用 <code>astream</code> 逐 token 吐
+- <code>run_agent_turn</code>（非流式）：供 <code>/api/agent</code> 程序化/测试出口，一次返回轨迹 + 答案</p>
+<p><strong>跨轮上下文</strong>：只回放 user 与「content 非空且无 tool_calls」的 assistant；带 tool_calls 的 assistant 常夹带 preamble，不跨轮回放避免污染续接。全部消息仍完整落库以备追溯。</p>
+<hr />
+<h2 id="_15">十一、本章小结<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>机制</strong>：模型出判断、代码出腿，靠说明书/申请单/结果单三份 JSON 协作；模型从头到尾没执行过代码</li>
+<li><strong>定义</strong>：<code>@tool</code> 一份代码两份产出，docstring 就是提示词；InjectedToolArg 藏住模型不该碰的参数</li>
+<li><strong>执行</strong>：注册表按名索骥，容错按「参数错/查落空/真故障」分级处理，超时兜底、写操作不重试</li>
+<li><strong>回灌</strong>：挑字段、翻译语义、ensure_ascii=False 序列化</li>
+<li><strong>边界</strong>：收敛不 bind_tools = 单轮；多轮循环是 Agent 的伏笔</li>
+<li><strong>留下的坑</strong>：query_faq 字面匹配的语义鸿沟 → 第 3 章 RAG 的正例</li>
+</ul>
+<hr />
+<h2 id="_16">附：本章踩坑记录<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>现象</th>
+<th>解法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>arguments 是字符串</td>
+<td>json 解析失败</td>
+<td>记得 <code>arguments</code> 是字符串包着的 JSON，先解析再执行</td>
+</tr>
+<tr>
+<td>content 设 NOT NULL</td>
+<td>纯工具调用轮次插入失败</td>
+<td>messages.content 允许为空</td>
+</tr>
+<tr>
+<td>中文 ENUM 乱码</td>
+<td>建表后 ENUM 值乱码、插入报错指不到源头</td>
+<td>DDL/seed 自带 <code>SET NAMES utf8mb4</code></td>
+</tr>
+<tr>
+<td>工具落空当异常</td>
+<td>前端给用户「系统错误」</td>
+<td>落空返回「未查到」结果，不是异常</td>
+</tr>
+<tr>
+<td>写操作自动重试</td>
+<td>重复工单</td>
+<td>create_ticket 进 NO_RETRY 集合</td>
+</tr>
+<tr>
+<td>mock 数据每次不同</td>
+<td>断言没法写、文档对不上</td>
+<td>随机种子用入参（<code>random.Random(f"order:{order_id}")</code>），同一入参结果稳定</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../01-LangChain%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A5%E5%85%A5%E4%B8%8EPrompt%E5%B7%A5%E7%A8%8B/" class="md-footer__link md-footer__link--prev" aria-label="上一页: AI智能客服实战·01 LLM接入与Prompt工程">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                AI智能客服实战·01 LLM接入与Prompt工程
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../03-RAG%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%9E%84%E5%BB%BA/" class="md-footer__link md-footer__link--next" aria-label="下一页: AI智能客服实战·03 RAG基础与知识库构建">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                AI智能客服实战·03 RAG基础与知识库构建
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.footer", "content.code.copy", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>

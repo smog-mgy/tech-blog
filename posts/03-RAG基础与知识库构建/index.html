@@ -1,0 +1,2674 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="记录学习、项目与踩坑的技术博客">
+      
+      
+        <meta name="author" content="smog-mgy">
+      
+      
+      
+        <link rel="prev" href="../02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE/">
+      
+      
+        <link rel="next" href="../04-RAG%E8%BF%9B%E9%98%B6%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8E%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.7">
+    
+    
+      
+        <title>AI智能客服实战·03 RAG基础与知识库构建 - 我的技术博客</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.ec1eaa64.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#03rag" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href="../.." title="我的技术博客" class="md-header__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            我的技术博客
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AI智能客服实战·03 RAG基础与知识库构建
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+  
+
+<nav class="md-nav md-nav--primary md-nav--integrated" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="我的技术博客" class="md-nav__button md-logo" aria-label="我的技术博客" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    我的技术博客
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    首页
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../about/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于我
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    技术文章
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    技术文章
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E5%87%BD%E6%95%B0%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python函数进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%BF%9B%E9%98%B6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python面向对象进阶
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Python%E6%A8%A1%E5%9D%97%E5%8C%96%E4%B8%8E%E5%B7%A5%E7%A8%8B%E7%BB%93%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Python模块化与工程结构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%85%B3%E4%BA%8EAgent%E5%BC%80%E5%8F%91%E7%9A%84Git%E5%9F%BA%E7%A1%80%E4%B8%8E%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    关于Agent开发的Git基础与分支管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%86%99Todo%E5%91%BD%E4%BB%A4%E8%A1%8C%E9%A1%B9%E7%9B%AE%E7%9A%84%E6%94%B6%E8%8E%B7/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    写Todo命令行项目的收获
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../PyTorch%E6%A1%86%E6%9E%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    PyTorch框架学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    神经网络基础学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    卷积神经网络学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    循环神经网络学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LLM%E4%B8%BB%E8%A6%81%E6%9E%B6%E6%9E%84%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主要架构学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../LLM%E4%B8%BB%E6%B5%81%E5%BC%80%E6%BA%90%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    LLM主流开源大模型学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E5%85%A5%E9%97%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法入门学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8BPrompt-Tuning%E6%96%B9%E6%B3%95%E8%BF%9B%E9%98%B6%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型Prompt-Tuning方法进阶学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%E5%BA%94%E7%94%A8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    大模型提示词工程应用学习笔记
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-LangChain%E5%A4%A7%E6%A8%A1%E5%9E%8B%E6%8E%A5%E5%85%A5%E4%B8%8EPrompt%E5%B7%A5%E7%A8%8B/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·01 LLM接入与Prompt工程
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·02 Function Calling工具链
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·03 RAG基础与知识库构建
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·03 RAG基础与知识库构建
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        一、核心思想：把「意思」变成机器能算的东西
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="一、核心思想：把「意思」变成机器能算的东西">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        字面对得上纯属运气
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rag" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        RAG 解决什么问题
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        知识库里该放什么
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        二、知识从哪来：写文档的人 + 聊过天的人
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="二、知识从哪来：写文档的人 + 聊过天的人">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        来源 1：人工整理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        来源 2：历史客服对话挖掘（重点）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三、两条流水线：离线建库 + 在线问答
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四、文档解析：读错一个字，后面全白搭
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        五、切分是隐形地基：切歪一寸，模型就敢乱答
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="五、切分是隐形地基：切歪一寸，模型就敢乱答">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        三代演进（每一代都是被上一代的毛病逼出来的）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        切分细节
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#embedding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        六、Embedding 选型：数据合规放最前
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="六、Embedding 选型：数据合规放最前">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        企业硬门槛
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开源候选对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        选型逻辑拆解
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        七、向量库选型
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="七、向量库选型">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ann" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ANN：近似最近邻
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        八、向量库和业务库，为什么要分家
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="八、向量库和业务库，为什么要分家">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        四种落地方案（从轻到重）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        九、双写落库：一个状态位换来的可重跑
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chunk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十、一条 chunk 长什么样
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十、一条 chunk 长什么样">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        两类内容的差别：questions 从哪来
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        元数据四类（都不进向量）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十一、在线问答：先跑通向量单路
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十二、代码走读要点
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="十二、代码走读要点">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        开工前冒烟：验维度
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        嵌入客户端：单例挡连接泄漏
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        切分原语细节
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        双写幂等的支点
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        挖知识的坑
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十三、实战验收
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        十四、本章小结
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        附：本章踩坑记录
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-RAG%E8%BF%9B%E9%98%B6%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8E%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·04 RAG进阶混合检索与评估
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-Workflow%E4%B8%8EAgent%E6%B7%B7%E5%90%88%E6%9E%B6%E6%9E%84/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·05 Workflow与Agent混合架构
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB%E4%B8%8E%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·06 意图识别与对话管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E4%BC%9A%E8%AF%9D%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·07 会话上下文管理
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E5%B7%A5%E5%85%B7%E7%B3%BB%E7%BB%9F/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·08 工具系统
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-Agent%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%A3%9E%E8%BD%AE/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·09 Agent可观测性与数据飞轮
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·10 模型微调
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-%E5%85%A8%E9%93%BE%E8%B7%AF%E4%B8%B2%E8%81%94%E4%B8%8E%E8%B8%A9%E5%9D%91%E5%A4%8D%E7%9B%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    AI智能客服实战·11 全链路串联与复盘
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-01-LLM%E6%8E%A5%E5%85%A5%E4%B8%8EPrompt%E5%B7%A5%E7%A8%8B-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·01 LLM接入与Prompt工程（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-01-LLM%E6%8E%A5%E5%85%A5%E4%B8%8EPrompt%E5%B7%A5%E7%A8%8B-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·01 LLM接入与Prompt工程（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·02 Function Calling工具链（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·02 Function Calling工具链（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-03-RAG%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%9E%84%E5%BB%BA-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·03 RAG基础与知识库构建（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-03-RAG%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%9F%A5%E8%AF%86%E5%BA%93%E6%9E%84%E5%BB%BA-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·03 RAG基础与知识库构建（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-04-%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8E%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·04 混合检索与评估体系（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-04-%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8E%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·04 混合检索与评估体系（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-05-Workflow%E4%B8%8EAgent%E6%B7%B7%E5%90%88%E6%9E%B6%E6%9E%84-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·05 Workflow与Agent混合架构（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-05-Workflow%E4%B8%8EAgent%E6%B7%B7%E5%90%88%E6%9E%B6%E6%9E%84-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·05 Workflow与Agent混合架构（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-06-%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB%E4%B8%8E%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·06 意图识别与对话管理（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-06-%E6%84%8F%E5%9B%BE%E8%AF%86%E5%88%AB%E4%B8%8E%E5%AF%B9%E8%AF%9D%E7%AE%A1%E7%90%86-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·06 意图识别与对话管理（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-07-%E4%BC%9A%E8%AF%9D%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·07 会话上下文管理（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-07-%E4%BC%9A%E8%AF%9D%E4%B8%8A%E4%B8%8B%E6%96%87%E7%AE%A1%E7%90%86-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·07 会话上下文管理（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-08-%E5%B7%A5%E5%85%B7%E7%B3%BB%E7%BB%9F%E4%B8%8EMCP%E6%89%A9%E5%B1%95-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·08 工具系统与MCP扩展（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-08-%E5%B7%A5%E5%85%B7%E7%B3%BB%E7%BB%9F%E4%B8%8EMCP%E6%89%A9%E5%B1%95-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·08 工具系统与MCP扩展（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-09-%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%A3%9E%E8%BD%AE-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·09 可观测性与数据飞轮（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-09-%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7%E4%B8%8E%E6%95%B0%E6%8D%AE%E9%A3%9E%E8%BD%AE-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·09 可观测性与数据飞轮（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-10-%E4%B8%BB%E9%A2%98%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·10 主题分类器与模型微调（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-10-%E4%B8%BB%E9%A2%98%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·10 主题分类器与模型微调（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-11-%E5%85%A8%E9%93%BE%E8%B7%AF%E4%B8%B2%E8%81%94%E4%B8%8E%E5%A4%8D%E7%9B%98-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·11 全链路串联与复盘（项目落地笔记）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../OpsDesk-11-%E5%85%A8%E9%93%BE%E8%B7%AF%E4%B8%B2%E8%81%94%E4%B8%8E%E5%A4%8D%E7%9B%98-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    OpsDesk·11 全链路串联与复盘（源码解析）
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="03rag">学习笔记 03｜RAG 基础：跑通「先查资料再回答」全链路<a class="headerlink" href="#03rag" title="Permanent link">&para;</a></h1>
+<p><strong>日期</strong>：2026-06-18
+<strong>标签</strong>：AI Agent · RAG · 知识库</p>
+<blockquote>
+<p>上一章收尾翻车现场还历历在目：faq 表里明明躺着「运费怎么算 → 单笔订单满 99 元包邮……」，用户一句「邮费是多少」却查了个空。病根不是数据，是查法——LIKE 认字面，用户嘴里的「邮费」在「运费怎么算」里字面上根本不存在。这一章把 query_faq 的查法整个换掉，让它能听懂「邮费」和「运费」说的是同一件事。这就是 RAG。</p>
+</blockquote>
+<hr />
+<h2 id="_1">一、核心思想：把「意思」变成机器能算的东西<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<h3 id="_2">字面对得上纯属运气<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<p>给「运费」配同义词表（邮费、快递费），给「包邮」挂上（免运费、满多少免邮）——补是能补，可用户说法无穷无尽：手滑错别字、口语化、换个行业黑话……补到最后你维护的是一本《电商黑话大辞典》，永远补不完。</p>
+<p><strong>真正该换的是查找方式本身</strong>。人理解「邮费是多少」靠的是字背后的意思；要让机器也做到，得先把「意思」这个抽象概念变成机器能算的东西——一串数字，也就是<strong>向量</strong>。意思相近的内容，数字上也挨得近。围着这个思路搭起来的整套查、答机制，就是 <strong>RAG（Retrieval-Augmented Generation，检索增强生成）</strong>。</p>
+<h3 id="rag">RAG 解决什么问题<a class="headerlink" href="#rag" title="Permanent link">&para;</a></h3>
+<p>模型的知识全部固化在训练那一刻的参数里，之后再也不更新：
+- 上周刚改的退货政策，它不知道
+- 新出的蓝牙耳机参数，它没学过
+- 碰到不知道的，它不会老实说「不知道」，而是天性般把「下一个最像话的词」接着编下去——编得越流畅，错得越理直气壮</p>
+<p>RAG 的思路：<strong>给模型一个外挂的库，每次回答问题先现查，查到什么照着什么答，库里没有就老实说没有。</strong> 库里的内容随时能更新——退货政策改了，换一份文档就行，不用重新训练模型。名字拆开看就是三步：Retrieval（去库里捞相关片段）→ Augmented（拼进模型这次要看的材料）→ Generation（照材料组织回答）。</p>
+<p>模型本身没变聪明一分——这些问题的重点不是智商，是<strong>数据</strong>。</p>
+<h3 id="_3">知识库里该放什么<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>第一反应可能是存历史客服对话——<strong>这个想法要纠正</strong>。原始对话东一句西一句，夹着寒暄废话，噪声太大，不适合直接检索。</p>
+<p>真正该放的是<strong>权威、结构清楚的文档</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>例子</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>退款退货政策</td>
+<td>7 天无理由规则、例外条款</td>
+</tr>
+<tr>
+<td>商品 FAQ</td>
+<td>规格、功能、使用方法</td>
+</tr>
+<tr>
+<td>售后服务手册</td>
+<td>保修条件、换货流程</td>
+</tr>
+<tr>
+<td>支付与发票 FAQ</td>
+<td>开票、退款到账</td>
+</tr>
+<tr>
+<td>促销活动规则</td>
+<td>满减、优惠券使用</td>
+</tr>
+<tr>
+<td>账号安全/评价规则</td>
+<td>封号、评价修改</td>
+</tr>
+</tbody>
+</table>
+<p>共同点：内容相对稳定，但<strong>会更新</strong>——这正是 RAG 的用武之地。</p>
+<hr />
+<h2 id="_4">二、知识从哪来：写文档的人 + 聊过天的人<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<h3 id="1">来源 1：人工整理<a class="headerlink" href="#1" title="Permanent link">&para;</a></h3>
+<p>懂业务的人把政策写成<strong>结构化 Markdown</strong>（一级标题、二级标题、正文段落层次分明）。这么写有讲究：结构感知切分吃这套结构红利。原则一句话：<strong>每一块内容都要能独立说清一件事</strong>，不能东一句西一句掺在一起——垃圾进，垃圾出。</p>
+<h3 id="2">来源 2：历史客服对话挖掘（重点）<a class="headerlink" href="#2" title="Permanent link">&para;</a></h3>
+<p>聊天记录里全是真实用户会问的问题，是一座金矿，但挖出来的是原始矿石。做法：拿一批会话喂给 LLM，让它抽取「用户问了什么、客服怎么答的」问答对，写进<strong>暂存表</strong>，等所有批次抽完，整体去重，才是能入库的问答对。</p>
+<p>例：用户「上次买的连衣裙偏大，想换小一码」/ 客服「可以，签收后 7 天内都能申请换货，运费我们出」→ 抽成「买的衣服尺码不合适能不能换货」/「支持签收后 7 天内换货，运费商家承担」。寒暄、口语、上下文依赖全被摘掉。</p>
+<p><strong>为什么要分批喂，不能一股脑全塞？</strong>
+1. 上下文有硬性 token 上限，塞不进去
+2. 数据一多，抽取质量反而掉——两个机制：
+   - <strong>幻觉变多</strong>：材料又长又杂，模型分心，把不同会话串味，硬凑出没出现过的问答对（「上下文焦虑」）
+   - <strong>准确率下降</strong>：「Lost in the Middle」现象——开头结尾模型看得认真，中间部分一带而过</p>
+<p>一批只放几十个会话，读得过来也不容易串味。</p>
+<hr />
+<h2 id="_5">三、两条流水线：离线建库 + 在线问答<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>离线建库</th>
+<th>在线问答</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>干什么</td>
+<td>解析 → 切分 → 向量化 → 存库</td>
+<td>问题向量化 → 查库 → 交给模型生成回答</td>
+</tr>
+<tr>
+<td>时机</td>
+<td>提前跑，定期更新，用户无感知</td>
+<td>用户每问一句走一遍</td>
+</tr>
+<tr>
+<td>被谁盯着</td>
+<td>没人</td>
+<td>用户的等待</td>
+</tr>
+</tbody>
+</table>
+<p>两条线各干各的，<strong>接口只有一个：向量库</strong>。离线建好的库就是在线要查的库，库建得好不好直接决定查不查得着。</p>
+<p>本章按两条线顺序走：先离线（文档解析→切分→Embedding→向量库→双写），再在线（只跑通 dense 向量单路检索）。</p>
+<hr />
+<h2 id="_6">四、文档解析：读错一个字，后面全白搭<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>情况</th>
+<th>处理</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>无边框表格</strong>（最要命）</td>
+<td>SKU 价格表靠空格对齐撑行列，解析器认不出，价格错配到下一行型号，用户拿错报价下单</td>
+<td>强表格识别能力，普通文本抽取顶不住</td>
+</tr>
+<tr>
+<td>多栏排版</td>
+<td>政策文档多是单栏+目录</td>
+<td>按顺序读基本不乱</td>
+</tr>
+<tr>
+<td>印章遮挡/扫描模糊</td>
+<td>资质证明、盖章合同；章压字、分辨率低发虚</td>
+<td>重型通道：印章层与文字层分离，文字层 OCR，模糊先增强再识别</td>
+</tr>
+</tbody>
+</table>
+<p><strong>工程上不能一刀切都上最贵最慢的解析</strong>：先加一层分类判断，判定为「难啃」的才送重型通道，其余走轻量通道，速度和准确率兼顾。</p>
+<p>顺手做一件小事：建<strong>电商领域术语词库</strong>（SKU、满减、花呗分期、运费险），清洗和切分识别结构时垫底。</p>
+<hr />
+<h2 id="_7">五、切分是隐形地基：切歪一寸，模型就敢乱答<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<p><strong>反例</strong>：退货政策「支持 7 天无理由退货，商品需保持完好，以下情况除外：定制商品、已拆封的个人护理类商品、赠品需与商品一并退回」。固定长度切分正好切在「以下情况除外」后面 → 前半块单独成块「支持 7 天无理由退货，商品需保持完好」。用户问「定制款杯子能退吗」，命中前半块，模型读不出例外，大大方方答「可以退」——定制明明不退。<strong>不能怪模型，是切分先把信息切没了。</strong></p>
+<h3 id="_8">三代演进（每一代都是被上一代的毛病逼出来的）<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p><strong>第一代：固定长度切</strong>（每 500 字一刀）
+- 优点：一行代码
+- 毛病：完全不管内容，句子被拦腰砍断，上面的例子就是这么翻车的</p>
+<p><strong>第二代：按句子边界切 + 块间重叠</strong>
+- 解决：句子不砍断、关键信息不卡边界
+- 遗留：没有章节层级关系。用户要定位「退货政策」里「无理由退货」怎么规定的，模型拿到块却不知道它挂在哪一节底下，按章节定位、溯源接不住</p>
+<p><strong>第三代：结构感知切分（Markdown 标题层级）</strong>
+- 一级二级标题各自成层，每块语义独立完整 + 带 <code>section_path</code> 层级路径：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"answer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"支持 7 天无理由退货，商品需保持完好，以下情况除外：定制商品、已拆封的个人护理类商品、赠品需与商品一并退回。"</span><span class="p">,</span>
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"section_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"退货政策 &gt; 无理由退货"</span>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="p">}</span>
+</code></pre></div>
+<p>这一块知道自己是「退货政策 &gt; 无理由退货」节，按章节定位、答案标引用溯源全靠它。这就是为什么人工整理要按标题分层——结构感知切分吃的正是这份结构。</p>
+<h3 id="_9">切分细节<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>超长章节分级让</strong>：先按小节切 → 小节还长按段落 → 段落还长才落到句子，优先保住更大的语义单元</li>
+<li><strong>重叠裁到最近句号</strong>：别固定截一段字数把半截话带过去——半句进来不补信息还添噪音</li>
+<li><strong>大表格按行切要复制表头</strong>：每块都带一份表头，否则模型拿到的是「中间几行数字」，分不清哪列是尺码哪列是价格</li>
+<li>碰上无标题层级的长文本：<strong>语义切分</strong>（按相邻句子向量相似度找断点）更合适；或切好后先补一段交代位置和角色的上下文再向量化</li>
+</ul>
+<hr />
+<h2 id="embedding">六、Embedding 选型：数据合规放最前<a class="headerlink" href="#embedding" title="Permanent link">&para;</a></h2>
+<h3 id="_10">企业硬门槛<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<ol>
+<li><strong>私有化部署</strong>：电商客服是企业级场景，数据不能外泄</li>
+<li><strong>能微调</strong>：拿自家语料微调</li>
+<li><strong>中英文都顶得住</strong></li>
+</ol>
+<p>这三条一出，闭源商用 API（OpenAI text-embedding、Voyage、Cohere）直接出局——不管效果多好，数据出不去、进不了私有环境、没法微调。学习/课程演示用云端即可，避免本地部署太重。</p>
+<h3 id="_11">开源候选对比<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>模型</th>
+<th>特点</th>
+<th>结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>BGE-M3</strong></td>
+<td>100+ 语言、8192 token 长文本、中英文稳、可微调、生产用得多、踩坑资料多</td>
+<td><strong>本项目默认选</strong></td>
+</tr>
+<tr>
+<td>Qwen3-Embedding</td>
+<td>同路线，多语言更强，主打 4B/8B 大档，有 0.6B 轻量档</td>
+<td>随时能换</td>
+</tr>
+<tr>
+<td>gte-multilingual-base</td>
+<td>Apache 2.0 商用无碍、小巧跑得快、能力够用</td>
+<td>没有非它不可的亮点，往后排</td>
+</tr>
+<tr>
+<td>jina-embeddings-v3</td>
+<td>权重 CC BY-NC 非商用协议</td>
+<td>商用要另谈授权，放备选</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_12">选型逻辑拆解<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>参数大 ≠ 检索效果好</strong>：瓶颈很少卡在 Embedding 参数规模，更多卡在切分质量、是否单路检索、有没有重排、要不要领域微调。电商场景用户问题短、知识范围有限（自家商品+自家政策），不是开放域百科，轻量档（0.6B）足够</li>
+<li><strong>维度 vs 成本</strong>：BGE-M3 固定 1024 维。想砍维度换 MRL 训练过的模型（重要信息压在靠前维度，截短精度损失不大），Qwen3-Embedding 和 OpenAI text-embedding-3 都支持按需设维</li>
+<li><strong>query 指令</strong>：有的模型给 query 端单独加检索指令/前缀（E5 的 <code>query:</code>、Qwen3 的 query 指令）能抬效果；BGE-M3 默认不用加，query/document 一视同仁</li>
+<li>优先级排序：<strong>数据合规 → 中英文表现/可微调 → 向量维度存储成本 → 自部署算力</strong></li>
+</ul>
+<hr />
+<h2 id="_13">七、向量库选型<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>方案</th>
+<th>定位</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FAISS</td>
+<td>纯检索库，无服务层</td>
+<td>只存向量+数字 ID，不存原文、无字段过滤，demo 级</td>
+</tr>
+<tr>
+<td>ChromaDB</td>
+<td>嵌入式，开箱即用</td>
+<td>开发期省心，撑不住生产并发</td>
+</tr>
+<tr>
+<td>pgvector</td>
+<td>PostgreSQL 插件</td>
+<td>复用现成库，SQL 过滤/事务天生就有，中小规模</td>
+</tr>
+<tr>
+<td><strong>Milvus</strong></td>
+<td>专业分布式向量库</td>
+<td>索引丰富、原生标量过滤、扛大规模高并发；<strong>2.5 起自带 BM25 全文检索</strong>，dense+BM25 同库共存，方便混合检索</td>
+</tr>
+<tr>
+<td>Qdrant</td>
+<td>同上</td>
+<td>备选</td>
+</tr>
+</tbody>
+</table>
+<p><strong>本项目选 Milvus</strong>：向量规模持续涨 + 按品类/店铺过滤的标量查询少不了；个人开发嫌重可用 ChromaDB 先跑。</p>
+<h3 id="ann">ANN：近似最近邻<a class="headerlink" href="#ann" title="Permanent link">&para;</a></h3>
+<p>「近似」= 不保证绝对最相似，拿一点精度换数量级速度。几十万条向量逐条比对，一次查询能等哭用户。</p>
+<ul>
+<li><strong>HNSW</strong>：多层图，从稀疏顶层入口往下钻、顺着邻居走到最相似点附近。查得快召回高，代价是建图占内存、写入慢 → 读多写少场景</li>
+<li><strong>IVF</strong>：先聚簇，查询只在最近几个簇里精算，跳过其余。建库快省内存，召回随「查几个簇」参数走 → 规模越大越划算</li>
+</ul>
+<hr />
+<h2 id="_14">八、向量库和业务库，为什么要分家<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>向量是原文的派生品，计算有损</strong>——不能拿一串数字反推原文；但<strong>随时能重算</strong>（原文没变，重跑 Embedding 一模一样）。后面微调 Embedding、调整切分、换维度都要全量重生成向量，原文留在 MySQL 就是重跑一遍脚本的事</li>
+<li><strong>职责各司其职</strong>：向量库专精相似度查找；业务上要事务、SQL 过滤、被多个服务共读的原文本该放关系型库</li>
+</ol>
+<h3 id="_15">四种落地方案（从轻到重）<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<ol>
+<li>FAISS + sidecar（pickle/SQLite 存原文，零额外服务）</li>
+<li>FAISS + MySQL（vectorId 关联，业务字段多了升级划算）</li>
+<li>Milvus/Qdrant 一体（原文和元数据进向量库自带存储，少运维一套，多一套分布式系统）</li>
+<li><strong>本项目</strong>：Milvus 存正文+检索元数据（同份正文还能开原生 BM25），MySQL 当权威事实源（会话、工单、待审数据），靠 <code>vectorId</code> 关联。检索时直接从 Milvus 取正文元数据，要补全业务上下文再拿主键回 MySQL 捞</li>
+</ol>
+<hr />
+<h2 id="_16">九、双写落库：一个状态位换来的可重跑<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h2>
+<p>知识块从切好到能被检索，走一趟双写：</p>
+<ol>
+<li>切好的块<strong>先写 MySQL</strong>，状态 <code>待向量化</code>，vectorId 留空</li>
+<li>调用 Embedding 算向量，连同正文、检索元数据<strong>写进 Milvus</strong>，拿到 Milvus 分配的 ID</li>
+<li><strong>回写</strong>：vectorId 补回 MySQL 记录，状态转 <code>已向量化</code></li>
+</ol>
+<p>一个布尔状态位，换来：随时扫 MySQL 揪出卡在「待向量化」的记录（=上次向量化中断的残骸），直接重跑这批，不用整库推倒。按 chunk 主键幂等 upsert，重复写不产生两份。</p>
+<p>当前同步走（切完一块立刻跑完四步）；数据量大了换异步队列：先全落 MySQL 标 pending，后台顺着 pending 建向量，建完一条改一条。</p>
+<hr />
+<h2 id="chunk">十、一条 chunk 长什么样<a class="headerlink" href="#chunk" title="Permanent link">&para;</a></h2>
+<p><strong>先澄清易混点</strong>：这坨 JSON 不会整个拿去向量化。真正送进 Embedding 的只有 category、questions、answer <strong>三格拼起来的文本</strong>，其余是给检索过滤和溯源的元数据，不进向量。</p>
+<h3 id="questions">两类内容的差别：questions 从哪来<a class="headerlink" href="#questions" title="Permanent link">&para;</a></h3>
+<p><strong>① 带真实问题的（商品 FAQ、对话挖出来的问答对）</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">{</span>
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="w">  </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"退换货"</span><span class="p">,</span>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="w">  </span><span class="nt">"questions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"买的鞋子能不能退"</span><span class="p">,</span><span class="w"> </span><span class="s2">"七天无理由适用哪些商品"</span><span class="p">],</span>
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">  </span><span class="nt">"answer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"支持 7 天无理由退货，商品需保持完好，定制类商品除外。"</span><span class="p">,</span>
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="w">  </span><span class="nt">"section_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"退货政策 &gt; 无理由退货"</span><span class="p">,</span>
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a><span class="w">  </span><span class="nt">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span>
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="w">  </span><span class="nt">"is_key_clause"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a><span class="w">  </span><span class="nt">"prev_chunk_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kb_00417"</span><span class="p">,</span>
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a><span class="w">  </span><span class="nt">"next_chunk_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kb_00419"</span>
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="p">}</span>
+</code></pre></div>
+<p><strong>② 纯文档（政策、售后手册）</strong>——没有天然问题，questions 填<strong>所在章节标题</strong>，category 填上级标题路径：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="p">{</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="w">  </span><span class="nt">"category"</span><span class="p">:</span><span class="w"> </span><span class="s2">"退货政策-无理由退货"</span><span class="p">,</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="w">  </span><span class="nt">"questions"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"例外情况"</span><span class="p">],</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">  </span><span class="nt">"answer"</span><span class="p">:</span><span class="w"> </span><span class="s2">"以下情况不支持无理由退货：定制商品、已拆封的个人护理类商品、赠品需与商品一并退回。"</span><span class="p">,</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">  </span><span class="nt">"section_path"</span><span class="p">:</span><span class="w"> </span><span class="s2">"退货政策 &gt; 无理由退货 &gt; 例外情况"</span><span class="p">,</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">  </span><span class="nt">"content_type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="w">  </span><span class="nt">"is_key_clause"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">  </span><span class="nt">"prev_chunk_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kb_00418"</span><span class="p">,</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">  </span><span class="nt">"next_chunk_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"kb_00420"</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="_17">元数据四类（都不进向量）<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>section_path</code></td>
+<td>章节路径，答案溯源定位靠它（贯穿全流程的暗线：切分时存进去，检索带着走，生成答案做引用溯源映射回原文）</td>
+</tr>
+<tr>
+<td><code>content_type</code></td>
+<td>文字/表格/图片</td>
+</tr>
+<tr>
+<td><code>is_key_clause</code></td>
+<td>是否退货售后这类关键条款，检索排序加权信号——接上切分反例：关键条款入库前就必须保证完整成块</td>
+</tr>
+<tr>
+<td><code>prev_chunk_id</code> / <code>next_chunk_id</code></td>
+<td>相邻块指针，语义不完整时自动拉前后块补全</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_18">十一、在线问答：先跑通向量单路<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_huggingface</span><span class="w"> </span><span class="kn">import</span> <span class="n">HuggingFaceEmbeddings</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">langchain_milvus</span><span class="w"> </span><span class="kn">import</span> <span class="n">Milvus</span>
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="n">embeddings</span> <span class="o">=</span> <span class="n">HuggingFaceEmbeddings</span><span class="p">(</span><span class="n">model_name</span><span class="o">=</span><span class="s2">"BAAI/bge-m3"</span><span class="p">)</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">vector_store</span> <span class="o">=</span> <span class="n">Milvus</span><span class="p">(</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>    <span class="n">embedding_function</span><span class="o">=</span><span class="n">embeddings</span><span class="p">,</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="n">connection_args</span><span class="o">=</span><span class="p">{</span><span class="s2">"uri"</span><span class="p">:</span> <span class="s2">"http://localhost:19530"</span><span class="p">},</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">collection_name</span><span class="o">=</span><span class="s2">"ecommerce_kb"</span><span class="p">,</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="p">)</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="n">retriever</span> <span class="o">=</span> <span class="n">vector_store</span><span class="o">.</span><span class="n">as_retriever</span><span class="p">(</span><span class="n">search_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s2">"k"</span><span class="p">:</span> <span class="mi">10</span><span class="p">})</span>
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="n">docs</span> <span class="o">=</span> <span class="n">retriever</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="s2">"邮费是多少"</span><span class="p">)</span>
+</code></pre></div>
+<p>LangChain 三件套：<code>HuggingFaceEmbeddings</code>（文字→向量）、<code>Milvus</code>（存和查）、<code>as_retriever</code>（包成「问题→文档」的统一接口）。<code>retriever.invoke</code> 一次调用内部就是：编码问题 → Milvus 查相似度 → 吐出命中的 chunk 连同元数据。</p>
+<p><strong>query_faq 换内脏不换签名</strong>：函数体换成 <code>await retrieval.search_knowledge(keyword)</code>，参数还是那一个 <code>keyword</code>，<code>@tool</code> 装饰器不动——调用方不知道底下换过，system prompt 不用改，模型看到的 schema 一个字节没变。这就是工具模块化的红利。</p>
+<p>回到那句「邮费是多少」：「邮费」和「运费」在向量空间里挨得近，稳稳命中。<strong>同义词词典正式退休。</strong></p>
+<hr />
+<h2 id="_19">十二、代码走读要点<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h2>
+<h3 id="_20">开工前冒烟：验维度<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">resp</span> <span class="o">=</span> <span class="k">await</span> <span class="n">client</span><span class="o">.</span><span class="n">embeddings</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">embed_model</span><span class="p">,</span> <span class="nb">input</span><span class="o">=</span><span class="p">[</span><span class="s2">"邮费是多少"</span><span class="p">,</span> <span class="s2">"运费怎么算"</span><span class="p">])</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">assert</span> <span class="n">dims</span> <span class="ow">and</span> <span class="n">dims</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1024</span><span class="p">,</span> <span class="sa">f</span><span class="s2">"期望维度 1024,实际 </span><span class="si">{</span><span class="n">dims</span><span class="si">}</span><span class="s2">"</span>
+</code></pre></div>
+<p>维度会被写死进 Milvus 集合 schema，<strong>集合建好就改不了字段维度，得删了重建</strong>。先验 1024 比灌一半数据才发现划算得多。</p>
+<h3 id="_21">嵌入客户端：单例挡连接泄漏<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h3>
+<p>进程内单例复用同一 httpx 连接池——每次 embed 新建 AsyncOpenAI，建库那种成百上千次调用会一路累积连接和 fd 撑爆。两个口子：<code>embed_texts</code>（批量建库）、<code>embed_query</code>（单条在线），后者直接套前者。嵌入上游和聊天上游是 <code>.env</code> 里分开的两组配置，选型完全不相干。</p>
+<h3 id="_22">切分原语细节<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>中文分隔符表要自己写</strong>：LangChain 默认表给英文准备（靠空格找词边界），中文没有词边界。自排版在换行后插句末标点层（。！？；），再逗号空格，最后才逐字——切下来至少落在句子/分句边界</li>
+<li><code>strip_headers=True</code>：标题从正文摘掉但留在 metadata，装配时拼 section_path、questions、category</li>
+<li><strong>句末重叠</strong>：<code>recursive_split</code> 自带 chunk_overlap 按字符数取，接过来多半是半截话；自写的 <code>apply_sentence_overlap</code> 从块尾倒着凑完整句，<code>if out and</code> 保证第一句无论多长都收进来（宁可重叠超一点，不给下一块接半截）</li>
+<li><strong>表格识别</strong>：判据「这行以竖线开头且下一行是分隔行」，允许表前有散文导语；每块重贴表头+分隔行（preamble 只跟首块走）；行数少的整块返回</li>
+<li><strong>is_key_clause</strong>：只扫标题+正文前 40 字——关键词在开头才说明这块讲的就是这件事；整块搜会把顺带提一句「运费另计」的商品介绍也标成关键条款</li>
+<li><strong>sources.py 一处维护</strong>：文档清单被离线 CLI、切块预览、浏览器录入页三处共用，各写一份会账对不上</li>
+</ul>
+<h3 id="_23">双写幂等的支点<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h3>
+<ul>
+<li>Milvus 集合 <code>auto_id=False</code>：主键直接用 MySQL 的 id，两库共享同一身份，天然幂等 upsert</li>
+<li>向量化文本 = <code>category\nquestions\nanswer</code> 三格</li>
+<li><code>write_pending</code> 两趟循环：先插入拿自增 id，再回头连 prev/next（邻居 id 那时才存在）</li>
+<li>建库 CLI 直接 INSERT 无天然幂等 → 先 count 挡住重跑，想重建 <code>make kb-reset</code></li>
+</ul>
+<h3 id="_24">挖知识的坑<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>并列数组规避 502</strong>：按直觉该写 <code>list[QaPair]</code>（问题对象数组），实测上游对嵌套对象数组的工具 schema 直接 502，换两个并列标量数组 <code>questions: list[str]</code> + <code>answers: list[str]</code> 正常——代价是没人替你保证对齐，长度不一致按较短截断+记警告（少抽两条没事，问题错配到别人的答案会污染知识库且很难查）</li>
+<li><strong>去重归一化</strong>：<code>[\s\W_]+</code> 去空白标点——注意 <code>\W</code> 不含中文（中文属 <code>\w</code>），不会把汉字吃掉；「运费怎么算？」和「运费怎么算」归一成同一键；<code>seen</code> 初始装库内存量，一趟同时挡本批撞车和存量撞车</li>
+<li><strong>暂存表 + 人工审核</strong>：挖出来的问答对不直接入库——客服当时的回答可能只对那一单成立、带着订单号或「稍等我看看」这种废话，进库后每次检索都可能捞出来当依据。先落 staging 标 extracted → 去重标 kept/discarded → <strong>入库口只有一个</strong>：<code>/staging/approve</code> 人工逐条采纳，只认 kept 状态（手快点两下被 409 挡回）。采纳的块 content_type 标 <code>mined</code>，跟人写的块能区分——后面几章都用这个区分</li>
+<li><code>batch_no</code> 过滤是踩坑后加的：挖到一半崩了会留一批 extracted 残骸，不圈定批次会把残骸卷进下次去重</li>
+</ul>
+<hr />
+<h2 id="_25">十三、实战验收<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h2>
+<p><strong>验收标准</strong>：
+1. 「邮费是多少」这类换说法的问题，能召回运费说明并答对（浏览器里气泡出现工具徽章 + 正确运费规则）
+2. 故意中断建库任务再重跑，漏向量化的块能被捡起补齐（<code>vectorize_status=pending</code> 兜底）</p>
+<p>演示链路：<code>make kb-build</code>（解析切分+双写）→ <code>make kb-vectorize</code>（向量化，可重跑）→ 浏览器问「邮费是多少」→ 命中运费知识块。</p>
+<hr />
+<h2 id="_26">十四、本章小结<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>思想</strong>：意思相近 = 向量挨得近；RAG = 外挂知识库，先查再答，库可随时更新，不用重训模型</li>
+<li><strong>知识</strong>：放权威结构文档；来源 = 人工整理 + 对话挖掘（分批喂防上下文焦虑/Lost in the Middle，暂存表人工审核入库）</li>
+<li><strong>切分</strong>：三代演进到结构感知，section_path 贯穿全流程；重叠裁句号、表格复制表头</li>
+<li><strong>选型</strong>：Embedding 合规优先选 BGE-M3；向量库选 Milvus（HNSW/IVF 按规模取舍）</li>
+<li><strong>分家</strong>：MySQL 权威源 + Milvus 向量检索，vectorId 关联，双写+状态位保幂等可重跑</li>
+<li><strong>换内脏不换签名</strong>：query_faq 从 LIKE 变成向量检索，对外契约不变</li>
+</ul>
+<p><strong>留下的坑</strong>：用户报一串 SKU 编号或具体型号，这类查询<strong>看重字面对得上</strong>；向量检索认语义相近，反而容易晃到几个长得像但答非所问的结果。这个缺口，第 4 章混合检索来补。</p>
+<hr />
+<h2 id="_27">附：本章踩坑记录<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>坑</th>
+<th>现象</th>
+<th>解法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>中文切分乱切</td>
+<td>默认分隔符表对中文等于只有段落换行两级，再切不动就逐字硬切，句子拦腰断</td>
+<td>自写 CJK_SEPARATORS 插句末标点层</td>
+</tr>
+<tr>
+<td>重叠带半截话</td>
+<td>chunk_overlap 按字符取，前块末尾半句接到后块</td>
+<td>自写按完整句取重叠，宁超不半截</td>
+</tr>
+<tr>
+<td>集合维度定死</td>
+<td>Milvus 集合建好改不了字段维度</td>
+<td>开工先 smoke 验上游返回 1024</td>
+</tr>
+<tr>
+<td>嵌套数组 502</td>
+<td>挖知识用 list[QaPair] 工具 schema，上游直接 502</td>
+<td>改两个并列标量数组，较短对齐+警告</td>
+</tr>
+<tr>
+<td>重复建库</td>
+<td>文档块直接 INSERT 重跑就原样再插一份</td>
+<td>count 先挡 + <code>make kb-reset</code> 清理</td>
+</tr>
+<tr>
+<td>挖知识残骸</td>
+<td>中断后 staging 残留 extracted 行卷进下次去重</td>
+<td>按 batch_no 圈定批次</td>
+</tr>
+<tr>
+<td>挖的问答对污染知识库</td>
+<td>「稍等我看下」被当答案进库</td>
+<td>暂存表 + /staging/approve 人工审核，只认 kept</td>
+</tr>
+</tbody>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="页脚" >
+        
+          
+          <a href="../02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE/" class="md-footer__link md-footer__link--prev" aria-label="上一页: AI智能客服实战·02 Function Calling工具链">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                上一页
+              </span>
+              <div class="md-ellipsis">
+                AI智能客服实战·02 Function Calling工具链
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../04-RAG%E8%BF%9B%E9%98%B6%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8E%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB/" class="md-footer__link md-footer__link--next" aria-label="下一页: AI智能客服实战·04 RAG进阶混合检索与评估">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                下一页
+              </span>
+              <div class="md-ellipsis">
+                AI智能客服实战·04 RAG进阶混合检索与评估
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.top", "navigation.footer", "content.code.copy", "toc.integrate"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.d7400e89.min.js"></script>
+      
+    
+  </body>
+</html>
