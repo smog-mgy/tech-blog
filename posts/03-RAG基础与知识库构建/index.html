@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。">
+        <meta name="description" content="文档解析与切块、Embedding、MySQL 和 Milvus 双写，以及在线检索问答的调用顺序。">
       
       
         <meta name="author" content="smog-mgy">
@@ -3711,7 +3711,7 @@
   <span class="md-ellipsis">
     
   
-    阅读与写作参考
+    技术博客与文章
   
 
     
@@ -4241,7 +4241,6 @@
 <h1 id="agent-03">Agent 学习 03｜知识库构建与双写<a class="headerlink" href="#agent-03" title="Permanent link">&para;</a></h1>
 <p><strong>记录日期</strong>：2026-06-18
 <strong>标签</strong>：AI Agent · RAG · 知识库</p>
-<p>这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。</p>
 <blockquote>
 <p>上一章收尾翻车现场还历历在目：faq 表里明明躺着「运费怎么算 → 单笔订单满 99 元包邮……」，用户一句「邮费是多少」却查了个空。病根不是数据，是查法——LIKE 认字面，用户嘴里的「邮费」在「运费怎么算」里字面上根本不存在。这一章把 query_faq 的查法整个换掉，让它能听懂「邮费」和「运费」说的是同一件事。这就是 RAG。</p>
 </blockquote>

@@ -3303,7 +3303,7 @@
   <span class="md-ellipsis">
     
   
-    阅读与写作参考
+    技术博客与文章
   
 
     
@@ -3431,7 +3431,7 @@
 
 
 <h1 id="_1">端口被占用，和浏览器页面有什么关系<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p><strong>记录阶段</strong>：2026 年 10 月下旬 · 10 月 28 日整理</p>
+<p><strong>日期</strong>：2026 年 10 月 28 日</p>
 <p>启动 RepoLaunch 时出现过 <code>WinError 10048</code>：程序无法监听本机 8787 端口。与此同时，浏览器中还开着同一地址的页面，很容易以为是网页占用了服务端口。</p>
 <h2 id="_2">先区分谁在监听<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
 <p>这里需要检查的是哪个进程在监听 <code>127.0.0.1:8787</code>。浏览器访问页面会建立客户端连接，单纯保持标签页打开，不会因此成为这个地址的监听服务。</p>
@@ -3447,7 +3447,6 @@
 <h2 id="_4">怎么判断问题确实解决<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>观察新窗口打印的最终 URL，访问这个地址并确认服务器响应。旧地址还能打开，只说明旧服务还在；新任务应以本次启动日志为准。</p>
 <p>自动换端口只能处理本机监听冲突。Docker 容器未就绪、应用加载失败、接口异常等问题仍要分别排查。</p>
-<p>这次排查让我更愿意把“选择端口、启动服务、等待就绪、打开浏览器”看成一条完整启动流程。</p>
 <ul>
 <li><a href="https://github.com/smog-mgy/RepoLaunch/blob/97128d84e3a5f6c28e0ab99315bf9fff8544574b/repolaunch/__main__.py">启动器源码</a></li>
 <li><a href="https://github.com/smog-mgy/RepoLaunch/blob/97128d84e3a5f6c28e0ab99315bf9fff8544574b/docs/RUNNING_WINDOWS.md">Windows 运行说明</a></li>

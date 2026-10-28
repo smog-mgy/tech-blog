@@ -3344,7 +3344,7 @@
   <span class="md-ellipsis">
     
   
-    阅读与写作参考
+    技术博客与文章
   
 
     
@@ -3505,7 +3505,7 @@
 
 
 <h1 id="_1">模型提出补丁之后，程序还要检查什么<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p><strong>记录阶段</strong>：2026 年 10 月下旬 · 10 月 28 日整理</p>
+<p><strong>日期</strong>：2026 年 10 月 28 日</p>
 <p>“修复成功”需要发生在重建和验证之后。模型提出了一个看起来合理的依赖名称，并不能说明目标服务真的恢复了。</p>
 <p>2026 年 10 月 26 日，验收样例先故意构建一个缺少 requests 的镜像，再观察真实的 <code>ModuleNotFoundError</code>。这使修复流程有一个已知、可重复的故障对象。</p>
 <h2 id="_2">先取得真实错误，再生成建议<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
@@ -3513,7 +3513,7 @@
 <p>这一版把截取后的日志、原方案和诊断案例交给规划器。案例是提示，真正支持“补充 requests”这个操作的证据，是目标进程确实报告缺少该模块。</p>
 <h2 id="_3">为什么修复只返回补丁<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>如果让模型重新生成完整方案，它可能在补依赖的同时换掉入口、端口和检查路径。即使新方案启动成功，也很难判断到底修好了原问题，还是绕开了原来的目标。</p>
-<p>因此修复响应只允许下面这些字段。这里是接口形状示例，不是宣称保留了模型响应的逐字原文：</p>
+<p>修复补丁的格式如下：</p>
 <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="p">{</span>
 <a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="w">  </span><span class="nt">"python_version"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span>
 <a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="w">  </span><span class="nt">"add_packages"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"requests"</span><span class="p">],</span>
@@ -3539,7 +3539,7 @@
 <p>验收文档记录，这次修复的模型请求耗时 2439 毫秒、服务端报告 2170 个 Token。它只对应这一次请求，不能理解为完整部署耗时或账号总账单。</p>
 <h2 id="_6">遇到打包声明错误怎么办<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <p>另一次目标仓库尝试出现 <code>Multiple top-level packages discovered in a flat-layout</code>。这类错误涉及目标项目的打包发现配置，补一个依赖并不能解决。</p>
-<p>当前执行器不自动修改目标源码或打包声明，因此这次尝试仍记录为失败。这个样例提醒我，评估修复能力时必须同时保存“可以修”和“目前不能修”的案例。</p>
+<p>这个错误需要修改项目的打包声明，超出了当前补丁范围，所以这次部署失败。</p>
 <h2 id="_7">对照源码和证据<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="https://github.com/smog-mgy/RepoLaunch/blob/97128d84e3a5f6c28e0ab99315bf9fff8544574b/repolaunch/planner.py">修复入口、窄补丁合并与后续校验</a></li>

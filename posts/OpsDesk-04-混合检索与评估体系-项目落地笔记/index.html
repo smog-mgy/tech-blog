@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="比较向量、关键词、融合与重排各自解决的问题，并区分仓库历史报告和当前复测。">
+        <meta name="description" content="向量与关键词召回、RRF 融合、重排和检索评估。">
       
       
         <meta name="author" content="smog-mgy">
@@ -1367,7 +1367,7 @@
   <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       
-        同一主题的另一种读法
+        相关文章
       
     </span>
   </a>
@@ -3390,7 +3390,7 @@
   <span class="md-ellipsis">
     
   
-    阅读与写作参考
+    技术博客与文章
   
 
     
@@ -3567,7 +3567,7 @@
   <a href="#_10" class="md-nav__link">
     <span class="md-ellipsis">
       
-        同一主题的另一种读法
+        相关文章
       
     </span>
   </a>
@@ -3597,7 +3597,6 @@
 <h1 id="opsdesk-04">OpsDesk 04｜混合检索与评估 · 项目复盘<a class="headerlink" href="#opsdesk-04" title="Permanent link">&para;</a></h1>
 <p><strong>记录日期</strong>：2026-08-23
 <strong>标签</strong>：AI Agent · OpsDesk · 项目落地笔记</p>
-<p>比较向量、关键词、融合与重排各自解决的问题，并区分仓库历史报告和当前复测。</p>
 <blockquote>
 <p>涉及源码：<code>app/core/retrieval.py</code>、<code>app/core/rerank.py</code>、<code>app/core/embeddings.py</code>、<code>scripts/eval_retrieval.py</code>、<code>tests/data/eval_ch04.jsonl</code></p>
 </blockquote>
@@ -3640,14 +3639,13 @@
 <a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>make<span class="w"> </span>eval-retrieval<span class="w"> </span><span class="c1"># 纯向量换说法召回验证</span>
 </code></pre></div>
 <h2 id="_9">源码对照与继续阅读<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
-<p>以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。</p>
 <ul>
 <li><a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/retrieval.py"><code>app/core/retrieval.py</code></a></li>
 <li><a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/rerank.py"><code>app/core/rerank.py</code></a></li>
 <li><a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/scripts/eval_retrieval.py"><code>scripts/eval_retrieval.py</code></a></li>
 </ul>
 <p>历史检索与生成指标可对照<a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch09/reports/eval_trend.txt">仓库中的评估趋势记录</a>。该记录缺少完整抽样与运行环境说明，数值仅作历史样例，不据此推断生产表现。</p>
-<h2 id="_10">同一主题的另一种读法<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<h2 id="_10">相关文章<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../OpsDesk-04-%E6%B7%B7%E5%90%88%E6%A3%80%E7%B4%A2%E4%B8%8E%E8%AF%84%E4%BC%B0%E4%BD%93%E7%B3%BB-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">源码解析</a></li>
 <li><a href="../../projects/opsdesk/">OpsDesk 专题导读</a></li>

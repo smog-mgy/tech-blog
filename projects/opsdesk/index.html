@@ -838,7 +838,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        三条值得先看的路径
+        主要功能
       
     </span>
   </a>
@@ -860,7 +860,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        实现与验证分开看
+        测试记录
       
     </span>
   </a>
@@ -871,7 +871,7 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        下一步怎么复现
+        本地运行
       
     </span>
   </a>
@@ -3322,7 +3322,7 @@
   <span class="md-ellipsis">
     
   
-    阅读与写作参考
+    技术博客与文章
   
 
     
@@ -3400,7 +3400,7 @@
   <a href="#_1" class="md-nav__link">
     <span class="md-ellipsis">
       
-        三条值得先看的路径
+        主要功能
       
     </span>
   </a>
@@ -3422,7 +3422,7 @@
   <a href="#_3" class="md-nav__link">
     <span class="md-ellipsis">
       
-        实现与验证分开看
+        测试记录
       
     </span>
   </a>
@@ -3433,7 +3433,7 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        下一步怎么复现
+        本地运行
       
     </span>
   </a>
@@ -3461,16 +3461,15 @@
 
 
 <h1 id="opsdesk">OpsDesk 项目导读<a class="headerlink" href="#opsdesk" title="Permanent link">&para;</a></h1>
-<p>OpsDesk 是一个围绕企业设备运维场景的个人练习项目，包含故障知识问答、报修确认和工单进度查询。业务数据是演示数据，不能把演示场景等同于企业生产使用。</p>
-<p><a href="https://github.com/smog-mgy/opsdesk">查看 GitHub 仓库</a> · 本次源码对照版本：<code>f95a24a</code>。</p>
-<h2 id="_1">三条值得先看的路径<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>OpsDesk 是一个围绕企业设备运维场景的个人练习项目，包含故障知识问答、报修确认和工单进度查询。工单和设备信息使用演示数据。</p>
+<p><a href="https://github.com/smog-mgy/opsdesk">查看 GitHub 仓库</a> · 源码版本：<code>f95a24a</code>。</p>
+<h2 id="_1">主要功能<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
 <ul>
 <li><strong>知识问答</strong>：检索候选、融合与重排、证据检查，再决定生成或拒答。先读第 3、4、9 章。</li>
 <li><strong>业务工具</strong>：模型提出调用，程序校验身份与参数，写操作经过确认后执行。先读第 2、5、8 章。</li>
 <li><strong>多轮对话</strong>：指代消解、历史裁剪与摘要、状态重置，服务于下一轮问题。先读第 6、7 章。</li>
 </ul>
 <h2 id="_2">按章节对照<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>项目复盘讲问题和取舍，源码解析讲函数、字段与控制流。两种内容相互链接，避免在目录里来回查找。</p>
 <table>
 <thead>
 <tr>
@@ -3537,11 +3536,11 @@
 </tr>
 </tbody>
 </table>
-<h2 id="_3">实现与验证分开看<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<h2 id="_3">测试记录<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
 <p>图编排、工具注册、检索和数据处理的入口可以在公开源码中检查。外部模型、MySQL、Milvus 和 Langfuse 的运行结果依赖当时环境，需要另行复现。</p>
-<p>仓库保留了<a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch09/reports/eval_trend.txt">历史评估趋势记录</a>和<a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch10/reports/eval_report.md">44 条留出样本的分类报告</a>。本次整理没有重新运行这些评估，样例指标不代表生产效果。</p>
-<p>在 RepoLaunch 的独立部署尝试中，这个仓库曾因 setuptools 的平铺目录包发现配置失败。RepoLaunch 当前不改目标项目打包声明，所以这次尝试仍应记录为失败；它不等于否定 OpsDesk 各模块的代码实现。</p>
-<h2 id="_4">下一步怎么复现<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>仓库保留了<a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch09/reports/eval_trend.txt">历史评估趋势记录</a>和<a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch10/reports/eval_report.md">44 条留出样本的分类报告</a>。评估结果来自当时的样例数据。</p>
+<p>在 RepoLaunch 的独立部署尝试中，这个仓库曾因 setuptools 的平铺目录包发现配置失败。RepoLaunch 当前不改目标项目打包声明，所以这次尝试仍应记录为失败。</p>
+<h2 id="_4">本地运行<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <p>先按仓库 README 核对依赖和外部服务，再运行本地测试与单条场景。先确认工具是否真的执行、证据是否来自检索，再检查界面上的回答是否看起来合理。</p>
 
 

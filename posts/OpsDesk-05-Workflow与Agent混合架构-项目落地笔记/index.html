@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="解释哪些节点必须按固定顺序执行，哪些步骤允许模型决定是否调用工具。">
+        <meta name="description" content="LangGraph 节点、条件路由、证据检查和工具调用循环。">
       
       
         <meta name="author" content="smog-mgy">
@@ -1472,7 +1472,7 @@
   <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
-        同一主题的另一种读法
+        相关文章
       
     </span>
   </a>
@@ -3379,7 +3379,7 @@
   <span class="md-ellipsis">
     
   
-    阅读与写作参考
+    技术博客与文章
   
 
     
@@ -3545,7 +3545,7 @@
   <a href="#_7" class="md-nav__link">
     <span class="md-ellipsis">
       
-        同一主题的另一种读法
+        相关文章
       
     </span>
   </a>
@@ -3575,7 +3575,6 @@
 <h1 id="opsdesk-05-agent">OpsDesk 05｜工作流与 Agent 的职责 · 项目复盘<a class="headerlink" href="#opsdesk-05-agent" title="Permanent link">&para;</a></h1>
 <p><strong>记录日期</strong>：2026-08-27
 <strong>标签</strong>：AI Agent · OpsDesk · 项目落地笔记</p>
-<p>解释哪些节点必须按固定顺序执行，哪些步骤允许模型决定是否调用工具。</p>
 <blockquote>
 <p>涉及源码：<code>app/graph/build.py</code>、<code>app/graph/nodes.py</code>、<code>app/graph/routing.py</code>、<code>app/graph/state.py</code></p>
 </blockquote>
@@ -3681,13 +3680,12 @@
 <a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="c1"># 闲聊类：今天天气怎么样 → 兜底脚本</span>
 </code></pre></div>
 <h2 id="_6">源码对照与继续阅读<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
-<p>以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。</p>
 <ul>
 <li><a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/graph/build.py"><code>app/graph/build.py</code></a></li>
 <li><a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/graph/routing.py"><code>app/graph/routing.py</code></a></li>
 <li><a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/graph/state.py"><code>app/graph/state.py</code></a></li>
 </ul>
-<h2 id="_7">同一主题的另一种读法<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<h2 id="_7">相关文章<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../OpsDesk-05-Workflow%E4%B8%8EAgent%E6%B7%B7%E5%90%88%E6%9E%B6%E6%9E%84-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">源码解析</a></li>
 <li><a href="../../projects/opsdesk/">OpsDesk 专题导读</a></li>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。">
+        <meta name="description" content="Fine-Tuning 与 Prompt-Tuning 的区别、几种提示微调方法，以及两类方法的代码实验。">
       
       
         <meta name="author" content="smog-mgy">
@@ -3572,7 +3572,7 @@
   <span class="md-ellipsis">
     
   
-    阅读与写作参考
+    技术博客与文章
   
 
     
@@ -3963,7 +3963,6 @@
 <h1 id="prompt-tuning">大模型 Prompt-Tuning 方法入门学习笔记<a class="headerlink" href="#prompt-tuning" title="Permanent link">&para;</a></h1>
 <p><strong>记录日期</strong>：2026-05-18
 <strong>标签</strong>：大模型 · Prompt-Tuning · 学习笔记</p>
-<p>保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。</p>
 <p><strong>前置</strong>：这篇承接 LLM 架构篇——你已经知道 BERT 是 Encoder（理解）、GPT 是 Decoder（生成）。这篇讲的是<strong>怎么让预训练模型更好地适配下游任务</strong>：传统做法是微调（Fine-Tuning），更省钱省力的做法是 Prompt-Tuning。</p>
 <hr />
 <h2 id="nlp">一、NLP 任务四种范式（先建立大局观）<a class="headerlink" href="#nlp" title="Permanent link">&para;</a></h2>

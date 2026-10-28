@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。">
+        <meta name="description" content="多标签主题分类器的数据准备、训练与评估，以及将模型放在旁路批量分类的用法。">
       
       
         <meta name="author" content="smog-mgy">
@@ -3659,7 +3659,7 @@
   <span class="md-ellipsis">
     
   
-    阅读与写作参考
+    技术博客与文章
   
 
     
@@ -4137,7 +4137,6 @@
 <h1 id="agent-10">Agent 学习 10｜旁路分类器与微调<a class="headerlink" href="#agent-10" title="Permanent link">&para;</a></h1>
 <p><strong>记录日期</strong>：2026-07-30
 <strong>标签</strong>：AI Agent · 模型微调 · 分类器</p>
-<p>这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。</p>
 <blockquote>
 <p>上一章数据飞轮转了一阵，把 bot 没答好的问题一条条接住，攒进低置信度问题池，几千上万条堆在那里。问题攒够了，你其实很想知道一件事：用户到底最常卡在哪一类上？是物流迟迟不到、要退换货、拿不准尺码，还是发票开不出来？搞清楚这个，才好排出先补哪块知识的优先级。几万条问题一条条调大模型打标，又贵又慢；这种量大、类目固定、还要便宜要快的归类任务，该请一台微调的小分类器出马了——这一章亲手把它训出来。</p>
 </blockquote>

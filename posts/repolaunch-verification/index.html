@@ -3333,7 +3333,7 @@
   <span class="md-ellipsis">
     
   
-    阅读与写作参考
+    技术博客与文章
   
 
     
@@ -3483,14 +3483,14 @@
 
 
 <h1 id="_1">三个仓库跑通之后，验证结论该怎么写<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h1>
-<p><strong>记录阶段</strong>：2026 年 10 月下旬 · 10 月 28 日整理</p>
+<p><strong>日期</strong>：2026 年 10 月 28 日</p>
 <p>一次演示最容易展示的是“页面打开了”。但写技术复盘时，我还需要回答：测的是哪份源码、检查了什么、哪些步骤使用替身，以及失败样例有没有被省略。</p>
 <h2 id="http-200">HTTP 200 回答的问题很有限<a class="headerlink" href="#http-200" title="Permanent link">&para;</a></h2>
 <p>执行器先启动容器，再检查方案指定路径的 HTTP 响应。拿到 2xx，说明检查时该路径可以正常响应。</p>
 <p>它不能证明登录、数据库读写或整条业务流程都正确。某个项目即使只返回默认欢迎页，也可能通过这个层级的检查。</p>
 <p>因此真实仓库验收额外加入内容探针。例如 FastAPI 样例除了检查根路径，还访问 <code>/items/7?q=test</code>，核对返回 JSON 中预期字段。</p>
 <h2 id="_2">保留的三个样例<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
-<p>以下是 2026 年 10 月 26 日文档中记录的样例结果；不是本篇整理时重新测出的新一轮数据。</p>
+<p>下表记录了 2026 年 10 月 26 日的三次部署测试。</p>
 <table>
 <thead>
 <tr>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。">
+        <meta name="description" content="固定工作流与模型决策的分工，ReAct 工具循环、停止条件，以及 LangGraph 中的节点和路由。">
       
       
         <meta name="author" content="smog-mgy">
@@ -3532,7 +3532,7 @@
   <span class="md-ellipsis">
     
   
-    阅读与写作参考
+    技术博客与文章
   
 
     
@@ -3883,7 +3883,6 @@
 <h1 id="agent-05-agent">Agent 学习 05｜工作流与 Agent 的职责<a class="headerlink" href="#agent-05-agent" title="Permanent link">&para;</a></h1>
 <p><strong>记录日期</strong>：2026-06-30
 <strong>标签</strong>：AI Agent · Workflow · LangGraph</p>
-<p>这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。</p>
 <blockquote>
 <p>上一章结束，检索链路立住了。但用户报一个手机号说查物流：模型得先拿手机号查订单、从订单翻出物流单号、再拿单号查一次物流——当时的系统只许模型开一次工具调用，走完查订单就没了下文。套个循环让模型想查多久查多久？光套循环不够，还得想明白：客服系统把主动权整个交出去，让模型想干嘛就干嘛，捅的乱子比查不到一次物流严重得多。这一章讲清楚这个循环配在哪、怎么配。</p>
 </blockquote>

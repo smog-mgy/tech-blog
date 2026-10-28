@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="把模型提出的工具请求与实际执行分开，重点检查建单确认、参数注入和工具审计。">
+        <meta name="description" content="工具参数校验、会话信息注入、建单确认与执行审计。">
       
       
         <meta name="author" content="smog-mgy">
@@ -1152,7 +1152,7 @@
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        同一主题的另一种读法
+        相关文章
       
     </span>
   </a>
@@ -3407,7 +3407,7 @@
   <span class="md-ellipsis">
     
   
-    阅读与写作参考
+    技术博客与文章
   
 
     
@@ -3601,7 +3601,7 @@
   <a href="#_6" class="md-nav__link">
     <span class="md-ellipsis">
       
-        同一主题的另一种读法
+        相关文章
       
     </span>
   </a>
@@ -3631,7 +3631,6 @@
 <h1 id="opsdesk-02">OpsDesk 02｜工具调用与写操作确认 · 项目复盘<a class="headerlink" href="#opsdesk-02" title="Permanent link">&para;</a></h1>
 <p><strong>记录日期</strong>：2026-08-15
 <strong>标签</strong>：AI Agent · OpsDesk · 项目落地笔记</p>
-<p>把模型提出的工具请求与实际执行分开，重点检查建单确认、参数注入和工具审计。</p>
 <blockquote>
 <p>涉及源码：<code>app/tools/registry.py</code>、<code>app/tools/engine.py</code>、<code>app/tools/business.py</code>、<code>app/tools/builtin/</code></p>
 </blockquote>
@@ -3670,13 +3669,12 @@
 <a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># {"user_id":"u1","message":"我的工单 WO-2026-9999 处理到哪了"}  → 归属校验拦下</span>
 </code></pre></div>
 <h2 id="_5">源码对照与继续阅读<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
-<p>以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。</p>
 <ul>
 <li><a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/tools/builtin/tickets.py"><code>app/tools/builtin/tickets.py</code></a></li>
 <li><a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/tools/builtin/ticket_confirm.py"><code>app/tools/builtin/ticket_confirm.py</code></a></li>
 <li><a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/tools/engine.py"><code>app/tools/engine.py</code></a></li>
 </ul>
-<h2 id="_6">同一主题的另一种读法<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<h2 id="_6">相关文章<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../OpsDesk-02-FunctionCalling%E5%B7%A5%E5%85%B7%E9%93%BE-%E6%BA%90%E7%A0%81%E8%A7%A3%E6%9E%90/">源码解析</a></li>
 <li><a href="../../projects/opsdesk/">OpsDesk 专题导读</a></li>

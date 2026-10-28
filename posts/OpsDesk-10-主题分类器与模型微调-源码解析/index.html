@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="说明旁路主题分类器的用途，阅读仓库中的留出集报告，同时保留小样本评估的限制。">
+        <meta name="description" content="旁路主题分类器的数据准备、训练、评估与 ONNX 导出。">
       
       
         <meta name="author" content="smog-mgy">
@@ -2069,7 +2069,7 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        同一主题的另一种读法
+        相关文章
       
     </span>
   </a>
@@ -3368,7 +3368,7 @@
   <span class="md-ellipsis">
     
   
-    阅读与写作参考
+    技术博客与文章
   
 
     
@@ -3523,7 +3523,7 @@
   <a href="#_4" class="md-nav__link">
     <span class="md-ellipsis">
       
-        同一主题的另一种读法
+        相关文章
       
     </span>
   </a>
@@ -3553,7 +3553,6 @@
 <h1 id="opsdesk-10">OpsDesk 10｜旁路分类器与微调 · 源码解析<a class="headerlink" href="#opsdesk-10" title="Permanent link">&para;</a></h1>
 <p><strong>记录日期</strong>：2026-09-18
 <strong>标签</strong>：AI Agent · OpsDesk · 源码解析</p>
-<p>说明旁路主题分类器的用途，阅读仓库中的留出集报告，同时保留小样本评估的限制。</p>
 <blockquote>
 <p>对应笔记：<code>第 10 章：主题分类器与模型微调（项目落地笔记）.md</code>
 本解析按脚本流水线走读，重点拆评估报告的数字结构和黄金样例的门控逻辑。</p>
@@ -3735,14 +3734,13 @@
 </tr>
 </tbody>
 </table>
-<p>以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。</p>
 <ul>
 <li><a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch10/reports/eval_report.md"><code>data/ch10/reports/eval_report.md</code></a></li>
 <li><a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch10/reports/export_report.json"><code>data/ch10/reports/export_report.json</code></a></li>
 <li><a href="https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/taxonomy.py"><code>app/core/taxonomy.py</code></a></li>
 </ul>
-<p>仓库分类器报告的留出集只有 44 条；其中的满分不能代表真实工单分布下的泛化能力。本次只核对报告与实现入口，没有重新训练模型。</p>
-<h2 id="_4">同一主题的另一种读法<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<p>仓库分类器报告的留出集只有 44 条；其中的满分不能代表真实工单分布下的泛化能力。</p>
+<h2 id="_4">相关文章<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
 <ul>
 <li><a href="../OpsDesk-10-%E4%B8%BB%E9%A2%98%E5%88%86%E7%B1%BB%E5%99%A8%E4%B8%8E%E6%A8%A1%E5%9E%8B%E5%BE%AE%E8%B0%83-%E9%A1%B9%E7%9B%AE%E8%90%BD%E5%9C%B0%E7%AC%94%E8%AE%B0/">项目复盘</a></li>
 <li><a href="../../projects/opsdesk/">OpsDesk 专题导读</a></li>
