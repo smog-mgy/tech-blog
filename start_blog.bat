@@ -1,5 +1,8 @@
 @echo off
-cd /d D:\Pythonproject\tech-blog
-start "Blog Server" /min cmd /k "F:\develop\Anaconda3\envs\blog_env\Scripts\mkdocs.exe serve -a 127.0.0.1:8000"
-timeout /t 8 /nobreak >nul
-start http://127.0.0.1:8000
+setlocal
+cd /d "%~dp0"
+set "PYTHONIOENCODING=utf-8"
+echo Blog preview: http://127.0.0.1:8000
+echo Keep this window open while using the preview.
+"F:\develop\Anaconda3\envs\blog_env\python.exe" -m mkdocs serve -a 127.0.0.1:8000
+pause

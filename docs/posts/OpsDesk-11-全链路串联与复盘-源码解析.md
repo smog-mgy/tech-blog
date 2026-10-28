@@ -1,7 +1,22 @@
-# 第 11 章：全链路串联与复盘（源码解析）
+---
+title: OpsDesk 11｜全链路验证与复盘 · 源码解析
+description: 把问答、工单、检索、工具和日志串成一条阅读路线，并列出验证入口与支持边界。
+date: '2026-09-29'
+updated: '2026-10-28'
+category: 项目实战
+tags:
+- AI Agent
+- OpsDesk
+- 源码解析
+---
 
-**日期**：2026-09-29
+
+# OpsDesk 11｜全链路验证与复盘 · 源码解析
+
+**记录日期**：2026-09-29
 **标签**：AI Agent · OpsDesk · 源码解析
+
+把问答、工单、检索、工具和日志串成一条阅读路线，并列出验证入口与支持边界。
 
 
 > 对应笔记：`第 11 章：全链路串联与复盘（项目落地笔记）.md`
@@ -143,3 +158,17 @@ START
 | `--group ml` 隔离重依赖 | 日常起应用不装 torch 几个 G |
 | classifier-up 起服务后 curl healthz 自检 | 起没起来当场知道 |
 | 测试按模块分层 + 按章标注 | 定位精确、离线可跑、演进可追溯 |
+## 源码对照与继续阅读
+
+以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
+
+- [`Makefile`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/Makefile)
+- [`app/graph/build.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/graph/build.py)
+- [`README.md`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/README.md)
+
+
+## 同一主题的另一种读法
+
+- [项目复盘](OpsDesk-11-全链路串联与复盘-项目落地笔记.md)
+- [OpsDesk 专题导读](../projects/opsdesk.md)
+- [上一章：旁路分类器与微调](OpsDesk-10-主题分类器与模型微调-源码解析.md)

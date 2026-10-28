@@ -1,7 +1,22 @@
-# 第 09 章：可观测性与数据飞轮 —— 项目落地笔记
+---
+title: OpsDesk 09｜调用追踪与反馈审核 · 项目复盘
+description: 把调用记录、置信度和反馈审核串起来，明确模型建议写回知识库之前的人工步骤。
+date: '2026-09-12'
+updated: '2026-10-28'
+category: 项目实战
+tags:
+- AI Agent
+- OpsDesk
+- 项目落地笔记
+---
 
-**日期**：2026-09-12
+
+# OpsDesk 09｜调用追踪与反馈审核 · 项目复盘
+
+**记录日期**：2026-09-12
 **标签**：AI Agent · OpsDesk · 项目落地笔记
+
+把调用记录、置信度和反馈审核串起来，明确模型建议写回知识库之前的人工步骤。
 
 
 > 涉及源码：`app/core/observability.py`、`app/core/flywheel.py`、`app/core/jobs.py`、`app/api/observability.py`、`app/api/rageval.py`、`app/api/admin.py`、`app/api/review.py`、`data/ch09/reports/eval_trend.txt`
@@ -135,3 +150,20 @@ make flywheel            # 问题池 → 标准化查重 → 待审队列
 make eval-flywheel       # 评估流水线，落 eval_runs 连趋势
 make cost-report         # 按意图统计 token 花销
 ```
+## 源码对照与继续阅读
+
+以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
+
+- [`app/core/observability.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/observability.py)
+- [`app/core/flywheel.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/flywheel.py)
+- [`app/core/confidence.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/confidence.py)
+
+历史检索与生成指标可对照[仓库中的评估趋势记录](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch09/reports/eval_trend.txt)。该记录缺少完整抽样与运行环境说明，数值仅作历史样例，不据此推断生产表现。
+
+
+## 同一主题的另一种读法
+
+- [源码解析](OpsDesk-09-可观测性与数据飞轮-源码解析.md)
+- [OpsDesk 专题导读](../projects/opsdesk.md)
+- [上一章：工具注册与 MCP](OpsDesk-08-工具系统与MCP扩展-项目落地笔记.md)
+- [下一章：旁路分类器与微调](OpsDesk-10-主题分类器与模型微调-项目落地笔记.md)

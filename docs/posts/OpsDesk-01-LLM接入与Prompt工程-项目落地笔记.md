@@ -1,7 +1,22 @@
-# 第 01 章：LLM 接入与 Prompt 工程 —— 项目落地笔记
+---
+title: OpsDesk 01｜模型接入与提示词 · 项目复盘
+description: 沿着模型工厂和提示词配置，梳理一次请求怎样完成配置校验、调用与结果处理。
+date: '2026-08-11'
+updated: '2026-10-28'
+category: 项目实战
+tags:
+- AI Agent
+- OpsDesk
+- 项目落地笔记
+---
 
-**日期**：2026-08-11
+
+# OpsDesk 01｜模型接入与提示词 · 项目复盘
+
+**记录日期**：2026-08-11
 **标签**：AI Agent · OpsDesk · 项目落地笔记
+
+沿着模型工厂和提示词配置，梳理一次请求怎样完成配置校验、调用与结果处理。
 
 
 > 涉及源码：`app/core/llm.py`、`app/core/prompts.py`、`app/config.py`、`app/core/model_guard.py`
@@ -71,3 +86,17 @@
 
 # 起应用后直接问一句，看角色 Prompt 是否生效（SSE 流式返回，请求体要先落文件再 curl，Windows 命令行 GBK 转码会乱码）
 ```
+## 源码对照与继续阅读
+
+以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
+
+- [`app/core/llm.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/llm.py)
+- [`app/core/prompts.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/prompts.py)
+- [`app/config.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/config.py)
+
+
+## 同一主题的另一种读法
+
+- [源码解析](OpsDesk-01-LLM接入与Prompt工程-源码解析.md)
+- [OpsDesk 专题导读](../projects/opsdesk.md)
+- [下一章：工具调用与写操作确认](OpsDesk-02-FunctionCalling工具链-项目落地笔记.md)

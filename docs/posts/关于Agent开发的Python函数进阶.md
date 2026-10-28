@@ -1,9 +1,23 @@
-# 关于Agent开发的Python函数进阶
+---
+title: Python：函数进阶
+description: 围绕后续 Agent 项目会反复使用的基础能力整理，阅读时可以先运行小例子，再回到项目中核对用法。
+date: '2026-03-05'
+updated: '2026-10-28'
+category: 基础与实验
+tags:
+- Python
+- Agent
+---
+
+
+# Python：函数进阶
 
 
 
-**日期**：2026-03-05 
+**记录日期**：2026-03-05
 **标签**：Python · Agent
+
+围绕后续 Agent 项目会反复使用的基础能力整理，阅读时可以先运行小例子，再回到项目中核对用法。
 
 ## *arg/**kwargs
 

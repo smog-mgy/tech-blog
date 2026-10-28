@@ -1,7 +1,22 @@
-# 第 10 章：主题分类器与模型微调 —— 项目落地笔记
+---
+title: OpsDesk 10｜旁路分类器与微调 · 项目复盘
+description: 说明旁路主题分类器的用途，阅读仓库中的留出集报告，同时保留小样本评估的限制。
+date: '2026-09-17'
+updated: '2026-10-28'
+category: 项目实战
+tags:
+- AI Agent
+- OpsDesk
+- 项目落地笔记
+---
 
-**日期**：2026-09-17
+
+# OpsDesk 10｜旁路分类器与微调 · 项目复盘
+
+**记录日期**：2026-09-17
 **标签**：AI Agent · OpsDesk · 项目落地笔记
+
+说明旁路主题分类器的用途，阅读仓库中的留出集报告，同时保留小样本评估的限制。
 
 
 > 涉及脚本：`scripts/ch10/`（build_corpus / prelabel / build_dataset / train / evaluate / export_onnx / serve / classify_pool / validate_golden / scan_threshold_replay / corpus_lib / inference_lib）
@@ -89,3 +104,20 @@ make ch10-export   # 导出 ONNX
 make classifier-up
 make classify-pool
 ```
+## 源码对照与继续阅读
+
+以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
+
+- [`data/ch10/reports/eval_report.md`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch10/reports/eval_report.md)
+- [`data/ch10/reports/export_report.json`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch10/reports/export_report.json)
+- [`app/core/taxonomy.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/taxonomy.py)
+
+仓库分类器报告的留出集只有 44 条；其中的满分不能代表真实工单分布下的泛化能力。本次只核对报告与实现入口，没有重新训练模型。
+
+
+## 同一主题的另一种读法
+
+- [源码解析](OpsDesk-10-主题分类器与模型微调-源码解析.md)
+- [OpsDesk 专题导读](../projects/opsdesk.md)
+- [上一章：调用追踪与反馈审核](OpsDesk-09-可观测性与数据飞轮-项目落地笔记.md)
+- [下一章：全链路验证与复盘](OpsDesk-11-全链路串联与复盘-项目落地笔记.md)

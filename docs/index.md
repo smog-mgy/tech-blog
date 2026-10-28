@@ -1,27 +1,37 @@
-# 我的技术博客
+# 苗国艺的工程笔记
 
-> 记录学习、项目实践与踩坑经历的技术博客。
+我在学习和实践 AI Agent 应用开发。这里记录 Python 基础、检索与工具调用，也记录把项目部署起来时遇到的具体问题。
 
-## 最新文章
+## 先读这几篇
 
-- [大模型提示词工程应用学习笔记](posts/大模型提示词工程应用学习笔记.md) —— 2026-06-04
-- [大模型Prompt-Tuning方法进阶学习笔记](posts/大模型Prompt-Tuning方法进阶学习笔记.md) —— 2026-05-28
-- [大模型Prompt-Tuning方法入门学习笔记](posts/大模型Prompt-Tuning方法入门学习笔记.md) —— 2026-05-21
-- [LLM主流开源大模型学习笔记](posts/LLM主流开源大模型学习笔记.md) —— 2026-05-14
-- [LLM主要架构学习笔记](posts/LLM主要架构学习笔记.md) —— 2026-05-07
-- [循环神经网络学习笔记](posts/循环神经网络学习笔记.md) —— 2026-04-30
-- [卷积神经网络学习笔记](posts/卷积神经网络学习笔记.md) —— 2026-04-23
-- [神经网络基础学习笔记](posts/神经网络基础学习笔记.md) —— 2026-04-16
-- [PyTorch框架学习笔记](posts/PyTorch框架学习笔记.md) —— 2026-04-09
-- [写Todo命令行项目的收获](posts/写Todo命令行项目的收获.md) —— 2026-04-02
-- [关于Agent开发的Git基础与分支管理](posts/关于Agent开发的Git基础与分支管理.md) —— 2026-03-26
-- [关于Agent开发的Python模块化与工程结构](posts/关于Agent开发的Python模块化与工程结构.md) —— 2026-03-19
-- [关于Agent开发的Python面向对象进阶](posts/关于Agent开发的Python面向对象进阶.md) —— 2026-03-12
-- [关于Agent开发的Python函数进阶](posts/关于Agent开发的Python函数进阶.md) —— 2026-03-05
+- [RepoLaunch：从仓库到可验证的本地运行](posts/repolaunch-overview.md) — 项目解决什么问题，做到了哪一步。
+- [模型提出补丁之后，程序还要检查什么](posts/repolaunch-repair.md) — 一次缺失依赖修复背后的边界。
+- [OpsDesk 项目导读](projects/opsdesk.md) — 把 11 章实现笔记和源码解析串起来。
 
-## 关于这个博客
+## 我在做的项目
 
-- 主要写 **Python / 大模型应用 / Agent 开发** 相关的内容
-- 每篇文章尽量做到：过程可复现、代码可运行、坑点讲清楚
-- 文章会持续更新，欢迎交流
+| 项目 | 主要关注 | 项目记录 |
+| --- | --- | --- |
+| **RepoLaunch** | 仓库分析、方案确认、容器执行、日志诊断与修复验证 | [专题](projects/repolaunch.md) · [GitHub](https://github.com/smog-mgy/RepoLaunch) |
+| **OpsDesk** | 设备运维问答、报修与查单、混合检索、业务工具和会话状态 | [专题](projects/opsdesk.md) · [GitHub](https://github.com/smog-mgy/opsdesk) |
 
+## 按问题寻找文章
+
+- 想补 Python 和模型基础：[技术笔记与阅读路线](learning/index.md)。
+- 想理解项目怎样组织：[项目实战](projects/index.md)。
+- 遇到端口或服务启动问题：[排错与 TIL](til/index.md)。
+- 想看完整学习过程：[全部文章](archive.md)。
+- 想了解这个博客的写作方式：[阅读与写作参考](reading.md)。
+
+## 最近整理
+
+2026 年 10 月下旬：RepoLaunch 项目复盘
+
+- [工作流和模型各自负责什么](posts/repolaunch-workflow.md)
+- [从真实失败日志到受控修复](posts/repolaunch-repair.md)
+- [故障案例、任务记录与模型追踪怎样协作](posts/repolaunch-integrations.md)
+- [三个仓库跑通之后，验证结论该怎么写](posts/repolaunch-verification.md)
+- [端口被占用，和浏览器页面有什么关系](til/repolaunch-port.md)
+- [Langfuse unhealthy 的两处排查](til/langfuse-health.md)
+
+9 月及更早的 OpsDesk 记录，已按主题收进[项目导读](projects/opsdesk.md)。

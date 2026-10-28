@@ -1,7 +1,22 @@
+---
+title: 大模型 Prompt-Tuning 方法进阶学习笔记
+description: 保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。
+date: '2026-05-24'
+updated: '2026-10-28'
+category: 基础与实验
+tags:
+- 大模型
+- Prompt-Tuning
+- PEFT
+---
+
+
 # 大模型 Prompt-Tuning 方法进阶学习笔记
 
-**日期**：2026-05-24
+**记录日期**：2026-05-24
 **标签**：大模型 · Prompt-Tuning · PEFT
+
+保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。
 
 > 主题：超大规模模型的三种 Prompt 方法（ICL / Instruction-Tuning / CoT）+ PEFT 参数高效微调（Prefix / Adapter / LoRA）
 

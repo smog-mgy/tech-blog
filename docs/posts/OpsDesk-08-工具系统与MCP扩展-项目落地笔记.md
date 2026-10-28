@@ -1,7 +1,22 @@
-# 第 08 章：工具系统（MCP 接入与动态扩展）—— 项目落地笔记
+---
+title: OpsDesk 08｜工具注册与 MCP · 项目复盘
+description: 区分工具描述、注册、执行和 MCP 连接，说明业务权限需要在哪一层落实。
+date: '2026-09-08'
+updated: '2026-10-28'
+category: 项目实战
+tags:
+- AI Agent
+- OpsDesk
+- 项目落地笔记
+---
 
-**日期**：2026-09-08
+
+# OpsDesk 08｜工具注册与 MCP · 项目复盘
+
+**记录日期**：2026-09-08
 **标签**：AI Agent · OpsDesk · 项目落地笔记
+
+区分工具描述、注册、执行和 MCP 连接，说明业务权限需要在哪一层落实。
 
 
 > 涉及源码：`app/tools/mcp_client.py`、`app/tools/registry.py`、`app/tools/engine.py`、`app/tools/builtin/`、`mcp_servers/spare_part_server.py`、`mcp_servers/ticket_ops_server.py`
@@ -127,3 +142,18 @@ registry.spec_from_langchain_tool(t, source="mcp", mcp_server=server, format_res
 # "我的工单 WO-2026-0001 到哪个节点了" → MCP 工单流转
 # 停掉一个 MCP Server 再问 → 应跳过该工具正常回复，不卡死
 ```
+## 源码对照与继续阅读
+
+以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
+
+- [`app/tools/registry.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/tools/registry.py)
+- [`app/tools/engine.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/tools/engine.py)
+- [`app/tools/mcp_client.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/tools/mcp_client.py)
+
+
+## 同一主题的另一种读法
+
+- [源码解析](OpsDesk-08-工具系统与MCP扩展-源码解析.md)
+- [OpsDesk 专题导读](../projects/opsdesk.md)
+- [上一章：会话上下文与摘要](OpsDesk-07-会话上下文管理-项目落地笔记.md)
+- [下一章：调用追踪与反馈审核](OpsDesk-09-可观测性与数据飞轮-项目落地笔记.md)

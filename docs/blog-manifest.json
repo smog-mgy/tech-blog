@@ -1,0 +1,380 @@
+[
+  {
+    "path": "posts/01-LangChain大模型接入与Prompt工程.md",
+    "title": "Agent 学习 01｜模型接入与提示词",
+    "date": "2026-06-06",
+    "category": "Agent 学习笔记",
+    "description": "这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。"
+  },
+  {
+    "path": "posts/02-FunctionCalling工具链.md",
+    "title": "Agent 学习 02｜工具调用与写操作确认",
+    "date": "2026-06-12",
+    "category": "Agent 学习笔记",
+    "description": "这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。"
+  },
+  {
+    "path": "posts/03-RAG基础与知识库构建.md",
+    "title": "Agent 学习 03｜知识库构建与双写",
+    "date": "2026-06-18",
+    "category": "Agent 学习笔记",
+    "description": "这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。"
+  },
+  {
+    "path": "posts/04-RAG进阶混合检索与评估体系.md",
+    "title": "Agent 学习 04｜混合检索与评估",
+    "date": "2026-06-24",
+    "category": "Agent 学习笔记",
+    "description": "这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。"
+  },
+  {
+    "path": "posts/05-Workflow与Agent混合架构.md",
+    "title": "Agent 学习 05｜工作流与 Agent 的职责",
+    "date": "2026-06-30",
+    "category": "Agent 学习笔记",
+    "description": "这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。"
+  },
+  {
+    "path": "posts/06-意图识别与对话管理.md",
+    "title": "Agent 学习 06｜意图识别与工单分流",
+    "date": "2026-07-06",
+    "category": "Agent 学习笔记",
+    "description": "这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。"
+  },
+  {
+    "path": "posts/07-会话上下文管理.md",
+    "title": "Agent 学习 07｜会话上下文与摘要",
+    "date": "2026-07-12",
+    "category": "Agent 学习笔记",
+    "description": "这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。"
+  },
+  {
+    "path": "posts/08-工具系统.md",
+    "title": "Agent 学习 08｜工具注册与 MCP",
+    "date": "2026-07-18",
+    "category": "Agent 学习笔记",
+    "description": "这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。"
+  },
+  {
+    "path": "posts/09-Agent可观测性与数据飞轮.md",
+    "title": "Agent 学习 09｜调用追踪与反馈审核",
+    "date": "2026-07-24",
+    "category": "Agent 学习笔记",
+    "description": "这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。"
+  },
+  {
+    "path": "posts/10-模型微调.md",
+    "title": "Agent 学习 10｜旁路分类器与微调",
+    "date": "2026-07-30",
+    "category": "Agent 学习笔记",
+    "description": "这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。"
+  },
+  {
+    "path": "posts/11-全链路串联与踩坑复盘.md",
+    "title": "Agent 学习 11｜全链路验证与复盘",
+    "date": "2026-08-05",
+    "category": "Agent 学习笔记",
+    "description": "这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。"
+  },
+  {
+    "path": "posts/LLM主流开源大模型学习笔记.md",
+    "title": "LLM 主流开源大模型学习笔记",
+    "date": "2026-05-12",
+    "category": "基础与实验",
+    "description": "保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。"
+  },
+  {
+    "path": "posts/LLM主要架构学习笔记.md",
+    "title": "LLM 主要架构学习笔记",
+    "date": "2026-05-07",
+    "category": "基础与实验",
+    "description": "保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。"
+  },
+  {
+    "path": "posts/OpsDesk-01-LLM接入与Prompt工程-源码解析.md",
+    "title": "OpsDesk 01｜模型接入与提示词 · 源码解析",
+    "date": "2026-08-12",
+    "category": "项目实战",
+    "description": "沿着模型工厂和提示词配置，梳理一次请求怎样完成配置校验、调用与结果处理。"
+  },
+  {
+    "path": "posts/OpsDesk-01-LLM接入与Prompt工程-项目落地笔记.md",
+    "title": "OpsDesk 01｜模型接入与提示词 · 项目复盘",
+    "date": "2026-08-11",
+    "category": "项目实战",
+    "description": "沿着模型工厂和提示词配置，梳理一次请求怎样完成配置校验、调用与结果处理。"
+  },
+  {
+    "path": "posts/OpsDesk-02-FunctionCalling工具链-源码解析.md",
+    "title": "OpsDesk 02｜工具调用与写操作确认 · 源码解析",
+    "date": "2026-08-16",
+    "category": "项目实战",
+    "description": "把模型提出的工具请求与实际执行分开，重点检查建单确认、参数注入和工具审计。"
+  },
+  {
+    "path": "posts/OpsDesk-02-FunctionCalling工具链-项目落地笔记.md",
+    "title": "OpsDesk 02｜工具调用与写操作确认 · 项目复盘",
+    "date": "2026-08-15",
+    "category": "项目实战",
+    "description": "把模型提出的工具请求与实际执行分开，重点检查建单确认、参数注入和工具审计。"
+  },
+  {
+    "path": "posts/OpsDesk-03-RAG基础与知识库构建-源码解析.md",
+    "title": "OpsDesk 03｜知识库构建与双写 · 源码解析",
+    "date": "2026-08-20",
+    "category": "项目实战",
+    "description": "从文档切分开始，追踪业务库记录、向量化和检索之间的关系，以及失败时怎样重跑。"
+  },
+  {
+    "path": "posts/OpsDesk-03-RAG基础与知识库构建-项目落地笔记.md",
+    "title": "OpsDesk 03｜知识库构建与双写 · 项目复盘",
+    "date": "2026-08-19",
+    "category": "项目实战",
+    "description": "从文档切分开始，追踪业务库记录、向量化和检索之间的关系，以及失败时怎样重跑。"
+  },
+  {
+    "path": "posts/OpsDesk-04-混合检索与评估体系-源码解析.md",
+    "title": "OpsDesk 04｜混合检索与评估 · 源码解析",
+    "date": "2026-08-24",
+    "category": "项目实战",
+    "description": "比较向量、关键词、融合与重排各自解决的问题，并区分仓库历史报告和当前复测。"
+  },
+  {
+    "path": "posts/OpsDesk-04-混合检索与评估体系-项目落地笔记.md",
+    "title": "OpsDesk 04｜混合检索与评估 · 项目复盘",
+    "date": "2026-08-23",
+    "category": "项目实战",
+    "description": "比较向量、关键词、融合与重排各自解决的问题，并区分仓库历史报告和当前复测。"
+  },
+  {
+    "path": "posts/OpsDesk-05-Workflow与Agent混合架构-源码解析.md",
+    "title": "OpsDesk 05｜工作流与 Agent 的职责 · 源码解析",
+    "date": "2026-08-28",
+    "category": "项目实战",
+    "description": "解释哪些节点必须按固定顺序执行，哪些步骤允许模型决定是否调用工具。"
+  },
+  {
+    "path": "posts/OpsDesk-05-Workflow与Agent混合架构-项目落地笔记.md",
+    "title": "OpsDesk 05｜工作流与 Agent 的职责 · 项目复盘",
+    "date": "2026-08-27",
+    "category": "项目实战",
+    "description": "解释哪些节点必须按固定顺序执行，哪些步骤允许模型决定是否调用工具。"
+  },
+  {
+    "path": "posts/OpsDesk-06-意图识别与对话管理-源码解析.md",
+    "title": "OpsDesk 06｜意图识别与工单分流 · 源码解析",
+    "date": "2026-09-01",
+    "category": "项目实战",
+    "description": "沿用户问题进入不同出口的路径，检查分类失败、指代不明和工单归属的处理。"
+  },
+  {
+    "path": "posts/OpsDesk-06-意图识别与对话管理-项目落地笔记.md",
+    "title": "OpsDesk 06｜意图识别与工单分流 · 项目复盘",
+    "date": "2026-08-31",
+    "category": "项目实战",
+    "description": "沿用户问题进入不同出口的路径，检查分类失败、指代不明和工单归属的处理。"
+  },
+  {
+    "path": "posts/OpsDesk-07-会话上下文管理-源码解析.md",
+    "title": "OpsDesk 07｜会话上下文与摘要 · 源码解析",
+    "date": "2026-09-05",
+    "category": "项目实战",
+    "description": "整理历史窗口、摘要和状态重置的关系，关注裁剪之后怎样保留关键业务信息。"
+  },
+  {
+    "path": "posts/OpsDesk-07-会话上下文管理-项目落地笔记.md",
+    "title": "OpsDesk 07｜会话上下文与摘要 · 项目复盘",
+    "date": "2026-09-04",
+    "category": "项目实战",
+    "description": "整理历史窗口、摘要和状态重置的关系，关注裁剪之后怎样保留关键业务信息。"
+  },
+  {
+    "path": "posts/OpsDesk-08-工具系统与MCP扩展-源码解析.md",
+    "title": "OpsDesk 08｜工具注册与 MCP · 源码解析",
+    "date": "2026-09-09",
+    "category": "项目实战",
+    "description": "区分工具描述、注册、执行和 MCP 连接，说明业务权限需要在哪一层落实。"
+  },
+  {
+    "path": "posts/OpsDesk-08-工具系统与MCP扩展-项目落地笔记.md",
+    "title": "OpsDesk 08｜工具注册与 MCP · 项目复盘",
+    "date": "2026-09-08",
+    "category": "项目实战",
+    "description": "区分工具描述、注册、执行和 MCP 连接，说明业务权限需要在哪一层落实。"
+  },
+  {
+    "path": "posts/OpsDesk-09-可观测性与数据飞轮-源码解析.md",
+    "title": "OpsDesk 09｜调用追踪与反馈审核 · 源码解析",
+    "date": "2026-09-13",
+    "category": "项目实战",
+    "description": "把调用记录、置信度和反馈审核串起来，明确模型建议写回知识库之前的人工步骤。"
+  },
+  {
+    "path": "posts/OpsDesk-09-可观测性与数据飞轮-项目落地笔记.md",
+    "title": "OpsDesk 09｜调用追踪与反馈审核 · 项目复盘",
+    "date": "2026-09-12",
+    "category": "项目实战",
+    "description": "把调用记录、置信度和反馈审核串起来，明确模型建议写回知识库之前的人工步骤。"
+  },
+  {
+    "path": "posts/OpsDesk-10-主题分类器与模型微调-源码解析.md",
+    "title": "OpsDesk 10｜旁路分类器与微调 · 源码解析",
+    "date": "2026-09-18",
+    "category": "项目实战",
+    "description": "说明旁路主题分类器的用途，阅读仓库中的留出集报告，同时保留小样本评估的限制。"
+  },
+  {
+    "path": "posts/OpsDesk-10-主题分类器与模型微调-项目落地笔记.md",
+    "title": "OpsDesk 10｜旁路分类器与微调 · 项目复盘",
+    "date": "2026-09-17",
+    "category": "项目实战",
+    "description": "说明旁路主题分类器的用途，阅读仓库中的留出集报告，同时保留小样本评估的限制。"
+  },
+  {
+    "path": "posts/OpsDesk-11-全链路串联与复盘-源码解析.md",
+    "title": "OpsDesk 11｜全链路验证与复盘 · 源码解析",
+    "date": "2026-09-29",
+    "category": "项目实战",
+    "description": "把问答、工单、检索、工具和日志串成一条阅读路线，并列出验证入口与支持边界。"
+  },
+  {
+    "path": "posts/OpsDesk-11-全链路串联与复盘-项目落地笔记.md",
+    "title": "OpsDesk 11｜全链路验证与复盘 · 项目复盘",
+    "date": "2026-09-24",
+    "category": "项目实战",
+    "description": "把问答、工单、检索、工具和日志串成一条阅读路线，并列出验证入口与支持边界。"
+  },
+  {
+    "path": "posts/PyTorch框架学习笔记.md",
+    "title": "PyTorch 框架学习笔记",
+    "date": "2026-04-09",
+    "category": "基础与实验",
+    "description": "保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。"
+  },
+  {
+    "path": "posts/关于Agent开发的Git基础与分支管理.md",
+    "title": "Git 基础与分支管理：从一次提交开始",
+    "date": "2026-03-26",
+    "category": "基础与实验",
+    "description": "记录代码提交、分支和协作中会实际用到的操作，适合作为项目开发时的查阅笔记。"
+  },
+  {
+    "path": "posts/关于Agent开发的Python函数进阶.md",
+    "title": "Python：函数进阶",
+    "date": "2026-03-05",
+    "category": "基础与实验",
+    "description": "围绕后续 Agent 项目会反复使用的基础能力整理，阅读时可以先运行小例子，再回到项目中核对用法。"
+  },
+  {
+    "path": "posts/关于Agent开发的Python模块化与工程结构.md",
+    "title": "Python：模块化与工程结构",
+    "date": "2026-03-19",
+    "category": "基础与实验",
+    "description": "围绕后续 Agent 项目会反复使用的基础能力整理，阅读时可以先运行小例子，再回到项目中核对用法。"
+  },
+  {
+    "path": "posts/关于Agent开发的Python面向对象进阶.md",
+    "title": "Python：面向对象进阶",
+    "date": "2026-03-12",
+    "category": "基础与实验",
+    "description": "围绕后续 Agent 项目会反复使用的基础能力整理，阅读时可以先运行小例子，再回到项目中核对用法。"
+  },
+  {
+    "path": "posts/写Todo命令行项目的收获.md",
+    "title": "写 Todo 命令行项目的收获",
+    "date": "2026-04-02",
+    "category": "基础与实验",
+    "description": "用一个小型命令行项目练习输入处理、任务状态与持久化，关注从可运行脚本走向清晰工程结构的过程。"
+  },
+  {
+    "path": "posts/卷积神经网络学习笔记.md",
+    "title": "卷积神经网络（CNN）学习笔记",
+    "date": "2026-04-23",
+    "category": "基础与实验",
+    "description": "保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。"
+  },
+  {
+    "path": "posts/大模型Prompt-Tuning方法入门学习笔记.md",
+    "title": "大模型 Prompt-Tuning 方法入门学习笔记",
+    "date": "2026-05-18",
+    "category": "基础与实验",
+    "description": "保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。"
+  },
+  {
+    "path": "posts/大模型Prompt-Tuning方法进阶学习笔记.md",
+    "title": "大模型 Prompt-Tuning 方法进阶学习笔记",
+    "date": "2026-05-24",
+    "category": "基础与实验",
+    "description": "保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。"
+  },
+  {
+    "path": "posts/大模型提示词工程应用学习笔记.md",
+    "title": "大模型提示词工程应用学习笔记",
+    "date": "2026-05-30",
+    "category": "基础与实验",
+    "description": "保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。"
+  },
+  {
+    "path": "posts/循环神经网络学习笔记.md",
+    "title": "循环神经网络（RNN）学习笔记",
+    "date": "2026-04-30",
+    "category": "基础与实验",
+    "description": "保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。"
+  },
+  {
+    "path": "posts/神经网络基础学习笔记.md",
+    "title": "神经网络基础学习笔记",
+    "date": "2026-04-16",
+    "category": "基础与实验",
+    "description": "保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。"
+  },
+  {
+    "path": "posts/repolaunch-overview.md",
+    "title": "RepoLaunch：从仓库到可验证的本地运行",
+    "description": "说明首版解决的部署问题、系统分工和目前的支持边界。",
+    "category": "项目实战",
+    "date": "2026-10-28"
+  },
+  {
+    "path": "posts/repolaunch-workflow.md",
+    "title": "RepoLaunch 的工作流：哪些决定交给模型",
+    "description": "沿 retrieve、propose、validate 三个节点理解固定流程与模型建议的关系。",
+    "category": "项目实战",
+    "date": "2026-10-28"
+  },
+  {
+    "path": "posts/repolaunch-repair.md",
+    "title": "模型提出补丁之后，程序还要检查什么",
+    "description": "从一次 requests 缺失故障解释补丁边界、依赖证据与重建验收。",
+    "category": "项目实战",
+    "date": "2026-10-28"
+  },
+  {
+    "path": "posts/repolaunch-integrations.md",
+    "title": "故障案例、任务记录和模型追踪怎样协作",
+    "description": "按数据用途解释 Milvus、MySQL、Langfuse 和只读 MCP 的边界。",
+    "category": "项目实战",
+    "date": "2026-10-28"
+  },
+  {
+    "path": "posts/repolaunch-verification.md",
+    "title": "三个仓库跑通之后，验证结论该怎么写",
+    "description": "区分 HTTP 就绪、内容探针、自动化测试与真实服务验收。",
+    "category": "项目实战",
+    "date": "2026-10-28"
+  },
+  {
+    "path": "til/repolaunch-port.md",
+    "title": "端口被占用，和浏览器页面有什么关系",
+    "description": "从 Windows 的 10048 报错区分监听服务、浏览器连接和自动换端口。",
+    "category": "排错与 TIL",
+    "date": "2026-10-28"
+  },
+  {
+    "path": "til/langfuse-health.md",
+    "title": "Langfuse unhealthy：先找到失败发生在哪一层",
+    "description": "记录 Windows 本地集成部署中的存储与监听地址问题，以及验证方法。",
+    "category": "排错与 TIL",
+    "date": "2026-10-28"
+  }
+]

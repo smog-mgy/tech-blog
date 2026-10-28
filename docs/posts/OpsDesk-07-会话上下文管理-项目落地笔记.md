@@ -1,7 +1,22 @@
-# 第 07 章：会话上下文管理 —— 项目落地笔记
+---
+title: OpsDesk 07｜会话上下文与摘要 · 项目复盘
+description: 整理历史窗口、摘要和状态重置的关系，关注裁剪之后怎样保留关键业务信息。
+date: '2026-09-04'
+updated: '2026-10-28'
+category: 项目实战
+tags:
+- AI Agent
+- OpsDesk
+- 项目落地笔记
+---
 
-**日期**：2026-09-04
+
+# OpsDesk 07｜会话上下文与摘要 · 项目复盘
+
+**记录日期**：2026-09-04
 **标签**：AI Agent · OpsDesk · 项目落地笔记
+
+整理历史窗口、摘要和状态重置的关系，关注裁剪之后怎样保留关键业务信息。
 
 
 > 涉及源码：`app/core/memory.py`、`app/core/summarizer.py`、`app/graph/nodes.py`、`app/graph/state.py`
@@ -114,3 +129,18 @@ class _Summary(BaseModel):
 # 连续聊十几轮（中间穿插无关话题），再问"我最开始报修的那个工单现在什么状态"，
 # 应能靠摘要层回答出来，而不是失忆
 ```
+## 源码对照与继续阅读
+
+以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
+
+- [`app/core/memory.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/memory.py)
+- [`app/core/summarizer.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/summarizer.py)
+- [`app/graph/state.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/graph/state.py)
+
+
+## 同一主题的另一种读法
+
+- [源码解析](OpsDesk-07-会话上下文管理-源码解析.md)
+- [OpsDesk 专题导读](../projects/opsdesk.md)
+- [上一章：意图识别与工单分流](OpsDesk-06-意图识别与对话管理-项目落地笔记.md)
+- [下一章：工具注册与 MCP](OpsDesk-08-工具系统与MCP扩展-项目落地笔记.md)

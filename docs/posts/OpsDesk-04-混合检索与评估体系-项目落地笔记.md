@@ -1,7 +1,22 @@
-# 第 04 章：混合检索与评估体系 —— 项目落地笔记
+---
+title: OpsDesk 04｜混合检索与评估 · 项目复盘
+description: 比较向量、关键词、融合与重排各自解决的问题，并区分仓库历史报告和当前复测。
+date: '2026-08-23'
+updated: '2026-10-28'
+category: 项目实战
+tags:
+- AI Agent
+- OpsDesk
+- 项目落地笔记
+---
 
-**日期**：2026-08-23
+
+# OpsDesk 04｜混合检索与评估 · 项目复盘
+
+**记录日期**：2026-08-23
 **标签**：AI Agent · OpsDesk · 项目落地笔记
+
+比较向量、关键词、融合与重排各自解决的问题，并区分仓库历史报告和当前复测。
 
 
 > 涉及源码：`app/core/retrieval.py`、`app/core/rerank.py`、`app/core/embeddings.py`、`scripts/eval_retrieval.py`、`tests/data/eval_ch04.jsonl`
@@ -22,7 +37,7 @@
 
 ## 加完混合，反而掉点
 
-这是这条链路里最反直觉的一课。纯向量 Recall@5 0.973，混上 BM25 不重排反而掉到 0.942——**两路召回混进来的噪声没人筛**，把原本靠前的真结果挤了下去。解决靠最后一道关：**Cross-Encoder 精排**（bge-reranker），把问题和每个候选拼在一起看词级交互，只对前 N 条重排（精排慢，不能全量）。加完精排拉回 0.986，MRR 0.897。
+这是这条链路里最反直觉的一课。旧笔记曾记录纯向量 Recall@5 0.973、混合未重排 0.942；公开仓库未保留这两次运行的完整原始报告，因此这里只保留为待复核的历史对比——**两路召回混进来的噪声没人筛**，把原本靠前的真结果挤了下去。解决靠最后一道关：**Cross-Encoder 精排**（bge-reranker），把问题和每个候选拼在一起看词级交互，只对前 N 条重排（精排慢，不能全量）。仓库保留的另一份趋势记录中，Recall@5 为 0.986、MRR 为 0.897；它不能补齐上述两次对照实验。
 
 **召回负责全、精排负责准，少一环就会互相拖累**——这句话是这个月最值钱的认知。
 
@@ -35,7 +50,7 @@
 3. **拒答评估**：故意问知识库里没有的问题，必须被拒答——测的是"不说胡话"
 4. **意图/分类器评估**：意图稳定性 + 分类器每类 P/R/F1（第 6、10 章）
 
-跑完的指标落 `eval_runs` 表连成趋势线，确认每次改动没把质量拉下来。当前一轮实测：Recall@5 0.986、MRR 0.897、忠实度 1.000、拒答率 0.983。
+跑完的指标落 `eval_runs` 表连成趋势线，确认每次改动没把质量拉下来。旧笔记记录的历史样例：Recall@5 0.986、MRR 0.897、忠实度 1.000、拒答率 0.983。
 
 ## 这一路埋过的几个坑
 
@@ -65,3 +80,20 @@ make eval-check     # ch04 评估集自检（ground truth 可命中 + 要点逐�
 make eval-rag       # 四策略评估（SKIP_GEN=1 只跑确定性两段）
 make eval-retrieval # 纯向量换说法召回验证
 ```
+## 源码对照与继续阅读
+
+以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
+
+- [`app/core/retrieval.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/retrieval.py)
+- [`app/core/rerank.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/rerank.py)
+- [`scripts/eval_retrieval.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/scripts/eval_retrieval.py)
+
+历史检索与生成指标可对照[仓库中的评估趋势记录](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch09/reports/eval_trend.txt)。该记录缺少完整抽样与运行环境说明，数值仅作历史样例，不据此推断生产表现。
+
+
+## 同一主题的另一种读法
+
+- [源码解析](OpsDesk-04-混合检索与评估体系-源码解析.md)
+- [OpsDesk 专题导读](../projects/opsdesk.md)
+- [上一章：知识库构建与双写](OpsDesk-03-RAG基础与知识库构建-项目落地笔记.md)
+- [下一章：工作流与 Agent 的职责](OpsDesk-05-Workflow与Agent混合架构-项目落地笔记.md)

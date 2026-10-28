@@ -1,7 +1,22 @@
-# 第 02 章：Function Calling 工具链 —— 项目落地笔记
+---
+title: OpsDesk 02｜工具调用与写操作确认 · 项目复盘
+description: 把模型提出的工具请求与实际执行分开，重点检查建单确认、参数注入和工具审计。
+date: '2026-08-15'
+updated: '2026-10-28'
+category: 项目实战
+tags:
+- AI Agent
+- OpsDesk
+- 项目落地笔记
+---
 
-**日期**：2026-08-15
+
+# OpsDesk 02｜工具调用与写操作确认 · 项目复盘
+
+**记录日期**：2026-08-15
 **标签**：AI Agent · OpsDesk · 项目落地笔记
+
+把模型提出的工具请求与实际执行分开，重点检查建单确认、参数注入和工具审计。
 
 
 > 涉及源码：`app/tools/registry.py`、`app/tools/engine.py`、`app/tools/business.py`、`app/tools/builtin/`
@@ -62,3 +77,18 @@
 # {"user_id":"u1","message":"我的工单 WO-2026-0001 处理到哪了"}  → 正常返回
 # {"user_id":"u1","message":"我的工单 WO-2026-9999 处理到哪了"}  → 归属校验拦下
 ```
+## 源码对照与继续阅读
+
+以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
+
+- [`app/tools/builtin/tickets.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/tools/builtin/tickets.py)
+- [`app/tools/builtin/ticket_confirm.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/tools/builtin/ticket_confirm.py)
+- [`app/tools/engine.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/tools/engine.py)
+
+
+## 同一主题的另一种读法
+
+- [源码解析](OpsDesk-02-FunctionCalling工具链-源码解析.md)
+- [OpsDesk 专题导读](../projects/opsdesk.md)
+- [上一章：模型接入与提示词](OpsDesk-01-LLM接入与Prompt工程-项目落地笔记.md)
+- [下一章：知识库构建与双写](OpsDesk-03-RAG基础与知识库构建-项目落地笔记.md)

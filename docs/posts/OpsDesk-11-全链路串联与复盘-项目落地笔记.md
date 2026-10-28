@@ -1,7 +1,22 @@
-# 第 11 章：全链路串联与复盘 —— 项目落地笔记
+---
+title: OpsDesk 11｜全链路验证与复盘 · 项目复盘
+description: 把问答、工单、检索、工具和日志串成一条阅读路线，并列出验证入口与支持边界。
+date: '2026-09-24'
+updated: '2026-10-28'
+category: 项目实战
+tags:
+- AI Agent
+- OpsDesk
+- 项目落地笔记
+---
 
-**日期**：2026-09-24
+
+# OpsDesk 11｜全链路验证与复盘 · 项目复盘
+
+**记录日期**：2026-09-24
 **标签**：AI Agent · OpsDesk · 项目落地笔记
+
+把问答、工单、检索、工具和日志串成一条阅读路线，并列出验证入口与支持边界。
 
 
 > 涉及：`Makefile`、`tests/`（80+ 测试文件）、`app/graph/build.py`、`docker-compose.yml`
@@ -22,7 +37,7 @@
  → log → Langfuse trace（第 9 章）：全程可观测
 ```
 
-11 章建的东西在这一句话里全部上线。**每一章都不是孤立知识点，是这条链上的一环。**
+11 章讨论的模块可以沿着这条路径逐项对照。**每一章都不是孤立知识点，是这条链上的一环。**
 
 ## 技术栈全景
 
@@ -114,7 +129,7 @@ tests/
 
 ```bash
 # 全量测试（离线可跑，不打真实模型）
-& "D:\Pythonproject\mewhelp\.venv\Scripts\python.exe" -m pytest -q
+python -m pytest -q
 
 # 一键拉起全套（MySQL/Milvus/MCP/应用）
 make dev
@@ -124,3 +139,17 @@ make dev
 # {"user_id":"u1","message":"电机过热报警怎么排查"} → 知识链路+证据闸
 # {"user_id":"u1","message":"SP-1004 有货吗"} → MCP 备件查询
 ```
+## 源码对照与继续阅读
+
+以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
+
+- [`Makefile`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/Makefile)
+- [`app/graph/build.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/graph/build.py)
+- [`README.md`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/README.md)
+
+
+## 同一主题的另一种读法
+
+- [源码解析](OpsDesk-11-全链路串联与复盘-源码解析.md)
+- [OpsDesk 专题导读](../projects/opsdesk.md)
+- [上一章：旁路分类器与微调](OpsDesk-10-主题分类器与模型微调-项目落地笔记.md)

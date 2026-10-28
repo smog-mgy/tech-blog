@@ -1,27 +1,9 @@
-# 我的技术博客
+# 苗国艺的工程笔记
 
-基于 [MkDocs](https://www.mkdocs.org/) + Material 主题搭建的静态技术博客。
+基于 MkDocs Material 的个人技术博客，按项目实战、技术笔记、排错与 TIL、归档组织。
 
-## 本地运行
+- 公网：https://smog-mgy.github.io/tech-blog/
+- 当前工作副本：`F:\CodexData\tech-blog`
+- 操作说明：[博客使用说明](博客使用说明.md)
 
-```powershell
-cd D:\Pythonproject\tech-blog
-F:\develop\Anaconda3\envs\blog_env\Scripts\mkdocs.exe serve -a 127.0.0.1:8000
-```
-
-浏览器打开 http://127.0.0.1:8000
-
-也可以直接双击桌面「我的技术博客」图标（会自动启动服务器并打开浏览器）。
-
-## 写新文章
-
-在 `docs/posts/` 下新建 Markdown 文件，然后在 `mkdocs.yml` 的 `nav` 中加一行即可。
-
-## 发布到 GitHub Pages
-
-```powershell
-cd D:\Pythonproject\tech-blog
-git add .
-git commit -m "更新博客"
-F:\develop\Anaconda3\envs\blog_env\Scripts\mkdocs.exe gh-deploy
-```
+旧文章路径保持不变。内容修改后先构建检查，再提交源码并发布 GitHub Pages。

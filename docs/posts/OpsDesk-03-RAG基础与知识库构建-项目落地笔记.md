@@ -1,7 +1,22 @@
-# 第 03 章：RAG 基础，跑通全链路 —— 项目落地笔记
+---
+title: OpsDesk 03｜知识库构建与双写 · 项目复盘
+description: 从文档切分开始，追踪业务库记录、向量化和检索之间的关系，以及失败时怎样重跑。
+date: '2026-08-19'
+updated: '2026-10-28'
+category: 项目实战
+tags:
+- AI Agent
+- OpsDesk
+- 项目落地笔记
+---
 
-**日期**：2026-08-19
+
+# OpsDesk 03｜知识库构建与双写 · 项目复盘
+
+**记录日期**：2026-08-19
 **标签**：AI Agent · OpsDesk · 项目落地笔记
+
+从文档切分开始，追踪业务库记录、向量化和检索之间的关系，以及失败时怎样重跑。
 
 
 > 涉及源码：`app/kb/chunking.py`、`app/kb/documents.py`、`app/kb/milvus_client.py`、`app/core/retrieval.py`
@@ -76,3 +91,18 @@ make kb-preview
 # {"user_id":"u1","message":"电机过热报警怎么排查"}
 ```
 基础 RAG 到这里能答了。但检索质量还很糙——纯向量漏字面词（设备型号差一位就是另一台），纯关键词换说法就查不到。下一步就是把这两路各补各的盲区、再用精排把噪声压下去。
+## 源码对照与继续阅读
+
+以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
+
+- [`app/kb/chunking.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/kb/chunking.py)
+- [`app/kb/dualwrite.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/kb/dualwrite.py)
+- [`app/kb/milvus_client.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/kb/milvus_client.py)
+
+
+## 同一主题的另一种读法
+
+- [源码解析](OpsDesk-03-RAG基础与知识库构建-源码解析.md)
+- [OpsDesk 专题导读](../projects/opsdesk.md)
+- [上一章：工具调用与写操作确认](OpsDesk-02-FunctionCalling工具链-项目落地笔记.md)
+- [下一章：混合检索与评估](OpsDesk-04-混合检索与评估体系-项目落地笔记.md)

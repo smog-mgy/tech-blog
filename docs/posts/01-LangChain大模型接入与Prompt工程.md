@@ -1,7 +1,22 @@
-# 学习笔记 01｜LLM 接入与 Prompt 工程
+---
+title: Agent 学习 01｜模型接入与提示词
+description: 这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。
+date: '2026-06-06'
+updated: '2026-10-28'
+category: Agent 学习笔记
+tags:
+- AI Agent
+- LangChain
+- Prompt 工程
+---
 
-**日期**：2026-06-06
+
+# Agent 学习 01｜模型接入与提示词
+
+**记录日期**：2026-06-06
 **标签**：AI Agent · LangChain · Prompt 工程
+
+这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。
 
 > 项目背景：我在做一个电商 AI 智能客服系统（后端 Python + FastAPI，AI 层 LangChain / LangGraph）。
 > 本章是第一站：先把「跟大模型对话」这条通路打通——说得稳、说得专业、反应快、记得住上文。
@@ -460,3 +475,9 @@ uv run python scripts/eval_extract.py
 | 模型传占位符 | order_id 填了字符串 "null" | prompt 劝 + pydantic `field_validator` 兜 |
 | 日志看不到 | `logger.info` 不输出 | uvicorn 默认不给应用 logger 配 handler，手动加 StreamHandler，`propagate=False` 隔离访问日志 |
 | 中文编码 | Windows 下读带中文的 md/jsonl 抛 UnicodeDecodeError | 启动脚本 `export PYTHONUTF8=1`，在 Python 启动前生效 |
+
+
+## 项目中的对应实现
+
+- [OpsDesk：模型接入与提示词](../posts/OpsDesk-01-LLM接入与Prompt工程-项目落地笔记.md)
+- [Agent 学习路线](../learning/index.md)

@@ -1,78 +1,118 @@
-# 技术博客站点配置
-site_name: 我的技术博客
-site_description: 记录学习、项目与踩坑的技术博客
+site_name: 苗国艺的工程笔记
+site_description: AI Agent 应用开发、Python 工程实践与真实故障复盘
 site_author: smog-mgy
-
 theme:
   name: material
   language: zh
   features:
-    - navigation.top        # 顶部导航
-    - navigation.footer     # 底部导航
-    - content.code.copy     # 代码块复制按钮
-    - toc.integrate         # 右侧目录
+  - navigation.tabs
+  - navigation.sections
+  - navigation.top
+  - navigation.footer
+  - content.code.copy
+  - search.suggest
+  - search.highlight
   palette:
-    - scheme: default
-      primary: indigo
-      accent: indigo
-
+  - scheme: default
+    primary: indigo
+    accent: indigo
+  font: false
 markdown_extensions:
-  - admonition                      # 提示框（!!! note 等）
-  - pymdownx.highlight:
-      anchor_linenums: true
-  - pymdownx.superfences            # 代码块增强
-  - pymdownx.inlinehilite           # 行内代码高亮
-  - toc:
-      permalink: true               # 标题锚点
-
+- admonition
+- pymdownx.highlight:
+    anchor_linenums: true
+- pymdownx.superfences
+- pymdownx.inlinehilite
+- toc:
+    permalink: true
 nav:
-  - 首页: index.md
-  - 关于我: about.md
-  - 技术文章:
-      - 关于Agent开发的Python函数进阶: posts/关于Agent开发的Python函数进阶.md
-      - 关于Agent开发的Python面向对象进阶: posts/关于Agent开发的Python面向对象进阶.md
-      - 关于Agent开发的Python模块化与工程结构: posts/关于Agent开发的Python模块化与工程结构.md
-      - 关于Agent开发的Git基础与分支管理: posts/关于Agent开发的Git基础与分支管理.md
-      - 写Todo命令行项目的收获: posts/写Todo命令行项目的收获.md
-      - PyTorch框架学习笔记: posts/PyTorch框架学习笔记.md
-      - 神经网络基础学习笔记: posts/神经网络基础学习笔记.md
-      - 卷积神经网络学习笔记: posts/卷积神经网络学习笔记.md
-      - 循环神经网络学习笔记: posts/循环神经网络学习笔记.md
-      - LLM主要架构学习笔记: posts/LLM主要架构学习笔记.md
-      - LLM主流开源大模型学习笔记: posts/LLM主流开源大模型学习笔记.md
-      - 大模型Prompt-Tuning方法入门学习笔记: posts/大模型Prompt-Tuning方法入门学习笔记.md
-      - 大模型Prompt-Tuning方法进阶学习笔记: posts/大模型Prompt-Tuning方法进阶学习笔记.md
-      - 大模型提示词工程应用学习笔记: posts/大模型提示词工程应用学习笔记.md
-      - AI智能客服实战·01 LLM接入与Prompt工程: posts/01-LangChain大模型接入与Prompt工程.md
-      - AI智能客服实战·02 Function Calling工具链: posts/02-FunctionCalling工具链.md
-      - AI智能客服实战·03 RAG基础与知识库构建: posts/03-RAG基础与知识库构建.md
-      - AI智能客服实战·04 RAG进阶混合检索与评估: posts/04-RAG进阶混合检索与评估体系.md
-      - AI智能客服实战·05 Workflow与Agent混合架构: posts/05-Workflow与Agent混合架构.md
-      - AI智能客服实战·06 意图识别与对话管理: posts/06-意图识别与对话管理.md
-      - AI智能客服实战·07 会话上下文管理: posts/07-会话上下文管理.md
-      - AI智能客服实战·08 工具系统: posts/08-工具系统.md
-      - AI智能客服实战·09 Agent可观测性与数据飞轮: posts/09-Agent可观测性与数据飞轮.md
-      - AI智能客服实战·10 模型微调: posts/10-模型微调.md
-      - AI智能客服实战·11 全链路串联与复盘: posts/11-全链路串联与踩坑复盘.md
-      - OpsDesk·01 LLM接入与Prompt工程（项目落地笔记）: posts/OpsDesk-01-LLM接入与Prompt工程-项目落地笔记.md
-      - OpsDesk·01 LLM接入与Prompt工程（源码解析）: posts/OpsDesk-01-LLM接入与Prompt工程-源码解析.md
-      - OpsDesk·02 Function Calling工具链（项目落地笔记）: posts/OpsDesk-02-FunctionCalling工具链-项目落地笔记.md
-      - OpsDesk·02 Function Calling工具链（源码解析）: posts/OpsDesk-02-FunctionCalling工具链-源码解析.md
-      - OpsDesk·03 RAG基础与知识库构建（项目落地笔记）: posts/OpsDesk-03-RAG基础与知识库构建-项目落地笔记.md
-      - OpsDesk·03 RAG基础与知识库构建（源码解析）: posts/OpsDesk-03-RAG基础与知识库构建-源码解析.md
-      - OpsDesk·04 混合检索与评估体系（项目落地笔记）: posts/OpsDesk-04-混合检索与评估体系-项目落地笔记.md
-      - OpsDesk·04 混合检索与评估体系（源码解析）: posts/OpsDesk-04-混合检索与评估体系-源码解析.md
-      - OpsDesk·05 Workflow与Agent混合架构（项目落地笔记）: posts/OpsDesk-05-Workflow与Agent混合架构-项目落地笔记.md
-      - OpsDesk·05 Workflow与Agent混合架构（源码解析）: posts/OpsDesk-05-Workflow与Agent混合架构-源码解析.md
-      - OpsDesk·06 意图识别与对话管理（项目落地笔记）: posts/OpsDesk-06-意图识别与对话管理-项目落地笔记.md
-      - OpsDesk·06 意图识别与对话管理（源码解析）: posts/OpsDesk-06-意图识别与对话管理-源码解析.md
-      - OpsDesk·07 会话上下文管理（项目落地笔记）: posts/OpsDesk-07-会话上下文管理-项目落地笔记.md
-      - OpsDesk·07 会话上下文管理（源码解析）: posts/OpsDesk-07-会话上下文管理-源码解析.md
-      - OpsDesk·08 工具系统与MCP扩展（项目落地笔记）: posts/OpsDesk-08-工具系统与MCP扩展-项目落地笔记.md
-      - OpsDesk·08 工具系统与MCP扩展（源码解析）: posts/OpsDesk-08-工具系统与MCP扩展-源码解析.md
-      - OpsDesk·09 可观测性与数据飞轮（项目落地笔记）: posts/OpsDesk-09-可观测性与数据飞轮-项目落地笔记.md
-      - OpsDesk·09 可观测性与数据飞轮（源码解析）: posts/OpsDesk-09-可观测性与数据飞轮-源码解析.md
-      - OpsDesk·10 主题分类器与模型微调（项目落地笔记）: posts/OpsDesk-10-主题分类器与模型微调-项目落地笔记.md
-      - OpsDesk·10 主题分类器与模型微调（源码解析）: posts/OpsDesk-10-主题分类器与模型微调-源码解析.md
-      - OpsDesk·11 全链路串联与复盘（项目落地笔记）: posts/OpsDesk-11-全链路串联与复盘-项目落地笔记.md
-      - OpsDesk·11 全链路串联与复盘（源码解析）: posts/OpsDesk-11-全链路串联与复盘-源码解析.md
+- 首页: index.md
+- 项目实战:
+  - 项目导读: projects/index.md
+  - RepoLaunch:
+    - 专题目录: projects/repolaunch.md
+    - RepoLaunch: posts/repolaunch-overview.md
+    - RepoLaunch 的工作流: posts/repolaunch-workflow.md
+    - 模型提出补丁之后，程序还要检查什么: posts/repolaunch-repair.md
+    - 故障案例、任务记录和模型追踪怎样协作: posts/repolaunch-integrations.md
+    - 三个仓库跑通之后，验证结论该怎么写: posts/repolaunch-verification.md
+  - OpsDesk:
+    - 专题目录: projects/opsdesk.md
+    - 01 模型接入与提示词:
+      - 项目复盘: posts/OpsDesk-01-LLM接入与Prompt工程-项目落地笔记.md
+      - 源码解析: posts/OpsDesk-01-LLM接入与Prompt工程-源码解析.md
+    - 02 工具调用与写操作确认:
+      - 项目复盘: posts/OpsDesk-02-FunctionCalling工具链-项目落地笔记.md
+      - 源码解析: posts/OpsDesk-02-FunctionCalling工具链-源码解析.md
+    - 03 知识库构建与双写:
+      - 项目复盘: posts/OpsDesk-03-RAG基础与知识库构建-项目落地笔记.md
+      - 源码解析: posts/OpsDesk-03-RAG基础与知识库构建-源码解析.md
+    - 04 混合检索与评估:
+      - 项目复盘: posts/OpsDesk-04-混合检索与评估体系-项目落地笔记.md
+      - 源码解析: posts/OpsDesk-04-混合检索与评估体系-源码解析.md
+    - 05 工作流与 Agent 的职责:
+      - 项目复盘: posts/OpsDesk-05-Workflow与Agent混合架构-项目落地笔记.md
+      - 源码解析: posts/OpsDesk-05-Workflow与Agent混合架构-源码解析.md
+    - 06 意图识别与工单分流:
+      - 项目复盘: posts/OpsDesk-06-意图识别与对话管理-项目落地笔记.md
+      - 源码解析: posts/OpsDesk-06-意图识别与对话管理-源码解析.md
+    - 07 会话上下文与摘要:
+      - 项目复盘: posts/OpsDesk-07-会话上下文管理-项目落地笔记.md
+      - 源码解析: posts/OpsDesk-07-会话上下文管理-源码解析.md
+    - 08 工具注册与 MCP:
+      - 项目复盘: posts/OpsDesk-08-工具系统与MCP扩展-项目落地笔记.md
+      - 源码解析: posts/OpsDesk-08-工具系统与MCP扩展-源码解析.md
+    - 09 调用追踪与反馈审核:
+      - 项目复盘: posts/OpsDesk-09-可观测性与数据飞轮-项目落地笔记.md
+      - 源码解析: posts/OpsDesk-09-可观测性与数据飞轮-源码解析.md
+    - 10 旁路分类器与微调:
+      - 项目复盘: posts/OpsDesk-10-主题分类器与模型微调-项目落地笔记.md
+      - 源码解析: posts/OpsDesk-10-主题分类器与模型微调-源码解析.md
+    - 11 全链路验证与复盘:
+      - 项目复盘: posts/OpsDesk-11-全链路串联与复盘-项目落地笔记.md
+      - 源码解析: posts/OpsDesk-11-全链路串联与复盘-源码解析.md
+- 技术笔记:
+  - 阅读路线: learning/index.md
+  - 基础与实验:
+    - Python：函数进阶: posts/关于Agent开发的Python函数进阶.md
+    - Python：面向对象进阶: posts/关于Agent开发的Python面向对象进阶.md
+    - Python：模块化与工程结构: posts/关于Agent开发的Python模块化与工程结构.md
+    - Git 基础与分支管理：从一次提交开始: posts/关于Agent开发的Git基础与分支管理.md
+    - 写 Todo 命令行项目的收获: posts/写Todo命令行项目的收获.md
+    - PyTorch 框架学习笔记: posts/PyTorch框架学习笔记.md
+    - 神经网络基础学习笔记: posts/神经网络基础学习笔记.md
+    - 卷积神经网络（CNN）学习笔记: posts/卷积神经网络学习笔记.md
+    - 循环神经网络（RNN）学习笔记: posts/循环神经网络学习笔记.md
+    - LLM 主要架构学习笔记: posts/LLM主要架构学习笔记.md
+    - LLM 主流开源大模型学习笔记: posts/LLM主流开源大模型学习笔记.md
+    - 大模型 Prompt-Tuning 方法入门学习笔记: posts/大模型Prompt-Tuning方法入门学习笔记.md
+    - 大模型 Prompt-Tuning 方法进阶学习笔记: posts/大模型Prompt-Tuning方法进阶学习笔记.md
+    - 大模型提示词工程应用学习笔记: posts/大模型提示词工程应用学习笔记.md
+  - Agent 学习:
+    - Agent 学习 01｜模型接入与提示词: posts/01-LangChain大模型接入与Prompt工程.md
+    - Agent 学习 02｜工具调用与写操作确认: posts/02-FunctionCalling工具链.md
+    - Agent 学习 03｜知识库构建与双写: posts/03-RAG基础与知识库构建.md
+    - Agent 学习 04｜混合检索与评估: posts/04-RAG进阶混合检索与评估体系.md
+    - Agent 学习 05｜工作流与 Agent 的职责: posts/05-Workflow与Agent混合架构.md
+    - Agent 学习 06｜意图识别与工单分流: posts/06-意图识别与对话管理.md
+    - Agent 学习 07｜会话上下文与摘要: posts/07-会话上下文管理.md
+    - Agent 学习 08｜工具注册与 MCP: posts/08-工具系统.md
+    - Agent 学习 09｜调用追踪与反馈审核: posts/09-Agent可观测性与数据飞轮.md
+    - Agent 学习 10｜旁路分类器与微调: posts/10-模型微调.md
+    - Agent 学习 11｜全链路验证与复盘: posts/11-全链路串联与踩坑复盘.md
+- 排错与 TIL:
+  - 目录: til/index.md
+  - 端口被占用，和浏览器页面有什么关系: til/repolaunch-port.md
+  - Langfuse unhealthy：先找到失败发生在哪一层: til/langfuse-health.md
+- 归档与阅读:
+  - 全部文章: archive.md
+  - 阅读与写作参考: reading.md
+- 关于我: about.md
+site_url: https://smog-mgy.github.io/tech-blog/
+repo_url: https://github.com/smog-mgy/tech-blog
+repo_name: smog-mgy/tech-blog
+edit_uri: edit/master/docs/
+plugins:
+- search
+extra_css:
+- stylesheets/extra.css

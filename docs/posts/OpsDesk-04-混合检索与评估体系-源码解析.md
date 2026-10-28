@@ -1,7 +1,22 @@
-# 第 04 章：混合检索与评估体系（源码解析）
+---
+title: OpsDesk 04｜混合检索与评估 · 源码解析
+description: 比较向量、关键词、融合与重排各自解决的问题，并区分仓库历史报告和当前复测。
+date: '2026-08-24'
+updated: '2026-10-28'
+category: 项目实战
+tags:
+- AI Agent
+- OpsDesk
+- 源码解析
+---
 
-**日期**：2026-08-24
+
+# OpsDesk 04｜混合检索与评估 · 源码解析
+
+**记录日期**：2026-08-24
 **标签**：AI Agent · OpsDesk · 源码解析
+
+比较向量、关键词、融合与重排各自解决的问题，并区分仓库历史报告和当前复测。
 
 
 > 对应笔记：`第 04 章：混合检索与评估体系（项目落地笔记）.md`
@@ -242,3 +257,20 @@ async def _post(url, json, headers, timeout):
 | 手写 rerank 请求 | rerank 非 OpenAI 协议，是 Jina/Cohere 形状 |
 | 连接层抖动纳入重试 | 上游掐连接一次都不试 → 整轮评估白跑 |
 | `_rerank_url` 版本段兜底 | 地址少 /v1 时 404 且排障绕圈 |
+## 源码对照与继续阅读
+
+以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
+
+- [`app/core/retrieval.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/retrieval.py)
+- [`app/core/rerank.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/rerank.py)
+- [`scripts/eval_retrieval.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/scripts/eval_retrieval.py)
+
+历史检索与生成指标可对照[仓库中的评估趋势记录](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch09/reports/eval_trend.txt)。该记录缺少完整抽样与运行环境说明，数值仅作历史样例，不据此推断生产表现。
+
+
+## 同一主题的另一种读法
+
+- [项目复盘](OpsDesk-04-混合检索与评估体系-项目落地笔记.md)
+- [OpsDesk 专题导读](../projects/opsdesk.md)
+- [上一章：知识库构建与双写](OpsDesk-03-RAG基础与知识库构建-源码解析.md)
+- [下一章：工作流与 Agent 的职责](OpsDesk-05-Workflow与Agent混合架构-源码解析.md)

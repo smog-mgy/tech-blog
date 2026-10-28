@@ -1,7 +1,22 @@
-# 第 08 章：工具系统（MCP 接入与动态扩展）（源码解析）
+---
+title: OpsDesk 08｜工具注册与 MCP · 源码解析
+description: 区分工具描述、注册、执行和 MCP 连接，说明业务权限需要在哪一层落实。
+date: '2026-09-09'
+updated: '2026-10-28'
+category: 项目实战
+tags:
+- AI Agent
+- OpsDesk
+- 源码解析
+---
 
-**日期**：2026-09-09
+
+# OpsDesk 08｜工具注册与 MCP · 源码解析
+
+**记录日期**：2026-09-09
 **标签**：AI Agent · OpsDesk · 源码解析
+
+区分工具描述、注册、执行和 MCP 连接，说明业务权限需要在哪一层落实。
 
 
 > 对应笔记：`第 08 章：工具系统（MCP 接入与动态扩展）（项目落地笔记）.md`
@@ -189,3 +204,18 @@ spec_from_langchain_tool(t, source="mcp", mcp_server=server, format_result=...)
 | `handle_tool_errors=False` | 工具错误抛 ToolException，执行引擎统一分诊/回灌 |
 | FORMATTERS 我们侧登记 | 原始 JSON 挑字段、翻人话，模型好组织话术 |
 | 统一 ToolSpec + source 标记 | 内置/MCP 共存，日志与权限有据可查 |
+## 源码对照与继续阅读
+
+以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
+
+- [`app/tools/registry.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/tools/registry.py)
+- [`app/tools/engine.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/tools/engine.py)
+- [`app/tools/mcp_client.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/tools/mcp_client.py)
+
+
+## 同一主题的另一种读法
+
+- [项目复盘](OpsDesk-08-工具系统与MCP扩展-项目落地笔记.md)
+- [OpsDesk 专题导读](../projects/opsdesk.md)
+- [上一章：会话上下文与摘要](OpsDesk-07-会话上下文管理-源码解析.md)
+- [下一章：调用追踪与反馈审核](OpsDesk-09-可观测性与数据飞轮-源码解析.md)
