@@ -1,0 +1,13 @@
+.md-grid { max-width: 84rem; }
+.md-typeset { font-size: .84rem; line-height: 1.85; }
+.md-typeset h1 { margin-bottom: 1.2rem; color: var(--md-default-fg-color); font-weight: 700; letter-spacing: -.02em; }
+.md-typeset h2 { margin-top: 2.15rem; font-weight: 650; }
+.md-typeset h3 { margin-top: 1.45rem; }
+.md-typeset p { margin-block: .85em; }
+.md-typeset table:not([class]) { font-size: .76rem; }
+.md-typeset code { font-size: .86em; }
+.md-typeset pre code { line-height: 1.65; }
+.md-typeset blockquote { color: var(--md-default-fg-color--light); }
+.md-nav { line-height: 1.55; }
+@media (min-width: 76.25em) { .md-content__inner { margin-left: 1.5rem; margin-right: 1.5rem; } }
+@media print { .md-typeset { font-size: 11pt; } }
