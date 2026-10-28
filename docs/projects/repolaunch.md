@@ -4,9 +4,9 @@ RepoLaunch 面向“仓库已经找到，却卡在依赖安装、启动命令和
 
 [查看 GitHub 仓库](https://github.com/smog-mgy/RepoLaunch)
 
-## 先看结果，再看实现
+## 项目文章
 
-已保留三个选定公开仓库的真实容器部署与内容探针记录，以及一次故意缺少 requests 的修复验收。这里没有任意仓库成功率，也没有生产用户规模数据。
+目前测试过三个公开仓库，并用一个故意缺少 requests 的样例验证了修复流程。测试记录见文末链接。
 
 1. [RepoLaunch：从仓库到可验证的本地运行](../posts/repolaunch-overview.md) — 说明首版解决的部署问题、系统分工和目前的支持边界。
 2. [RepoLaunch 的工作流：哪些决定交给模型](../posts/repolaunch-workflow.md) — 沿 retrieve、propose、validate 三个节点理解固定流程与模型建议的关系。

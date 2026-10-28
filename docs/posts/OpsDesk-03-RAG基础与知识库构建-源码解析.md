@@ -1,6 +1,6 @@
 ---
 title: OpsDesk 03｜知识库构建与双写 · 源码解析
-description: 从文档切分开始，追踪业务库记录、向量化和检索之间的关系，以及失败时怎样重跑。
+description: 文档切块、向量化、MySQL 与 Milvus 双写，以及失败重试。
 date: '2026-08-20'
 updated: '2026-10-28'
 category: 项目实战
@@ -15,8 +15,6 @@ tags:
 
 **记录日期**：2026-08-20
 **标签**：AI Agent · OpsDesk · 源码解析
-
-从文档切分开始，追踪业务库记录、向量化和检索之间的关系，以及失败时怎样重跑。
 
 
 > 对应笔记：`第 03 章：RAG 基础，跑通全链路（项目落地笔记）.md`
@@ -211,14 +209,12 @@ def build_chunks(md, content_type, chunk_size=400, overlap=60, table_max_rows=10
 | Chunk 带 questions/section_path | 检索、引用、证据展示的数据结构一次建好 |
 ## 源码对照与继续阅读
 
-以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
-
 - [`app/kb/chunking.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/kb/chunking.py)
 - [`app/kb/dualwrite.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/kb/dualwrite.py)
 - [`app/kb/milvus_client.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/kb/milvus_client.py)
 
 
-## 同一主题的另一种读法
+## 相关文章
 
 - [项目复盘](OpsDesk-03-RAG基础与知识库构建-项目落地笔记.md)
 - [OpsDesk 专题导读](../projects/opsdesk.md)

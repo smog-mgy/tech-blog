@@ -1,6 +1,6 @@
 ---
 title: OpsDesk 07｜会话上下文与摘要 · 源码解析
-description: 整理历史窗口、摘要和状态重置的关系，关注裁剪之后怎样保留关键业务信息。
+description: 历史窗口裁剪、异步摘要和跨轮会话状态。
 date: '2026-09-05'
 updated: '2026-10-28'
 category: 项目实战
@@ -15,8 +15,6 @@ tags:
 
 **记录日期**：2026-09-05
 **标签**：AI Agent · OpsDesk · 源码解析
-
-整理历史窗口、摘要和状态重置的关系，关注裁剪之后怎样保留关键业务信息。
 
 
 > 对应笔记：`第 07 章：会话上下文管理（项目落地笔记）.md`
@@ -253,14 +251,12 @@ async def maybe_schedule_summary(conversation_id: int) -> None:
 | 两字段原子更新 | 杜绝摘要与边界不同步的中间态 |
 ## 源码对照与继续阅读
 
-以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
-
 - [`app/core/memory.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/memory.py)
 - [`app/core/summarizer.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/summarizer.py)
 - [`app/graph/state.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/graph/state.py)
 
 
-## 同一主题的另一种读法
+## 相关文章
 
 - [项目复盘](OpsDesk-07-会话上下文管理-项目落地笔记.md)
 - [OpsDesk 专题导读](../projects/opsdesk.md)

@@ -1,6 +1,5 @@
 # 技术笔记与阅读路线
 
-这些文章保存学习阶段的概念、代码练习和理解。可以按问题查阅，也可以沿下面的顺序补基础。
 
 ## 从 Python 走到可运行项目
 
@@ -36,6 +35,7 @@
 - [Agent 学习 10｜旁路分类器与微调](../posts/10-模型微调.md)
 - [Agent 学习 11｜全链路验证与复盘](../posts/11-全链路串联与踩坑复盘.md)
 
-## 把学习笔记接回项目
+## 项目实践
 
-每个 Agent 章节都链接到 [OpsDesk 专题](../projects/opsdesk.md)的对应实现；想看部署与修复的取舍，可以转到 [RepoLaunch 专题](../projects/repolaunch.md)。
+- [OpsDesk：知识问答与工单工具](../projects/opsdesk.md)
+- [RepoLaunch：部署与故障修复](../projects/repolaunch.md)

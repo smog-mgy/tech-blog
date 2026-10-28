@@ -1,6 +1,6 @@
 ---
 title: OpsDesk 06｜意图识别与工单分流 · 项目复盘
-description: 沿用户问题进入不同出口的路径，检查分类失败、指代不明和工单归属的处理。
+description: 意图分类、指代消解、工单分流与归属校验。
 date: '2026-08-31'
 updated: '2026-10-28'
 category: 项目实战
@@ -15,8 +15,6 @@ tags:
 
 **记录日期**：2026-08-31
 **标签**：AI Agent · OpsDesk · 项目落地笔记
-
-沿用户问题进入不同出口的路径，检查分类失败、指代不明和工单归属的处理。
 
 
 > 涉及源码：`app/core/intent.py`、`app/core/coref.py`、`app/core/query_understanding.py`、`app/graph/nodes.py`、`app/graph/routing.py`、`app/api/actions.py`
@@ -192,14 +190,12 @@ return f"{head}\n{body}".strip() if head else body
 ```
 ## 源码对照与继续阅读
 
-以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
-
 - [`app/core/intent.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/intent.py)
 - [`app/core/coref.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/coref.py)
 - [`app/graph/nodes.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/graph/nodes.py)
 
 
-## 同一主题的另一种读法
+## 相关文章
 
 - [源码解析](OpsDesk-06-意图识别与对话管理-源码解析.md)
 - [OpsDesk 专题导读](../projects/opsdesk.md)

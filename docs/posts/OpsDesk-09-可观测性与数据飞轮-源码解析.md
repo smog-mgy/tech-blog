@@ -1,6 +1,6 @@
 ---
 title: OpsDesk 09｜调用追踪与反馈审核 · 源码解析
-description: 把调用记录、置信度和反馈审核串起来，明确模型建议写回知识库之前的人工步骤。
+description: Langfuse 调用追踪、置信度判断和反馈审核流程。
 date: '2026-09-13'
 updated: '2026-10-28'
 category: 项目实战
@@ -15,8 +15,6 @@ tags:
 
 **记录日期**：2026-09-13
 **标签**：AI Agent · OpsDesk · 源码解析
-
-把调用记录、置信度和反馈审核串起来，明确模型建议写回知识库之前的人工步骤。
 
 
 > 对应笔记：`第 09 章：可观测性与数据飞轮（项目落地笔记）.md`
@@ -215,8 +213,6 @@ async def process_pending(limit: int = 50) -> dict:
 | 评估趋势连飞轮 | 每次补知识都在指标上验证，不让质量悄悄退化 |
 ## 源码对照与继续阅读
 
-以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
-
 - [`app/core/observability.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/observability.py)
 - [`app/core/flywheel.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/flywheel.py)
 - [`app/core/confidence.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/confidence.py)
@@ -224,7 +220,7 @@ async def process_pending(limit: int = 50) -> dict:
 历史检索与生成指标可对照[仓库中的评估趋势记录](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch09/reports/eval_trend.txt)。该记录缺少完整抽样与运行环境说明，数值仅作历史样例，不据此推断生产表现。
 
 
-## 同一主题的另一种读法
+## 相关文章
 
 - [项目复盘](OpsDesk-09-可观测性与数据飞轮-项目落地笔记.md)
 - [OpsDesk 专题导读](../projects/opsdesk.md)

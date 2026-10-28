@@ -1,6 +1,6 @@
 ---
 title: Python：面向对象进阶
-description: 围绕后续 Agent 项目会反复使用的基础能力整理，阅读时可以先运行小例子，再回到项目中核对用法。
+description: 类和实例、__init__ 与 self、继承和方法重写、常用魔术方法，附 Document 类示例。
 date: '2026-03-12'
 updated: '2026-10-28'
 category: 基础与实验
@@ -15,8 +15,6 @@ tags:
 
 **记录日期**：2026-03-12
 **标签**：Python · Agent · OOP
-
-围绕后续 Agent 项目会反复使用的基础能力整理，阅读时可以先运行小例子，再回到项目中核对用法。
 
 ## 为什么Agent开发必须懂面向对象
 

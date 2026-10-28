@@ -1,6 +1,6 @@
 ---
 title: OpsDesk 01｜模型接入与提示词 · 源码解析
-description: 沿着模型工厂和提示词配置，梳理一次请求怎样完成配置校验、调用与结果处理。
+description: 模型工厂、上游配置、提示词管理和流式调用中的用量统计。
 date: '2026-08-12'
 updated: '2026-10-28'
 category: 项目实战
@@ -15,8 +15,6 @@ tags:
 
 **记录日期**：2026-08-12
 **标签**：AI Agent · OpsDesk · 源码解析
-
-沿着模型工厂和提示词配置，梳理一次请求怎样完成配置校验、调用与结果处理。
 
 
 > 对应笔记：`第 01 章：LLM 接入与 Prompt 工程（项目落地笔记）.md`
@@ -170,14 +168,12 @@ def repair_hint(bad: list[str]) -> str:
 | `repair_hint` 不猜型号 | 猜是幻觉的来源 |
 ## 源码对照与继续阅读
 
-以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
-
 - [`app/core/llm.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/llm.py)
 - [`app/core/prompts.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/prompts.py)
 - [`app/config.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/config.py)
 
 
-## 同一主题的另一种读法
+## 相关文章
 
 - [项目复盘](OpsDesk-01-LLM接入与Prompt工程-项目落地笔记.md)
 - [OpsDesk 专题导读](../projects/opsdesk.md)

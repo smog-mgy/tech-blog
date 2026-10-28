@@ -12,7 +12,7 @@ tags:
 
 # 端口被占用，和浏览器页面有什么关系
 
-**记录阶段**：2026 年 10 月下旬 · 10 月 28 日整理
+**日期**：2026 年 10 月 28 日
 
 启动 RepoLaunch 时出现过 `WinError 10048`：程序无法监听本机 8787 端口。与此同时，浏览器中还开着同一地址的页面，很容易以为是网页占用了服务端口。
 
@@ -39,7 +39,6 @@ tags:
 
 自动换端口只能处理本机监听冲突。Docker 容器未就绪、应用加载失败、接口异常等问题仍要分别排查。
 
-这次排查让我更愿意把“选择端口、启动服务、等待就绪、打开浏览器”看成一条完整启动流程。
 
 - [启动器源码](https://github.com/smog-mgy/RepoLaunch/blob/97128d84e3a5f6c28e0ab99315bf9fff8544574b/repolaunch/__main__.py)
 - [Windows 运行说明](https://github.com/smog-mgy/RepoLaunch/blob/97128d84e3a5f6c28e0ab99315bf9fff8544574b/docs/RUNNING_WINDOWS.md)

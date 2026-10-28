@@ -1,6 +1,6 @@
 ---
 title: 大模型 Prompt-Tuning 方法进阶学习笔记
-description: 保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。
+description: ICL、指令微调与思维链的区别，Prefix、Adapter 和 LoRA 的参数更新方式，附 PEFT 实验。
 date: '2026-05-24'
 updated: '2026-10-28'
 category: 基础与实验
@@ -15,8 +15,6 @@ tags:
 
 **记录日期**：2026-05-24
 **标签**：大模型 · Prompt-Tuning · PEFT
-
-保留这篇基础学习记录，按概念、示例和实验顺序阅读。涉及模型和依赖版本的内容以文中的环境为准。
 
 > 主题：超大规模模型的三种 Prompt 方法（ICL / Instruction-Tuning / CoT）+ PEFT 参数高效微调（Prefix / Adapter / LoRA）
 

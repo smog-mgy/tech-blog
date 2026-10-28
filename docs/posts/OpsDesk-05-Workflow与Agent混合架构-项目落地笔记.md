@@ -1,6 +1,6 @@
 ---
 title: OpsDesk 05｜工作流与 Agent 的职责 · 项目复盘
-description: 解释哪些节点必须按固定顺序执行，哪些步骤允许模型决定是否调用工具。
+description: LangGraph 节点、条件路由、证据检查和工具调用循环。
 date: '2026-08-27'
 updated: '2026-10-28'
 category: 项目实战
@@ -15,8 +15,6 @@ tags:
 
 **记录日期**：2026-08-27
 **标签**：AI Agent · OpsDesk · 项目落地笔记
-
-解释哪些节点必须按固定顺序执行，哪些步骤允许模型决定是否调用工具。
 
 
 > 涉及源码：`app/graph/build.py`、`app/graph/nodes.py`、`app/graph/routing.py`、`app/graph/state.py`
@@ -139,14 +137,12 @@ def merge_dict(a: dict | None, b: dict | None) -> dict:
 ```
 ## 源码对照与继续阅读
 
-以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
-
 - [`app/graph/build.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/graph/build.py)
 - [`app/graph/routing.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/graph/routing.py)
 - [`app/graph/state.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/graph/state.py)
 
 
-## 同一主题的另一种读法
+## 相关文章
 
 - [源码解析](OpsDesk-05-Workflow与Agent混合架构-源码解析.md)
 - [OpsDesk 专题导读](../projects/opsdesk.md)

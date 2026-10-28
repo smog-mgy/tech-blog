@@ -1,6 +1,6 @@
 ---
 title: Agent 学习 01｜模型接入与提示词
-description: 这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。
+description: Chat Completions 请求、LangChain 模型封装、提示词配置，以及流式输出和多轮历史的处理。
 date: '2026-06-06'
 updated: '2026-10-28'
 category: Agent 学习笔记
@@ -15,8 +15,6 @@ tags:
 
 **记录日期**：2026-06-06
 **标签**：AI Agent · LangChain · Prompt 工程
-
-这篇保留学习阶段的概念、示例与验证方法。实际项目实现可沿文末的 OpsDesk 对应章节继续阅读；示例输出不自动视为新一轮实测结果。
 
 > 项目背景：我在做一个电商 AI 智能客服系统（后端 Python + FastAPI，AI 层 LangChain / LangGraph）。
 > 本章是第一站：先把「跟大模型对话」这条通路打通——说得稳、说得专业、反应快、记得住上文。

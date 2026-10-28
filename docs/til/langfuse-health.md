@@ -12,11 +12,11 @@ tags:
 
 # Langfuse unhealthy：先找到失败发生在哪一层
 
-**记录阶段**：2026 年 10 月下旬 · 10 月 28 日整理
+**日期**：2026 年 10 月 28 日
 
 部署可选集成时，etcd、ClickHouse、MinIO 和 Redis 都显示 Healthy，但 `langfuse-web` 仍然 unhealthy。这个状态只说明健康检查没有通过，还不能直接确定根因。
 
-项目保留的验收记录包含两处实际修正：ClickHouse 的 Windows 绑定目录问题，以及 Langfuse 的监听地址问题。它们属于这次本地环境的排查结果，不能把所有同类报错都归成相同原因。
+这次调整了两处配置：ClickHouse 的数据卷和 Langfuse 的监听地址。
 
 ## 先保留诊断，不急着删数据
 

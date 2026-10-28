@@ -1,6 +1,6 @@
 ---
 title: OpsDesk 04｜混合检索与评估 · 项目复盘
-description: 比较向量、关键词、融合与重排各自解决的问题，并区分仓库历史报告和当前复测。
+description: 向量与关键词召回、RRF 融合、重排和检索评估。
 date: '2026-08-23'
 updated: '2026-10-28'
 category: 项目实战
@@ -15,8 +15,6 @@ tags:
 
 **记录日期**：2026-08-23
 **标签**：AI Agent · OpsDesk · 项目落地笔记
-
-比较向量、关键词、融合与重排各自解决的问题，并区分仓库历史报告和当前复测。
 
 
 > 涉及源码：`app/core/retrieval.py`、`app/core/rerank.py`、`app/core/embeddings.py`、`scripts/eval_retrieval.py`、`tests/data/eval_ch04.jsonl`
@@ -82,8 +80,6 @@ make eval-retrieval # 纯向量换说法召回验证
 ```
 ## 源码对照与继续阅读
 
-以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
-
 - [`app/core/retrieval.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/retrieval.py)
 - [`app/core/rerank.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/rerank.py)
 - [`scripts/eval_retrieval.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/scripts/eval_retrieval.py)
@@ -91,7 +87,7 @@ make eval-retrieval # 纯向量换说法召回验证
 历史检索与生成指标可对照[仓库中的评估趋势记录](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch09/reports/eval_trend.txt)。该记录缺少完整抽样与运行环境说明，数值仅作历史样例，不据此推断生产表现。
 
 
-## 同一主题的另一种读法
+## 相关文章
 
 - [源码解析](OpsDesk-04-混合检索与评估体系-源码解析.md)
 - [OpsDesk 专题导读](../projects/opsdesk.md)

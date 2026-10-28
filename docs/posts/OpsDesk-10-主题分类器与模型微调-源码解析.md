@@ -1,6 +1,6 @@
 ---
 title: OpsDesk 10｜旁路分类器与微调 · 源码解析
-description: 说明旁路主题分类器的用途，阅读仓库中的留出集报告，同时保留小样本评估的限制。
+description: 旁路主题分类器的数据准备、训练、评估与 ONNX 导出。
 date: '2026-09-18'
 updated: '2026-10-28'
 category: 项目实战
@@ -15,8 +15,6 @@ tags:
 
 **记录日期**：2026-09-18
 **标签**：AI Agent · OpsDesk · 源码解析
-
-说明旁路主题分类器的用途，阅读仓库中的留出集报告，同时保留小样本评估的限制。
 
 
 > 对应笔记：`第 10 章：主题分类器与模型微调（项目落地笔记）.md`
@@ -146,16 +144,14 @@ support 4-5 条、全 TP、FP/FN 全 0——**F1=1.0 的真相：44 条测试集
 | ONNX 导出 | 跨平台轻部署，推理快 |
 ## 源码对照与继续阅读
 
-以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
-
 - [`data/ch10/reports/eval_report.md`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch10/reports/eval_report.md)
 - [`data/ch10/reports/export_report.json`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/data/ch10/reports/export_report.json)
 - [`app/core/taxonomy.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/core/taxonomy.py)
 
-仓库分类器报告的留出集只有 44 条；其中的满分不能代表真实工单分布下的泛化能力。本次只核对报告与实现入口，没有重新训练模型。
+仓库分类器报告的留出集只有 44 条；其中的满分不能代表真实工单分布下的泛化能力。
 
 
-## 同一主题的另一种读法
+## 相关文章
 
 - [项目复盘](OpsDesk-10-主题分类器与模型微调-项目落地笔记.md)
 - [OpsDesk 专题导读](../projects/opsdesk.md)

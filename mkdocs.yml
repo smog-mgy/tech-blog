@@ -106,7 +106,7 @@ nav:
   - Langfuse unhealthy：先找到失败发生在哪一层: til/langfuse-health.md
 - 归档与阅读:
   - 全部文章: archive.md
-  - 阅读与写作参考: reading.md
+  - 技术博客与文章: reading.md
 - 关于我: about.md
 site_url: https://smog-mgy.github.io/tech-blog/
 repo_url: https://github.com/smog-mgy/tech-blog

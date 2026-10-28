@@ -1,6 +1,6 @@
 ---
 title: OpsDesk 11｜全链路验证与复盘 · 项目复盘
-description: 把问答、工单、检索、工具和日志串成一条阅读路线，并列出验证入口与支持边界。
+description: 工单、问答和工具调用的完整流程，以及本地测试入口。
 date: '2026-09-24'
 updated: '2026-10-28'
 category: 项目实战
@@ -15,8 +15,6 @@ tags:
 
 **记录日期**：2026-09-24
 **标签**：AI Agent · OpsDesk · 项目落地笔记
-
-把问答、工单、检索、工具和日志串成一条阅读路线，并列出验证入口与支持边界。
 
 
 > 涉及：`Makefile`、`tests/`（80+ 测试文件）、`app/graph/build.py`、`docker-compose.yml`
@@ -141,14 +139,12 @@ make dev
 ```
 ## 源码对照与继续阅读
 
-以下入口固定到同一份公开提交，便于对照本文中的实现。原文保留阶段性记录；这里没有重新运行整套外部服务验收。
-
 - [`Makefile`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/Makefile)
 - [`app/graph/build.py`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/app/graph/build.py)
 - [`README.md`](https://github.com/smog-mgy/opsdesk/blob/f95a24a2a67d1d3ae5cb6c253537d3f373df7b00/README.md)
 
 
-## 同一主题的另一种读法
+## 相关文章
 
 - [源码解析](OpsDesk-11-全链路串联与复盘-源码解析.md)
 - [OpsDesk 专题导读](../projects/opsdesk.md)
